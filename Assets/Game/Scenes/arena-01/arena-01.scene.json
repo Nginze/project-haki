@@ -2,6 +2,11 @@
   "type": "haki.scene",
   "version": 1,
   "id": "arena-01",
+  "environment": {
+    "texture": "engine.texture.environment.qwantani-dusk",
+    "intensity": 1.0,
+    "rotationDegrees": 0.0
+  },
   "entities": [
     {
       "id": "fba13699-24b1-4bf6-ae74-7c3fa51eac4c",

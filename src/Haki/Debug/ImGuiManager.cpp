@@ -414,6 +414,14 @@ void ImGuiManager::DrawLightingMenu(Renderer &renderer, Scene *scene)
                      ImGuiSliderFlags_AlwaysClamp);
     ImGui::EndDisabled();
     ImGui::Checkbox("Skybox", &settings.SkyboxEnabled);
+    if (scene && !AssetManager::GetTexture(scene->GetEnvironment().Texture))
+    {
+        // The sky and image-based lighting both come from the scene's environment map.
+        ImGui::SameLine();
+        ImGui::TextColored({1.0f, 0.7f, 0.3f, 1.0f}, "(scene has no environment map)");
+        ImGui::SetItemTooltip("Add to the scene JSON:\n"
+                              "\"environment\": { \"texture\": \"engine.texture.environment.qwantani-dusk\" }");
+    }
 
     ImGui::Separator();
     if (ImGui::BeginMenu("SSAO"))
