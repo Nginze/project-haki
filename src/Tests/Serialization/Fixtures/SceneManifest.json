@@ -1,0 +1,12 @@
+{
+  "type": "haki.scene-manifest",
+  "version": 1,
+  "assetCatalog": "AssetCatalog.json",
+  "entry": "test",
+  "scenes": [
+    {
+      "id": "test",
+      "source": "Test.scene.json"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "type": "haki.scene",
+  "version": 1,
+  "id": "test",
+  "entities": [
+    {
+      "id": "camera",
+      "components": {
+        "transform": {},
+        "camera": {
+          "primary": true
+        }
+      }
+    }
+  ],
+  "prefabs": [
+    {
+      "source": "Light.prefab.json",
+      "instance": "light-01",
+      "transform": {
+        "translation": [2.0, 0.0, 0.0]
+      },
+      "overrides": {
+        "root": {
+          "transform": {
+            "translation": [4.0, 0.0, 0.0]
+          }
+        }
+      }
+    }
+  ]
+}

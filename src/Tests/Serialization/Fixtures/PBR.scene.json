@@ -1,0 +1,39 @@
+{
+  "type": "haki.scene",
+  "version": 1,
+  "id": "pbr-test",
+  "entities": [
+    {
+      "id": "camera",
+      "components": {
+        "transform": {
+          "translation": [0.0, 0.0, 2.0]
+        },
+        "camera": {
+          "primary": true
+        }
+      }
+    },
+    {
+      "id": "sun",
+      "components": {
+        "transform": {},
+        "directionalLight": {
+          "color": [1.0, 1.0, 1.0],
+          "intensity": 2.0
+        }
+      }
+    },
+    {
+      "id": "triangle",
+      "components": {
+        "transform": {},
+        "meshRenderer": {
+          "mesh": "mesh.triangle",
+          "materials": ["material.pbr-test"]
+        }
+      }
+    }
+  ],
+  "prefabs": []
+}

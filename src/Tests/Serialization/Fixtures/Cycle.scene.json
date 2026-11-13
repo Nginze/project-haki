@@ -1,0 +1,21 @@
+{
+  "type": "haki.scene",
+  "version": 1,
+  "id": "cycle",
+  "entities": [
+    {
+      "id": "camera",
+      "components": {
+        "camera": {
+          "primary": true
+        }
+      }
+    }
+  ],
+  "prefabs": [
+    {
+      "source": "CycleA.prefab.json",
+      "instance": "cycle"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "type": "haki.asset-catalog",
+  "version": 1,
+  "assets": [
+    {
+      "id": "mesh.crate",
+      "type": "mesh",
+      "source": "crate.glb",
+      "mesh": "Crate"
+    },
+    {
+      "id": "material.crate",
+      "type": "material",
+      "source": "Crate.material.json"
+    },
+    {
+      "id": "mesh.triangle",
+      "type": "mesh",
+      "source": "Triangle.gltf",
+      "mesh": "Triangle"
+    },
+    {
+      "id": "mesh.triangle-indexed",
+      "type": "mesh",
+      "source": "Triangle.gltf",
+      "mesh": "#0"
+    },
+    {
+      "id": "mesh.skinned-triangle",
+      "type": "mesh",
+      "source": "SkinnedTriangle.gltf",
+      "mesh": "#0",
+      "node": "#0"
+    },
+    {
+      "id": "mesh.skinned-triangle-base",
+      "type": "mesh",
+      "source": "SkinnedTriangle.gltf",
+      "mesh": "#0"
+    },
+    {
+      "id": "skeleton.translated",
+      "type": "skeleton",
+      "source": "SkinnedTriangle.gltf",
+      "skin": "#0",
+      "node": "#0"
+    },
+    {
+      "id": "animation.joint-motion",
+      "type": "animationClip",
+      "source": "SkinnedTriangle.gltf",
+      "animation": "Joint Motion",
+      "skeleton": "skeleton.translated"
+    },
+    {
+      "id": "shader.forward",
+      "type": "shader",
+      "source": "../../../../Assets/Shaders/ForwardLit"
+    },
+    {
+      "id": "material.test",
+      "type": "material",
+      "source": "Test.material.json"
+    },
+    {
+      "id": "engine.shader.gltf-pbr",
+      "type": "shader",
+      "source": "../../../../Assets/Shaders/GltfPBR"
+    },
+    {
+      "id": "material.pbr-test",
+      "type": "material",
+      "source": "PBR.material.json"
+    },
+    {
+      "id": "texture.environment",
+      "type": "texture",
+      "source": "environment.fake"
+    }
+  ]
+}

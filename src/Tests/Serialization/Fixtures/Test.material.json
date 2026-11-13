@@ -1,0 +1,22 @@
+{
+  "type": "haki.material",
+  "version": 1,
+  "shader": "shader.forward",
+  "state": {
+    "blend": "opaque",
+    "cull": "back",
+    "depthTest": true,
+    "depthWrite": true,
+    "wireframe": false
+  },
+  "parameters": {
+    "BaseColor": {
+      "type": "vec4",
+      "value": [0.8, 0.6, 0.4, 1.0]
+    },
+    "UseBaseColorTexture": {
+      "type": "int",
+      "value": 0
+    }
+  }
+}

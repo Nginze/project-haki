@@ -1,0 +1,14 @@
+{
+  "type": "haki.asset-catalog",
+  "version": 1,
+  "imports": [
+    "../../../../Assets/Engine/Catalog.json"
+  ],
+  "assets": [
+    {
+      "id": "test.material.bloom-emissive",
+      "type": "material",
+      "source": "BloomEmissive.material.json"
+    }
+  ]
+}

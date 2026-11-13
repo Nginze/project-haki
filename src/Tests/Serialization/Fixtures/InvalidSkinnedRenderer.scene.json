@@ -1,0 +1,24 @@
+{
+  "type": "haki.scene",
+  "version": 1,
+  "id": "invalid-skinned-renderer",
+  "entities": [
+    {
+      "id": "camera",
+      "components": {
+        "camera": { "primary": true }
+      }
+    },
+    {
+      "id": "character",
+      "components": {
+        "skinnedMeshRenderer": {
+          "mesh": "mesh.character",
+          "skeleton": "skeleton.character",
+          "materials": ["material.character"],
+          "unknown": true
+        }
+      }
+    }
+  ]
+}

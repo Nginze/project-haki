@@ -1,0 +1,74 @@
+{
+  "type": "haki.scene",
+  "version": 1,
+  "id": "invalid-physics",
+  "entities": [
+    {
+      "id": "bad-shape",
+      "components": {
+        "transform": {},
+        "rigidBody": {
+          "motion": "dynamic"
+        },
+        "collider": {
+          "shape": "cylinder"
+        }
+      }
+    },
+    {
+      "id": "missing-collider",
+      "components": {
+        "transform": {},
+        "rigidBody": {
+          "motion": "static"
+        }
+      }
+    },
+    {
+      "id": "bad-radius",
+      "components": {
+        "transform": {},
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": -1.0
+        },
+        "collider": {
+          "shape": "sphere",
+          "radius": 0.0
+        }
+      }
+    },
+    {
+      "id": "character-with-body",
+      "components": {
+        "transform": {},
+        "characterController": {},
+        "rigidBody": {
+          "motion": "static"
+        },
+        "collider": {
+          "shape": "box"
+        }
+      }
+    },
+    {
+      "id": "input-without-character",
+      "components": {
+        "transform": {},
+        "playerInput": {
+          "moveSpeed": 4.0
+        }
+      }
+    },
+    {
+      "id": "bad-slope",
+      "components": {
+        "transform": {},
+        "characterController": {
+          "maxSlopeDegrees": 95.0
+        }
+      }
+    }
+  ],
+  "prefabs": []
+}

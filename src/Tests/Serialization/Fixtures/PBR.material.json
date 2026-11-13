@@ -1,0 +1,41 @@
+{
+  "type": "haki.material",
+  "version": 1,
+  "shader": "engine.shader.gltf-pbr",
+  "state": {
+    "pass": "default",
+    "blend": "opaque",
+    "cull": "back",
+    "depthTest": true,
+    "depthWrite": true,
+    "wireframe": false
+  },
+  "parameters": {
+    "BaseColorFactor": { "type": "vec4", "value": [0.8, 0.6, 0.4, 1.0] },
+    "UseBaseColorTexture": { "type": "int", "value": 0 },
+    "PbrWorkflow": { "type": "int", "value": 0 },
+    "SpecularFactor": { "type": "vec3", "value": [1.0, 1.0, 1.0] },
+    "GlossinessFactor": { "type": "float", "value": 1.0 },
+    "MetallicFactor": { "type": "float", "value": 0.1 },
+    "RoughnessFactor": { "type": "float", "value": 0.7 },
+    "UseMetallicRoughnessTexture": { "type": "int", "value": 0 },
+    "UseNormalTexture": { "type": "int", "value": 0 },
+    "NormalScale": { "type": "float", "value": 1.0 },
+    "EmissiveFactor": { "type": "vec3", "value": [0.0, 0.0, 0.0] },
+    "UseEmissiveTexture": { "type": "int", "value": 0 },
+    "UseOcclusionTexture": { "type": "int", "value": 0 },
+    "OcclusionStrength": { "type": "float", "value": 1.0 },
+    "AlphaMode": { "type": "int", "value": 0 },
+    "AlphaCutoff": { "type": "float", "value": 0.5 },
+    "TransmissionFactor": { "type": "float", "value": 0.0 },
+    "UseTransmissionTexture": { "type": "int", "value": 0 },
+    "ThicknessFactor": { "type": "float", "value": 0.0 },
+    "UseThicknessTexture": { "type": "int", "value": 0 },
+    "AttenuationColor": { "type": "vec3", "value": [1.0, 1.0, 1.0] },
+    "AttenuationDistance": { "type": "float", "value": 0.0 },
+    "Ior": { "type": "float", "value": 1.5 },
+    "BaseColorTextureTexCoord": { "type": "int", "value": 1 },
+    "NormalTextureUvTransform": { "type": "mat3", "value": [2.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.25, 0.5, 1.0] },
+    "DielectricSpecular": { "type": "vec3", "value": [1.0, 1.0, 1.0] }
+  }
+}

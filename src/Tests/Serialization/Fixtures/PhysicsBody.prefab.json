@@ -1,0 +1,21 @@
+{
+  "type": "haki.prefab",
+  "version": 1,
+  "entities": [
+    {
+      "id": "root",
+      "components": {
+        "transform": {},
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": 5.0
+        },
+        "collider": {
+          "shape": "sphere",
+          "radius": 0.5
+        }
+      }
+    }
+  ],
+  "prefabs": []
+}

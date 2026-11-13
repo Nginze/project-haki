@@ -1,0 +1,34 @@
+{
+  "type": "haki.asset-catalog",
+  "version": 1,
+  "assets": [
+    {
+      "id": "engine.shader.gltf-pbr",
+      "type": "shader",
+      "source": "Shaders/GltfPBR"
+    },
+    {
+      "id": "engine.mesh.unit-cube",
+      "type": "mesh",
+      "source": "Geometry/UnitCube.gltf",
+      "mesh": "UnitCube"
+    },
+    {
+      "id": "engine.material.debug-grey",
+      "type": "material",
+      "source": "Materials/DebugGrey.material.json"
+    },
+    {
+      "id": "engine.material.debug-orange",
+      "type": "material",
+      "source": "Materials/DebugOrange.material.json"
+    },
+    {
+      "id": "engine.texture.environment.qwantani-dusk",
+      "type": "texture",
+      "source": "Skyboxes/qwantani_dusk_2_puresky_4k.hdr",
+      "srgb": false,
+      "flipY": true
+    }
+  ]
+}

@@ -1,0 +1,236 @@
+{
+  "type": "haki.scene",
+  "version": 1,
+  "id": "locomotion-blend",
+  "entities": [
+    {
+      "id": "camera",
+      "components": {
+        "camera": {
+          "primary": true
+        }
+      }
+    },
+    {
+      "id": "player",
+      "components": {
+        "transform": {},
+        "characterController": {}
+      }
+    },
+    {
+      "id": "visual-2",
+      "components": {
+        "parent": {
+          "entity": "player"
+        },
+        "skinnedMeshRenderer": {
+          "mesh": "mesh.character",
+          "skeleton": "skeleton.character",
+          "materials": [
+            "material.character"
+          ]
+        },
+        "animator": {
+          "clips": {
+            "Idle": "animation.idle",
+            "Walk": "animation.walk",
+            "Run": "animation.run"
+          },
+          "currentClip": "Idle",
+          "defaultFade": -1
+        },
+        "locomotion": {
+          "blend": [
+            {
+              "clip": "Idle",
+              "speed": 0
+            },
+            {
+              "clip": "Walk",
+              "speed": 1.5
+            },
+            {
+              "clip": "Run",
+              "speed": 4.5
+            }
+          ],
+          "fade": 0.1,
+          "smoothing": 0.2,
+          "maxPlaybackScale": 1.5
+        }
+      }
+    },
+    {
+      "id": "visual-3",
+      "components": {
+        "parent": {
+          "entity": "player"
+        },
+        "skinnedMeshRenderer": {
+          "mesh": "mesh.character",
+          "skeleton": "skeleton.character",
+          "materials": [
+            "material.character"
+          ]
+        },
+        "animator": {
+          "clips": {
+            "Idle": "animation.idle",
+            "Walk": "animation.walk",
+            "Run": "animation.run"
+          },
+          "currentClip": "Idle",
+          "defaultFade": 0.15
+        },
+        "locomotion": {
+          "blend": [
+            {
+              "clip": "Idle",
+              "speed": 0
+            },
+            {
+              "clip": "Run",
+              "speed": 2
+            },
+            {
+              "clip": "Walk",
+              "speed": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "visual-4",
+      "components": {
+        "parent": {
+          "entity": "player"
+        },
+        "skinnedMeshRenderer": {
+          "mesh": "mesh.character",
+          "skeleton": "skeleton.character",
+          "materials": [
+            "material.character"
+          ]
+        },
+        "animator": {
+          "clips": {
+            "Idle": "animation.idle",
+            "Walk": "animation.walk",
+            "Run": "animation.run"
+          },
+          "currentClip": "Idle",
+          "defaultFade": 0.15
+        },
+        "locomotion": {
+          "blend": [
+            {
+              "clip": "Idle",
+              "speed": 0
+            },
+            {
+              "clip": "Sprint",
+              "speed": 6
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "visual-5",
+      "components": {
+        "parent": {
+          "entity": "player"
+        },
+        "skinnedMeshRenderer": {
+          "mesh": "mesh.character",
+          "skeleton": "skeleton.character",
+          "materials": [
+            "material.character"
+          ]
+        },
+        "animator": {
+          "clips": {
+            "Idle": "animation.idle",
+            "Walk": "animation.walk",
+            "Run": "animation.run"
+          },
+          "currentClip": "Idle",
+          "defaultFade": 0.15
+        },
+        "locomotion": {
+          "blend": [
+            {
+              "clip": "Idle",
+              "speed": 0
+            }
+          ],
+          "idleClip": "Idle"
+        }
+      }
+    },
+    {
+      "id": "visual-6",
+      "components": {
+        "parent": {
+          "entity": "player"
+        },
+        "skinnedMeshRenderer": {
+          "mesh": "mesh.character",
+          "skeleton": "skeleton.character",
+          "materials": [
+            "material.character"
+          ]
+        },
+        "animator": {
+          "clips": {
+            "Idle": "animation.idle",
+            "Walk": "animation.walk",
+            "Run": "animation.run"
+          },
+          "currentClip": "Idle",
+          "defaultFade": 0.15
+        },
+        "locomotion": {
+          "idleClip": "Idle",
+          "moveClip": "Run",
+          "speedThreshold": 0.2
+        }
+      }
+    },
+    {
+      "id": "visual-7",
+      "components": {
+        "parent": {
+          "entity": "player"
+        },
+        "skinnedMeshRenderer": {
+          "mesh": "mesh.character",
+          "skeleton": "skeleton.character",
+          "materials": [
+            "material.character"
+          ]
+        },
+        "animator": {
+          "clips": {
+            "Idle": "animation.idle",
+            "Walk": "animation.walk",
+            "Run": "animation.run"
+          },
+          "currentClip": "Idle",
+          "defaultFade": 0.15
+        },
+        "locomotion": {
+          "blend": [
+            {
+              "clip": "Idle",
+              "speed": 0
+            }
+          ],
+          "maxPlaybackScale": 0.5
+        }
+      }
+    }
+  ]
+}

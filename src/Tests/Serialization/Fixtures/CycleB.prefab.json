@@ -1,0 +1,11 @@
+{
+  "type": "haki.prefab",
+  "version": 1,
+  "entities": [],
+  "prefabs": [
+    {
+      "source": "CycleA.prefab.json",
+      "instance": "a"
+    }
+  ]
+}

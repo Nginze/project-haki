@@ -1,0 +1,7461 @@
+{
+  "type": "haki.scene",
+  "version": 1,
+  "id": "arena-01",
+  "entities": [
+    {
+      "id": "fba13699-24b1-4bf6-ae74-7c3fa51eac4c",
+      "name": "Arena_Floor",
+      "components": {
+        "transform": {
+          "translation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            -0.10000000149011612,
+            -0.0
+          ],
+          "halfExtents": [
+            11.0,
+            0.10000000149011612,
+            8.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.arena-floor-mesh",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "47d9e49c-a403-4251-99dd-0ef1ec74557f",
+      "name": "Barrel_4_5",
+      "components": {
+        "transform": {
+          "translation": [
+            -6.5,
+            0.0,
+            -2.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": 30.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.45997464656829834,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.45997464656829834,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-barrel",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "c20e988f-19e2-4c3d-9393-b97fa5589420",
+      "name": "Barrel_4_10",
+      "components": {
+        "transform": {
+          "translation": [
+            -6.5,
+            0.0,
+            2.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": 30.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.45997464656829834,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.45997464656829834,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-barrel",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "874b6cce-5439-4311-b352-f08028fe6d88",
+      "name": "Barrel_17_5",
+      "components": {
+        "transform": {
+          "translation": [
+            6.5,
+            0.0,
+            -2.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": 30.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.45997464656829834,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.45997464656829834,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-barrel",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "d89da9e8-2f29-41b4-bbad-f3a9c3cab5ee",
+      "name": "Barrel_17_10",
+      "components": {
+        "transform": {
+          "translation": [
+            6.5,
+            0.0,
+            2.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": 30.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.45997464656829834,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.45997464656829834,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-barrel",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.brawlstars-gameplaycam",
+      "name": "BrawlStars_GameplayCam",
+      "components": {
+        "transform": {
+          "translation": [
+            0.0,
+            19.5,
+            14.5
+          ],
+          "rotation": [
+            -0.4641067478977165,
+            0.0,
+            0.0,
+            0.8857792764316659
+          ],
+          "scale": [
+            1.0,
+            1.0000000304301475,
+            1.0000000304301475
+          ]
+        },
+        "camera": {
+          "fovYDegrees": 32.26880414280885,
+          "near": 0.10000000149011612,
+          "far": 1000.0,
+          "primary": true
+        }
+      }
+    },
+    {
+      "id": "arena.brawlstars-sun",
+      "name": "BrawlStars_Sun",
+      "components": {
+        "transform": {
+          "translation": [
+            0.0,
+            10.0,
+            0.0
+          ],
+          "rotation": [
+            -0.2961900815313383,
+            -0.19223632423082626,
+            -0.303056654626596,
+            0.8851402687344057
+          ],
+          "scale": [
+            1.000000057998119,
+            1.0000000808616671,
+            1.000000056145227
+          ]
+        },
+        "directionalLight": {
+          "color": [
+            1.0,
+            0.9599999785423279,
+            0.8799999952316284
+          ],
+          "intensity": 3.5
+        }
+      }
+    },
+    {
+      "id": "a75759c2-e2a5-4d30-b5b7-303976a865ee",
+      "name": "Body",
+      "components": {
+        "transform": {
+          "translation": [
+            -9.5,
+            0.0,
+            6.5
+          ],
+          "rotation": [
+            0.0,
+            0.9999999999999991,
+            0.0,
+            -4.37113882867378e-08
+          ],
+          "scale": [
+            0.4799999892711658,
+            0.47999998927116394,
+            0.4799999892711658
+          ]
+        },
+        "parent": {
+          "entity": "235a53f5-34d7-4fec-804d-a9960fc59ead",
+          "local": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              -1.0,
+              -0.0,
+              4.371138828673793e-08
+            ],
+            "scale": [
+              0.47999998927116394,
+              0.47999998927116394,
+              0.47999998927116394
+            ]
+          }
+        },
+        "locomotion": {
+          "idleClip": "Idle",
+          "moveClip": "Run",
+          "speedThreshold": 0.10000000149011612
+        },
+        "skinnedMeshRenderer": {
+          "mesh": "arena-01.mesh.arena.cube-007",
+          "skeleton": "arena-01.skeleton.arena.skin-0.node-30",
+          "materials": [
+            "arena-01.material.arena.skin-006-41167b5b34",
+            "arena-01.material.arena.beige-006-43554b460d",
+            "arena-01.material.arena.clothes-006-5d4e475a59",
+            "arena-01.material.arena.gold-006-4ab0833367",
+            "arena-01.material.arena.brown-006-16f57e57c2",
+            "arena-01.material.arena.face-006-5fbbde5f76",
+            "arena-01.material.arena.black-006-2e1638522f",
+            "arena-01.material.arena.red-006-83850f0d21"
+          ]
+        },
+        "animator": {
+          "clips": {
+            "Death": "arena-01.animation-clip.arena.animation-0.skin-0.node-30",
+            "Death.001": "arena-01.animation-clip.arena.animation-1.skin-0.node-30",
+            "Death.002": "arena-01.animation-clip.arena.animation-2.skin-0.node-30",
+            "Death.003": "arena-01.animation-clip.arena.animation-3.skin-0.node-30",
+            "Death.004": "arena-01.animation-clip.arena.animation-4.skin-0.node-30",
+            "Death.005": "arena-01.animation-clip.arena.animation-5.skin-0.node-30",
+            "Death.006": "arena-01.animation-clip.arena.animation-6.skin-0.node-30",
+            "Defeat": "arena-01.animation-clip.arena.animation-7.skin-0.node-30",
+            "Defeat.001": "arena-01.animation-clip.arena.animation-8.skin-0.node-30",
+            "Defeat.002": "arena-01.animation-clip.arena.animation-9.skin-0.node-30",
+            "Defeat.003": "arena-01.animation-clip.arena.animation-10.skin-0.node-30",
+            "Defeat.004": "arena-01.animation-clip.arena.animation-11.skin-0.node-30",
+            "Defeat.005": "arena-01.animation-clip.arena.animation-12.skin-0.node-30",
+            "Defeat.006": "arena-01.animation-clip.arena.animation-13.skin-0.node-30",
+            "Idle": "arena-01.animation-clip.arena.animation-14.skin-0.node-30",
+            "Idle.001": "arena-01.animation-clip.arena.animation-15.skin-0.node-30",
+            "Idle.002": "arena-01.animation-clip.arena.animation-16.skin-0.node-30",
+            "Idle.003": "arena-01.animation-clip.arena.animation-17.skin-0.node-30",
+            "Idle.004": "arena-01.animation-clip.arena.animation-18.skin-0.node-30",
+            "Idle.005": "arena-01.animation-clip.arena.animation-19.skin-0.node-30",
+            "Idle.006": "arena-01.animation-clip.arena.animation-20.skin-0.node-30",
+            "Jump": "arena-01.animation-clip.arena.animation-21.skin-0.node-30",
+            "Jump.001": "arena-01.animation-clip.arena.animation-22.skin-0.node-30",
+            "Jump.002": "arena-01.animation-clip.arena.animation-23.skin-0.node-30",
+            "Jump.003": "arena-01.animation-clip.arena.animation-24.skin-0.node-30",
+            "Jump.004": "arena-01.animation-clip.arena.animation-25.skin-0.node-30",
+            "Jump.005": "arena-01.animation-clip.arena.animation-26.skin-0.node-30",
+            "Jump.006": "arena-01.animation-clip.arena.animation-27.skin-0.node-30",
+            "PickUp": "arena-01.animation-clip.arena.animation-28.skin-0.node-30",
+            "PickUp.001": "arena-01.animation-clip.arena.animation-29.skin-0.node-30",
+            "PickUp.002": "arena-01.animation-clip.arena.animation-30.skin-0.node-30",
+            "PickUp.003": "arena-01.animation-clip.arena.animation-31.skin-0.node-30",
+            "PickUp.004": "arena-01.animation-clip.arena.animation-32.skin-0.node-30",
+            "PickUp.005": "arena-01.animation-clip.arena.animation-33.skin-0.node-30",
+            "PickUp.006": "arena-01.animation-clip.arena.animation-34.skin-0.node-30",
+            "Punch": "arena-01.animation-clip.arena.animation-35.skin-0.node-30",
+            "Punch.001": "arena-01.animation-clip.arena.animation-36.skin-0.node-30",
+            "Punch.002": "arena-01.animation-clip.arena.animation-37.skin-0.node-30",
+            "Punch.003": "arena-01.animation-clip.arena.animation-38.skin-0.node-30",
+            "Punch.004": "arena-01.animation-clip.arena.animation-39.skin-0.node-30",
+            "Punch.005": "arena-01.animation-clip.arena.animation-40.skin-0.node-30",
+            "Punch.006": "arena-01.animation-clip.arena.animation-41.skin-0.node-30",
+            "RecieveHit": "arena-01.animation-clip.arena.animation-42.skin-0.node-30",
+            "RecieveHit.001": "arena-01.animation-clip.arena.animation-43.skin-0.node-30",
+            "RecieveHit.002": "arena-01.animation-clip.arena.animation-44.skin-0.node-30",
+            "RecieveHit.003": "arena-01.animation-clip.arena.animation-45.skin-0.node-30",
+            "RecieveHit.004": "arena-01.animation-clip.arena.animation-46.skin-0.node-30",
+            "RecieveHit.005": "arena-01.animation-clip.arena.animation-47.skin-0.node-30",
+            "RecieveHit.006": "arena-01.animation-clip.arena.animation-48.skin-0.node-30",
+            "Roll": "arena-01.animation-clip.arena.animation-49.skin-0.node-30",
+            "Roll.001": "arena-01.animation-clip.arena.animation-50.skin-0.node-30",
+            "Roll.002": "arena-01.animation-clip.arena.animation-51.skin-0.node-30",
+            "Roll.003": "arena-01.animation-clip.arena.animation-52.skin-0.node-30",
+            "Roll.004": "arena-01.animation-clip.arena.animation-53.skin-0.node-30",
+            "Roll.005": "arena-01.animation-clip.arena.animation-54.skin-0.node-30",
+            "Roll.006": "arena-01.animation-clip.arena.animation-55.skin-0.node-30",
+            "Run": "arena-01.animation-clip.arena.animation-56.skin-0.node-30",
+            "Run.001": "arena-01.animation-clip.arena.animation-57.skin-0.node-30",
+            "Run.002": "arena-01.animation-clip.arena.animation-58.skin-0.node-30",
+            "Run.003": "arena-01.animation-clip.arena.animation-59.skin-0.node-30",
+            "Run.004": "arena-01.animation-clip.arena.animation-60.skin-0.node-30",
+            "Run.005": "arena-01.animation-clip.arena.animation-61.skin-0.node-30",
+            "Run.006": "arena-01.animation-clip.arena.animation-62.skin-0.node-30",
+            "Run_Carry": "arena-01.animation-clip.arena.animation-63.skin-0.node-30",
+            "Run_Carry.001": "arena-01.animation-clip.arena.animation-64.skin-0.node-30",
+            "Run_Carry.002": "arena-01.animation-clip.arena.animation-65.skin-0.node-30",
+            "Run_Carry.003": "arena-01.animation-clip.arena.animation-66.skin-0.node-30",
+            "Run_Carry.004": "arena-01.animation-clip.arena.animation-67.skin-0.node-30",
+            "Run_Carry.005": "arena-01.animation-clip.arena.animation-68.skin-0.node-30",
+            "Run_Carry.006": "arena-01.animation-clip.arena.animation-69.skin-0.node-30",
+            "Shoot_OneHanded": "arena-01.animation-clip.arena.animation-70.skin-0.node-30",
+            "Shoot_OneHanded.001": "arena-01.animation-clip.arena.animation-71.skin-0.node-30",
+            "Shoot_OneHanded.002": "arena-01.animation-clip.arena.animation-72.skin-0.node-30",
+            "Shoot_OneHanded.003": "arena-01.animation-clip.arena.animation-73.skin-0.node-30",
+            "Shoot_OneHanded.004": "arena-01.animation-clip.arena.animation-74.skin-0.node-30",
+            "Shoot_OneHanded.005": "arena-01.animation-clip.arena.animation-75.skin-0.node-30",
+            "Shoot_OneHanded.006": "arena-01.animation-clip.arena.animation-76.skin-0.node-30",
+            "SitDown": "arena-01.animation-clip.arena.animation-77.skin-0.node-30",
+            "SitDown.001": "arena-01.animation-clip.arena.animation-78.skin-0.node-30",
+            "SitDown.002": "arena-01.animation-clip.arena.animation-79.skin-0.node-30",
+            "SitDown.003": "arena-01.animation-clip.arena.animation-80.skin-0.node-30",
+            "SitDown.004": "arena-01.animation-clip.arena.animation-81.skin-0.node-30",
+            "SitDown.005": "arena-01.animation-clip.arena.animation-82.skin-0.node-30",
+            "SitDown.006": "arena-01.animation-clip.arena.animation-83.skin-0.node-30",
+            "StandUp": "arena-01.animation-clip.arena.animation-84.skin-0.node-30",
+            "StandUp.001": "arena-01.animation-clip.arena.animation-85.skin-0.node-30",
+            "StandUp.002": "arena-01.animation-clip.arena.animation-86.skin-0.node-30",
+            "StandUp.003": "arena-01.animation-clip.arena.animation-87.skin-0.node-30",
+            "StandUp.004": "arena-01.animation-clip.arena.animation-88.skin-0.node-30",
+            "StandUp.005": "arena-01.animation-clip.arena.animation-89.skin-0.node-30",
+            "StandUp.006": "arena-01.animation-clip.arena.animation-90.skin-0.node-30",
+            "SwordSlash": "arena-01.animation-clip.arena.animation-91.skin-0.node-30",
+            "SwordSlash.001": "arena-01.animation-clip.arena.animation-92.skin-0.node-30",
+            "SwordSlash.002": "arena-01.animation-clip.arena.animation-93.skin-0.node-30",
+            "SwordSlash.003": "arena-01.animation-clip.arena.animation-94.skin-0.node-30",
+            "SwordSlash.004": "arena-01.animation-clip.arena.animation-95.skin-0.node-30",
+            "SwordSlash.005": "arena-01.animation-clip.arena.animation-96.skin-0.node-30",
+            "SwordSlash.006": "arena-01.animation-clip.arena.animation-97.skin-0.node-30",
+            "Victory": "arena-01.animation-clip.arena.animation-98.skin-0.node-30",
+            "Victory.001": "arena-01.animation-clip.arena.animation-99.skin-0.node-30",
+            "Victory.002": "arena-01.animation-clip.arena.animation-100.skin-0.node-30",
+            "Victory.003": "arena-01.animation-clip.arena.animation-101.skin-0.node-30",
+            "Victory.004": "arena-01.animation-clip.arena.animation-102.skin-0.node-30",
+            "Victory.005": "arena-01.animation-clip.arena.animation-103.skin-0.node-30",
+            "Victory.006": "arena-01.animation-clip.arena.animation-104.skin-0.node-30",
+            "Walk": "arena-01.animation-clip.arena.animation-105.skin-0.node-30",
+            "Walk.001": "arena-01.animation-clip.arena.animation-106.skin-0.node-30",
+            "Walk.002": "arena-01.animation-clip.arena.animation-107.skin-0.node-30",
+            "Walk.003": "arena-01.animation-clip.arena.animation-108.skin-0.node-30",
+            "Walk.004": "arena-01.animation-clip.arena.animation-109.skin-0.node-30",
+            "Walk.005": "arena-01.animation-clip.arena.animation-110.skin-0.node-30",
+            "Walk.006": "arena-01.animation-clip.arena.animation-111.skin-0.node-30",
+            "Walk_Carry": "arena-01.animation-clip.arena.animation-112.skin-0.node-30",
+            "Walk_Carry.001": "arena-01.animation-clip.arena.animation-113.skin-0.node-30",
+            "Walk_Carry.002": "arena-01.animation-clip.arena.animation-114.skin-0.node-30",
+            "Walk_Carry.003": "arena-01.animation-clip.arena.animation-115.skin-0.node-30",
+            "Walk_Carry.004": "arena-01.animation-clip.arena.animation-116.skin-0.node-30",
+            "Walk_Carry.005": "arena-01.animation-clip.arena.animation-117.skin-0.node-30",
+            "Walk_Carry.006": "arena-01.animation-clip.arena.animation-118.skin-0.node-30"
+          },
+          "currentClip": "Idle",
+          "playbackSpeed": 1.0,
+          "playing": true,
+          "loop": true
+        }
+      }
+    },
+    {
+      "id": "d43e6c39-65bc-4e39-b38d-0d8d7af073e6",
+      "name": "Crate_9_5",
+      "components": {
+        "transform": {
+          "translation": [
+            -1.5,
+            0.0,
+            -2.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": 20.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.29411762952804565,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.29411762952804565,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-crate",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "39b9c32e-a4f8-4243-b911-70ec0f3026f9",
+      "name": "Crate_9_6",
+      "components": {
+        "transform": {
+          "translation": [
+            -1.5,
+            0.0,
+            -1.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": 20.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.29411762952804565,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.29411762952804565,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-crate",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "8e25ec7b-a1c9-465c-adcd-bfee3d6518ae",
+      "name": "Crate_9_9",
+      "components": {
+        "transform": {
+          "translation": [
+            -1.5,
+            0.0,
+            1.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": 20.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.29411762952804565,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.29411762952804565,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-crate",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "2f8b9e28-3f3c-4f0b-8a4a-50a5b99247ce",
+      "name": "Crate_9_10",
+      "components": {
+        "transform": {
+          "translation": [
+            -1.5,
+            0.0,
+            2.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": 20.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.29411762952804565,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.29411762952804565,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-crate",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "0fbd04bd-4d04-4995-8ce1-47b39c1e8991",
+      "name": "Crate_12_5",
+      "components": {
+        "transform": {
+          "translation": [
+            1.5,
+            0.0,
+            -2.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": 20.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.29411762952804565,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.29411762952804565,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-crate",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "e7140e0b-b09e-40cb-96b2-29113489952e",
+      "name": "Crate_12_6",
+      "components": {
+        "transform": {
+          "translation": [
+            1.5,
+            0.0,
+            -1.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": 20.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.29411762952804565,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.29411762952804565,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-crate",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "46fc3253-3bc9-4ad4-b9d1-d375067c3dd3",
+      "name": "Crate_12_9",
+      "components": {
+        "transform": {
+          "translation": [
+            1.5,
+            0.0,
+            1.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": 20.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.29411762952804565,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.29411762952804565,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-crate",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "f6f91abb-6a6a-43c0-ac1a-90f9cdd89b4a",
+      "name": "Crate_12_10",
+      "components": {
+        "transform": {
+          "translation": [
+            1.5,
+            0.0,
+            2.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": 20.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.29411762952804565,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.29411762952804565,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-crate",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "c95c0cc3-e944-49e4-b954-11b597babbd2",
+      "name": "Fence_6_4",
+      "components": {
+        "transform": {
+          "translation": [
+            -4.5,
+            0.0,
+            -3.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.4400000274181366,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.4400000274181366,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-fence",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "bbe16f09-bebf-419f-b555-a64a21488beb",
+      "name": "Fence_6_11",
+      "components": {
+        "transform": {
+          "translation": [
+            -4.5,
+            0.0,
+            3.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.4400000274181366,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.4400000274181366,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-fence",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "78aaddc0-bb37-46d2-ab27-277a6e76db8b",
+      "name": "Fence_7_4",
+      "components": {
+        "transform": {
+          "translation": [
+            -3.5,
+            0.0,
+            -3.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.4400000274181366,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.4400000274181366,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-fence",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "1bf91f86-b2d9-43c1-8818-2eacdb7f90f1",
+      "name": "Fence_7_11",
+      "components": {
+        "transform": {
+          "translation": [
+            -3.5,
+            0.0,
+            3.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.4400000274181366,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.4400000274181366,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-fence",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "2e029b6b-131d-4449-8053-2f0ba837f6c1",
+      "name": "Fence_14_4",
+      "components": {
+        "transform": {
+          "translation": [
+            3.5,
+            0.0,
+            -3.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.4400000274181366,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.4400000274181366,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-fence",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "c26cc159-8826-49bf-bb69-6d3693c73ad1",
+      "name": "Fence_14_11",
+      "components": {
+        "transform": {
+          "translation": [
+            3.5,
+            0.0,
+            3.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.4400000274181366,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.4400000274181366,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-fence",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "9f2190ed-1875-4b57-a2e8-6a28822a05a3",
+      "name": "Fence_15_4",
+      "components": {
+        "transform": {
+          "translation": [
+            4.5,
+            0.0,
+            -3.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.4400000274181366,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.4400000274181366,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-fence",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "81fe78a7-1c49-4c17-af43-d83e5e197057",
+      "name": "Fence_15_11",
+      "components": {
+        "transform": {
+          "translation": [
+            4.5,
+            0.0,
+            3.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.4400000274181366,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.4400000274181366,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-fence",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-3-6",
+      "name": "Grass_3_6",
+      "components": {
+        "transform": {
+          "translation": [
+            -7.5,
+            0.0,
+            -1.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-3-7",
+      "name": "Grass_3_7",
+      "components": {
+        "transform": {
+          "translation": [
+            -7.5,
+            0.0,
+            -0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-3-8",
+      "name": "Grass_3_8",
+      "components": {
+        "transform": {
+          "translation": [
+            -7.5,
+            0.0,
+            0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-3-9",
+      "name": "Grass_3_9",
+      "components": {
+        "transform": {
+          "translation": [
+            -7.5,
+            0.0,
+            1.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-4-6",
+      "name": "Grass_4_6",
+      "components": {
+        "transform": {
+          "translation": [
+            -6.5,
+            0.0,
+            -1.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-4-7",
+      "name": "Grass_4_7",
+      "components": {
+        "transform": {
+          "translation": [
+            -6.5,
+            0.0,
+            -0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-4-8",
+      "name": "Grass_4_8",
+      "components": {
+        "transform": {
+          "translation": [
+            -6.5,
+            0.0,
+            0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-4-9",
+      "name": "Grass_4_9",
+      "components": {
+        "transform": {
+          "translation": [
+            -6.5,
+            0.0,
+            1.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-10-2",
+      "name": "Grass_10_2",
+      "components": {
+        "transform": {
+          "translation": [
+            -0.5,
+            0.0,
+            -5.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-10-3",
+      "name": "Grass_10_3",
+      "components": {
+        "transform": {
+          "translation": [
+            -0.5,
+            0.0,
+            -4.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-10-12",
+      "name": "Grass_10_12",
+      "components": {
+        "transform": {
+          "translation": [
+            -0.5,
+            0.0,
+            4.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-10-13",
+      "name": "Grass_10_13",
+      "components": {
+        "transform": {
+          "translation": [
+            -0.5,
+            0.0,
+            5.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-11-2",
+      "name": "Grass_11_2",
+      "components": {
+        "transform": {
+          "translation": [
+            0.5,
+            0.0,
+            -5.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-11-3",
+      "name": "Grass_11_3",
+      "components": {
+        "transform": {
+          "translation": [
+            0.5,
+            0.0,
+            -4.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-11-12",
+      "name": "Grass_11_12",
+      "components": {
+        "transform": {
+          "translation": [
+            0.5,
+            0.0,
+            4.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-11-13",
+      "name": "Grass_11_13",
+      "components": {
+        "transform": {
+          "translation": [
+            0.5,
+            0.0,
+            5.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-17-6",
+      "name": "Grass_17_6",
+      "components": {
+        "transform": {
+          "translation": [
+            6.5,
+            0.0,
+            -1.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-17-7",
+      "name": "Grass_17_7",
+      "components": {
+        "transform": {
+          "translation": [
+            6.5,
+            0.0,
+            -0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-17-8",
+      "name": "Grass_17_8",
+      "components": {
+        "transform": {
+          "translation": [
+            6.5,
+            0.0,
+            0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-17-9",
+      "name": "Grass_17_9",
+      "components": {
+        "transform": {
+          "translation": [
+            6.5,
+            0.0,
+            1.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-18-6",
+      "name": "Grass_18_6",
+      "components": {
+        "transform": {
+          "translation": [
+            7.5,
+            0.0,
+            -1.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-18-7",
+      "name": "Grass_18_7",
+      "components": {
+        "transform": {
+          "translation": [
+            7.5,
+            0.0,
+            -0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-18-8",
+      "name": "Grass_18_8",
+      "components": {
+        "transform": {
+          "translation": [
+            7.5,
+            0.0,
+            0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.grass-18-9",
+      "name": "Grass_18_9",
+      "components": {
+        "transform": {
+          "translation": [
+            7.5,
+            0.0,
+            1.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-grass",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "235a53f5-34d7-4fec-804d-a9960fc59ead",
+      "name": "Player",
+      "components": {
+        "transform": {
+          "translation": [
+            -9.5,
+            0.0,
+            6.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "characterController": {
+          "radius": 0.3499999940395355,
+          "halfHeight": 0.5499999821186066,
+          "maxSlopeDegrees": 45.0,
+          "stepHeight": 0.30000001192092896,
+          "mass": 70.0,
+          "maxStrength": 200.0,
+          "gravityFactor": 1.0
+        },
+        "playerInput": {
+          "moveSpeed": 5.0
+        },
+        "script": {
+          "path": "player.lua",
+          "properties": {}
+        }
+      }
+    },
+    {
+      "id": "arena.spawnpad-1-1",
+      "name": "SpawnPad_1_1",
+      "components": {
+        "transform": {
+          "translation": [
+            -9.5,
+            0.0,
+            -6.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-spawn-pad",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.spawnpad-1-14",
+      "name": "SpawnPad_1_14",
+      "components": {
+        "transform": {
+          "translation": [
+            -9.5,
+            0.0,
+            6.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-spawn-pad",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.spawnpad-20-1",
+      "name": "SpawnPad_20_1",
+      "components": {
+        "transform": {
+          "translation": [
+            9.5,
+            0.0,
+            -6.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-spawn-pad",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena.spawnpad-20-14",
+      "name": "SpawnPad_20_14",
+      "components": {
+        "transform": {
+          "translation": [
+            9.5,
+            0.0,
+            6.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-spawn-pad",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "24f76eb5-2d8f-4623-8a9f-b7a495f3e9c5",
+      "name": "Wall_3_2",
+      "components": {
+        "transform": {
+          "translation": [
+            -7.5,
+            0.0,
+            -5.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "8c064c16-0649-4312-8a90-9e13274326bf",
+      "name": "Wall_3_3",
+      "components": {
+        "transform": {
+          "translation": [
+            -7.5,
+            0.0,
+            -4.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "c513b8d2-6725-46f2-a0b1-1a36959a07fa",
+      "name": "Wall_3_12",
+      "components": {
+        "transform": {
+          "translation": [
+            -7.5,
+            0.0,
+            4.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "0dd84f44-ab56-482f-8d22-589b3aebcc2c",
+      "name": "Wall_3_13",
+      "components": {
+        "transform": {
+          "translation": [
+            -7.5,
+            0.0,
+            5.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "d576af2e-d70d-44bc-a527-f9ba2a8e5560",
+      "name": "Wall_4_2",
+      "components": {
+        "transform": {
+          "translation": [
+            -6.5,
+            0.0,
+            -5.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "3cd2012e-60c0-4398-a4f0-550d8bd18d3a",
+      "name": "Wall_4_13",
+      "components": {
+        "transform": {
+          "translation": [
+            -6.5,
+            0.0,
+            5.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "468dbb57-b542-4051-9785-2453c113ba98",
+      "name": "Wall_7_7",
+      "components": {
+        "transform": {
+          "translation": [
+            -3.5,
+            0.0,
+            -0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "e87608e4-96f2-4e93-9470-4b1187b7c1ed",
+      "name": "Wall_7_8",
+      "components": {
+        "transform": {
+          "translation": [
+            -3.5,
+            0.0,
+            0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "f19f8408-4a5c-4a18-b8c2-08125d5a1652",
+      "name": "Wall_8_7",
+      "components": {
+        "transform": {
+          "translation": [
+            -2.5,
+            0.0,
+            -0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "5bf6714f-c189-42a9-a9e4-be8c8f7e0c15",
+      "name": "Wall_8_8",
+      "components": {
+        "transform": {
+          "translation": [
+            -2.5,
+            0.0,
+            0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "cf3b5db1-260b-425d-91ee-667307733bd1",
+      "name": "Wall_10_1",
+      "components": {
+        "transform": {
+          "translation": [
+            -0.5,
+            0.0,
+            -6.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "1b7b0455-1fe6-4b1c-8208-ca4ef5caf879",
+      "name": "Wall_10_14",
+      "components": {
+        "transform": {
+          "translation": [
+            -0.5,
+            0.0,
+            6.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "8a14eaef-37de-4ce3-a24e-7112e39f13a9",
+      "name": "Wall_11_1",
+      "components": {
+        "transform": {
+          "translation": [
+            0.5,
+            0.0,
+            -6.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "1681cb26-a3d7-4d85-a912-40e183d0dcac",
+      "name": "Wall_11_14",
+      "components": {
+        "transform": {
+          "translation": [
+            0.5,
+            0.0,
+            6.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "72faf70a-173b-40c2-9619-b55143aab2d5",
+      "name": "Wall_13_7",
+      "components": {
+        "transform": {
+          "translation": [
+            2.5,
+            0.0,
+            -0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "69b91a4e-55be-4b98-b239-35343dc532a7",
+      "name": "Wall_13_8",
+      "components": {
+        "transform": {
+          "translation": [
+            2.5,
+            0.0,
+            0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "5472719f-f8d6-4045-a396-24ac249894ea",
+      "name": "Wall_14_7",
+      "components": {
+        "transform": {
+          "translation": [
+            3.5,
+            0.0,
+            -0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "6e07d467-8b0b-4dbe-b3d7-6817629c0911",
+      "name": "Wall_14_8",
+      "components": {
+        "transform": {
+          "translation": [
+            3.5,
+            0.0,
+            0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "43835c29-8ee5-4543-b087-c2da9041429f",
+      "name": "Wall_17_2",
+      "components": {
+        "transform": {
+          "translation": [
+            6.5,
+            0.0,
+            -5.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "5a99aee2-dd7e-472d-887b-e91f7872d4b7",
+      "name": "Wall_17_13",
+      "components": {
+        "transform": {
+          "translation": [
+            6.5,
+            0.0,
+            5.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "2ba2d64f-b0fd-4cbc-b20c-4be90d6d0bad",
+      "name": "Wall_18_2",
+      "components": {
+        "transform": {
+          "translation": [
+            7.5,
+            0.0,
+            -5.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "bf9d397b-a4ba-4b68-bbdc-8ea2592913bb",
+      "name": "Wall_18_3",
+      "components": {
+        "transform": {
+          "translation": [
+            7.5,
+            0.0,
+            -4.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "31dc8fd7-2d6e-429c-8ea8-a88cdd9beaa0",
+      "name": "Wall_18_12",
+      "components": {
+        "transform": {
+          "translation": [
+            7.5,
+            0.0,
+            4.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "5363e5d5-0128-491f-b3df-65f6721051fa",
+      "name": "Wall_18_13",
+      "components": {
+        "transform": {
+          "translation": [
+            7.5,
+            0.0,
+            5.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.7857142090797424,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            0.7857142090797424,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "c92902b7-aac8-4cb2-be24-56ce4c1c180f",
+      "name": "Wall_Outer_0_0",
+      "components": {
+        "transform": {
+          "translation": [
+            -10.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "0223d434-5b1e-4228-8181-4f5716ed646b",
+      "name": "Wall_Outer_0_1",
+      "components": {
+        "transform": {
+          "translation": [
+            -10.5,
+            0.0,
+            -6.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "6af589ec-ec6a-44df-83cc-54229f86c844",
+      "name": "Wall_Outer_0_2",
+      "components": {
+        "transform": {
+          "translation": [
+            -10.5,
+            0.0,
+            -5.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "23849c0a-78e6-4c48-a57a-3d38c3445b11",
+      "name": "Wall_Outer_0_3",
+      "components": {
+        "transform": {
+          "translation": [
+            -10.5,
+            0.0,
+            -4.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "a5f4e2c8-68df-4e0b-82c0-85b9e55781a4",
+      "name": "Wall_Outer_0_4",
+      "components": {
+        "transform": {
+          "translation": [
+            -10.5,
+            0.0,
+            -3.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ef1d7fc6-2588-441b-aab1-06180a007f15",
+      "name": "Wall_Outer_0_5",
+      "components": {
+        "transform": {
+          "translation": [
+            -10.5,
+            0.0,
+            -2.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ce1b5c6c-9639-4ae4-9555-35c7d8faa752",
+      "name": "Wall_Outer_0_6",
+      "components": {
+        "transform": {
+          "translation": [
+            -10.5,
+            0.0,
+            -1.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "9e78aebe-015b-4e79-a26e-5f02293a46b8",
+      "name": "Wall_Outer_0_7",
+      "components": {
+        "transform": {
+          "translation": [
+            -10.5,
+            0.0,
+            -0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "071e20f2-dad9-4621-8f9e-63b3b068fe74",
+      "name": "Wall_Outer_0_8",
+      "components": {
+        "transform": {
+          "translation": [
+            -10.5,
+            0.0,
+            0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "8df680b5-438f-4ec1-a384-894e40ba7c4f",
+      "name": "Wall_Outer_0_9",
+      "components": {
+        "transform": {
+          "translation": [
+            -10.5,
+            0.0,
+            1.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "d12cf7ac-81f1-4fc6-9383-5b9cfc744474",
+      "name": "Wall_Outer_0_10",
+      "components": {
+        "transform": {
+          "translation": [
+            -10.5,
+            0.0,
+            2.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "2305224f-6a16-4b60-b112-0c7fa2b2803f",
+      "name": "Wall_Outer_0_11",
+      "components": {
+        "transform": {
+          "translation": [
+            -10.5,
+            0.0,
+            3.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "297c2025-a883-429b-ba20-fce7c5b81591",
+      "name": "Wall_Outer_0_12",
+      "components": {
+        "transform": {
+          "translation": [
+            -10.5,
+            0.0,
+            4.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "783959b7-9308-4381-a63f-fcb63d2a2c53",
+      "name": "Wall_Outer_0_13",
+      "components": {
+        "transform": {
+          "translation": [
+            -10.5,
+            0.0,
+            5.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "c5d22186-020a-418c-90d0-4e7309ab4cc8",
+      "name": "Wall_Outer_0_14",
+      "components": {
+        "transform": {
+          "translation": [
+            -10.5,
+            0.0,
+            6.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "f597327e-5611-4683-8d37-01632cf14e59",
+      "name": "Wall_Outer_0_15",
+      "components": {
+        "transform": {
+          "translation": [
+            -10.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "b6dc5f6a-6b57-4a52-aabc-bf652a220939",
+      "name": "Wall_Outer_1_0",
+      "components": {
+        "transform": {
+          "translation": [
+            -9.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "e33aa892-605e-482b-9d27-714faf945f88",
+      "name": "Wall_Outer_1_15",
+      "components": {
+        "transform": {
+          "translation": [
+            -9.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "918d2e96-3082-49c1-95d0-83fb874cf7ca",
+      "name": "Wall_Outer_2_0",
+      "components": {
+        "transform": {
+          "translation": [
+            -8.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "7c62e701-f290-4c35-a760-485fa9d59ddf",
+      "name": "Wall_Outer_2_15",
+      "components": {
+        "transform": {
+          "translation": [
+            -8.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "13b0b5a0-a807-4049-83dd-08da4faaf2f3",
+      "name": "Wall_Outer_3_0",
+      "components": {
+        "transform": {
+          "translation": [
+            -7.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "5102956d-4214-4337-bb52-f3255eddce6a",
+      "name": "Wall_Outer_3_15",
+      "components": {
+        "transform": {
+          "translation": [
+            -7.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "3d6a045e-d8cc-4f08-8064-60f84157482d",
+      "name": "Wall_Outer_4_0",
+      "components": {
+        "transform": {
+          "translation": [
+            -6.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "a6d225db-6971-46b9-bc03-7ae07165555d",
+      "name": "Wall_Outer_4_15",
+      "components": {
+        "transform": {
+          "translation": [
+            -6.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "20146fc9-fcbc-4852-a4ce-eaa3a05d8a1b",
+      "name": "Wall_Outer_5_0",
+      "components": {
+        "transform": {
+          "translation": [
+            -5.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "262fa3a9-94f4-4adc-9020-9112fa3cc561",
+      "name": "Wall_Outer_5_15",
+      "components": {
+        "transform": {
+          "translation": [
+            -5.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ec2bc2c0-25a9-4a6b-b652-8496a35a4cc4",
+      "name": "Wall_Outer_6_0",
+      "components": {
+        "transform": {
+          "translation": [
+            -4.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "8cc8cf2b-9fa0-4fd8-9c4f-5c15c5f01b9f",
+      "name": "Wall_Outer_6_15",
+      "components": {
+        "transform": {
+          "translation": [
+            -4.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "6ee437e8-ab97-42bd-b95a-c884b9fe0b91",
+      "name": "Wall_Outer_7_0",
+      "components": {
+        "transform": {
+          "translation": [
+            -3.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "4031b472-59cd-4c57-8164-382de123b492",
+      "name": "Wall_Outer_7_15",
+      "components": {
+        "transform": {
+          "translation": [
+            -3.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "4d2e1e23-8466-4a5c-99b7-d34680374b38",
+      "name": "Wall_Outer_8_0",
+      "components": {
+        "transform": {
+          "translation": [
+            -2.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "c6790eef-f004-4d59-a370-45f59b6a0354",
+      "name": "Wall_Outer_8_15",
+      "components": {
+        "transform": {
+          "translation": [
+            -2.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "9c6f37a8-44dc-4a63-a0dd-dcd20a9e240c",
+      "name": "Wall_Outer_9_0",
+      "components": {
+        "transform": {
+          "translation": [
+            -1.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "f3e1c7b1-3317-4258-b48e-f08cb8946dc4",
+      "name": "Wall_Outer_9_15",
+      "components": {
+        "transform": {
+          "translation": [
+            -1.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "11570ed3-1019-483e-bc99-7adf3f1148b0",
+      "name": "Wall_Outer_10_0",
+      "components": {
+        "transform": {
+          "translation": [
+            -0.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "19da29b8-a249-4132-9ab2-da2e9bfd224c",
+      "name": "Wall_Outer_10_15",
+      "components": {
+        "transform": {
+          "translation": [
+            -0.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "542f9c1e-7e90-4a5a-ba5e-b192d01c8607",
+      "name": "Wall_Outer_11_0",
+      "components": {
+        "transform": {
+          "translation": [
+            0.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "8b56b6ab-8bc6-4ef1-a504-39be77e78397",
+      "name": "Wall_Outer_11_15",
+      "components": {
+        "transform": {
+          "translation": [
+            0.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "be7ee4e3-94dc-4cc2-b9b1-a0fd2c4a863c",
+      "name": "Wall_Outer_12_0",
+      "components": {
+        "transform": {
+          "translation": [
+            1.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "c623dcd7-e8d9-442f-a0fc-9bd7c40c0f73",
+      "name": "Wall_Outer_12_15",
+      "components": {
+        "transform": {
+          "translation": [
+            1.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "b2ce7b75-acec-4a20-bdf7-441e8217871c",
+      "name": "Wall_Outer_13_0",
+      "components": {
+        "transform": {
+          "translation": [
+            2.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "47cdf89b-e17d-462c-b227-d7e6156bd30b",
+      "name": "Wall_Outer_13_15",
+      "components": {
+        "transform": {
+          "translation": [
+            2.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "6a18a252-8bfe-428d-95ef-4833063c894c",
+      "name": "Wall_Outer_14_0",
+      "components": {
+        "transform": {
+          "translation": [
+            3.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "232f23f3-34d9-49c7-98f1-087b4b038e41",
+      "name": "Wall_Outer_14_15",
+      "components": {
+        "transform": {
+          "translation": [
+            3.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "a379b398-c3e1-48da-b4f1-5a49155adf43",
+      "name": "Wall_Outer_15_0",
+      "components": {
+        "transform": {
+          "translation": [
+            4.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "058ac8cf-6f0d-413e-bd66-9c55aaace7c3",
+      "name": "Wall_Outer_15_15",
+      "components": {
+        "transform": {
+          "translation": [
+            4.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "522e3b09-afc2-4905-853f-f4065ea45fee",
+      "name": "Wall_Outer_16_0",
+      "components": {
+        "transform": {
+          "translation": [
+            5.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "4cd1d18d-91d3-4f17-82e1-c1a2eef67445",
+      "name": "Wall_Outer_16_15",
+      "components": {
+        "transform": {
+          "translation": [
+            5.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "56783d23-9361-465b-a624-92b4a1dc0d28",
+      "name": "Wall_Outer_17_0",
+      "components": {
+        "transform": {
+          "translation": [
+            6.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "63e35126-c518-4d25-bb67-404b8c1e49ef",
+      "name": "Wall_Outer_17_15",
+      "components": {
+        "transform": {
+          "translation": [
+            6.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "aa10cf6b-3848-480d-9f53-57583e0eaa15",
+      "name": "Wall_Outer_18_0",
+      "components": {
+        "transform": {
+          "translation": [
+            7.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "d370bff8-84a3-46f2-b1b7-24a475e33103",
+      "name": "Wall_Outer_18_15",
+      "components": {
+        "transform": {
+          "translation": [
+            7.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "401b475b-4f3f-4176-8827-6adc5a160581",
+      "name": "Wall_Outer_19_0",
+      "components": {
+        "transform": {
+          "translation": [
+            8.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "f39ef97b-7932-4a85-86fb-76b3c8c88ef8",
+      "name": "Wall_Outer_19_15",
+      "components": {
+        "transform": {
+          "translation": [
+            8.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "dd88ecb6-3d86-4144-9eca-75ce40ccaa4f",
+      "name": "Wall_Outer_20_0",
+      "components": {
+        "transform": {
+          "translation": [
+            9.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "f567084b-bb1c-41b8-92f9-0bd1d21866d0",
+      "name": "Wall_Outer_20_15",
+      "components": {
+        "transform": {
+          "translation": [
+            9.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "a30c4b66-4513-46ec-996a-370fd4c3909a",
+      "name": "Wall_Outer_21_0",
+      "components": {
+        "transform": {
+          "translation": [
+            10.5,
+            0.0,
+            -7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "931576df-86bd-436f-82df-570d7caf4964",
+      "name": "Wall_Outer_21_1",
+      "components": {
+        "transform": {
+          "translation": [
+            10.5,
+            0.0,
+            -6.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "f4250a84-4085-4493-9647-03fe4189765b",
+      "name": "Wall_Outer_21_2",
+      "components": {
+        "transform": {
+          "translation": [
+            10.5,
+            0.0,
+            -5.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "9079d0b2-ebc2-4b24-9c80-35684c12c57d",
+      "name": "Wall_Outer_21_3",
+      "components": {
+        "transform": {
+          "translation": [
+            10.5,
+            0.0,
+            -4.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "02247217-e7a4-455c-b941-4b52e27ce9d7",
+      "name": "Wall_Outer_21_4",
+      "components": {
+        "transform": {
+          "translation": [
+            10.5,
+            0.0,
+            -3.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "90d14434-98a1-4ae0-bb1a-06d8f32fe9c7",
+      "name": "Wall_Outer_21_5",
+      "components": {
+        "transform": {
+          "translation": [
+            10.5,
+            0.0,
+            -2.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "5d4a52bf-67c3-4d2d-9b65-19390db4b0ff",
+      "name": "Wall_Outer_21_6",
+      "components": {
+        "transform": {
+          "translation": [
+            10.5,
+            0.0,
+            -1.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "1d50ff5a-3050-42fd-abeb-ce0aad7d47d4",
+      "name": "Wall_Outer_21_7",
+      "components": {
+        "transform": {
+          "translation": [
+            10.5,
+            0.0,
+            -0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "9be3119b-04f2-4e52-95f6-03286df90607",
+      "name": "Wall_Outer_21_8",
+      "components": {
+        "transform": {
+          "translation": [
+            10.5,
+            0.0,
+            0.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "eeacfb5e-939f-442a-aaba-02d67f22b566",
+      "name": "Wall_Outer_21_9",
+      "components": {
+        "transform": {
+          "translation": [
+            10.5,
+            0.0,
+            1.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "004efa26-0025-44a2-947d-664f24f59bab",
+      "name": "Wall_Outer_21_10",
+      "components": {
+        "transform": {
+          "translation": [
+            10.5,
+            0.0,
+            2.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "cd771b29-3c37-4f2a-9bb0-9aaa4874ed2a",
+      "name": "Wall_Outer_21_11",
+      "components": {
+        "transform": {
+          "translation": [
+            10.5,
+            0.0,
+            3.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "278e271a-8309-4b09-8f03-f2eda301cd9e",
+      "name": "Wall_Outer_21_12",
+      "components": {
+        "transform": {
+          "translation": [
+            10.5,
+            0.0,
+            4.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "4d5105d3-0f98-4919-b3ed-6fda6c5a7b5c",
+      "name": "Wall_Outer_21_13",
+      "components": {
+        "transform": {
+          "translation": [
+            10.5,
+            0.0,
+            5.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "a008b453-7369-4774-9b38-8a694cd97af6",
+      "name": "Wall_Outer_21_14",
+      "components": {
+        "transform": {
+          "translation": [
+            10.5,
+            0.0,
+            6.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "cd097c6b-2ae3-47e6-975a-42199fd99a70",
+      "name": "Wall_Outer_21_15",
+      "components": {
+        "transform": {
+          "translation": [
+            10.5,
+            0.0,
+            7.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            2.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static",
+          "mass": 0.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            1.5714284181594849,
+            -0.0
+          ],
+          "halfExtents": [
+            0.5,
+            1.5714284181594849,
+            0.5
+          ]
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-wall",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    }
+  ],
+  "prefabs": [],
+  "assetCatalog": "Catalog.json",
+  "script": "sandbox_rules.lua"
+}

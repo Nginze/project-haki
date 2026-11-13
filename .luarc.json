@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime.version": "Lua 5.4",
+  "runtime.path": [
+    "?.lua",
+    "?/init.lua",
+    "Assets/Game/Scenes/arena-01/Scripts/?.lua",
+    "Assets/Game/Shared/Scripts/?.lua",
+    "Assets/Game/?/Scripts/?.lua",
+    "Assets/Game/Scenes/arena-01/Scripts/?/init.lua"
+  ],
+  "workspace.library": [
+    "tools/lua/library"
+  ],
+  "workspace.checkThirdParty": false,
+  "workspace.ignoreDir": [
+    ".git",
+    ".venv",
+    ".cache",
+    "build",
+    "vendor",
+    "Archive"
+  ],
+  "completion.callSnippet": "Replace"
+}

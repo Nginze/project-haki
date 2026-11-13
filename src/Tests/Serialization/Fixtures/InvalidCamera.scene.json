@@ -1,0 +1,12 @@
+{
+  "type": "haki.scene",
+  "version": 1,
+  "id": "invalid-cameras",
+  "entities": [
+    { "id": "zero-size", "components": { "camera": { "projection": "orthographic", "orthoSize": 0, "primary": true } } },
+    { "id": "bad-projection", "components": { "camera": { "projection": "fisheye" } } },
+    { "id": "bad-fov", "components": { "camera": { "fovYDegrees": 180 } } },
+    { "id": "bad-planes", "components": { "camera": { "projection": "orthographic", "near": 5, "far": 1 } } }
+  ],
+  "prefabs": []
+}

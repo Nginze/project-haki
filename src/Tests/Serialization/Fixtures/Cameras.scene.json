@@ -1,0 +1,19 @@
+{
+  "type": "haki.scene",
+  "version": 1,
+  "id": "cameras",
+  "entities": [
+    {
+      "id": "top-down",
+      "components": {
+        "transform": { "translation": [0, 20, 0] },
+        "camera": { "projection": "orthographic", "orthoSize": 8, "near": 0.5, "far": 100, "primary": true }
+      }
+    },
+    {
+      "id": "default",
+      "components": { "camera": {} }
+    }
+  ],
+  "prefabs": []
+}

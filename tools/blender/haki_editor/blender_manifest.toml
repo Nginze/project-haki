@@ -1,0 +1,13 @@
+schema_version = "1.0.0"
+id = "haki_editor"
+version = "0.2.0"
+name = "Haki Editor"
+tagline = "Author arena physics and characters for Haki"
+maintainer = "Haki developers"
+type = "add-on"
+blender_version_min = "4.2.0"
+license = ["SPDX:GPL-3.0-or-later"]
+tags = ["Game Engine", "Import-Export"]
+
+[permissions]
+files = "Export GLB arenas and invoke the configured local Haki importer"

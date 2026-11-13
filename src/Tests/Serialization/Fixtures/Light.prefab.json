@@ -1,0 +1,20 @@
+{
+  "type": "haki.prefab",
+  "version": 1,
+  "entities": [
+    {
+      "id": "root",
+      "components": {
+        "transform": {
+          "translation": [1.0, 0.0, 0.0]
+        },
+        "pointLight": {
+          "color": [1.0, 0.5, 0.25],
+          "intensity": 2.0,
+          "range": 8.0
+        }
+      }
+    }
+  ],
+  "prefabs": []
+}

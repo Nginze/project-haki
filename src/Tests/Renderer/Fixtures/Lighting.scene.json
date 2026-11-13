@@ -1,0 +1,210 @@
+{
+  "type": "haki.scene",
+  "version": 1,
+  "id": "bloom-lights-test",
+  "entities": [
+    {
+      "id": "camera",
+      "name": "Bloom Test Camera",
+      "components": {
+        "transform": {
+          "translation": [
+            0.0,
+            1.15,
+            3.4
+          ],
+          "rotation": [
+            -0.09430823,
+            0.0,
+            0.0,
+            0.99554305
+          ]
+        },
+        "camera": {
+          "fovYDegrees": 60.0,
+          "near": 0.1,
+          "far": 1000.0,
+          "primary": true
+        }
+      }
+    },
+    {
+      "id": "floor",
+      "name": "Neutral Floor",
+      "components": {
+        "transform": {},
+        "meshRenderer": {
+          "mesh": "cornell-box.mesh.cornellbox-empty-co.floor-0",
+          "materials": [
+            "cornell-box.material.cornellbox-empty-co.floor-8887b2fd5a"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ceiling",
+      "name": "Neutral Ceiling",
+      "components": {
+        "transform": {},
+        "meshRenderer": {
+          "mesh": "cornell-box.mesh.cornellbox-empty-co.ceiling-1",
+          "materials": [
+            "cornell-box.material.cornellbox-empty-co.floor-8887b2fd5a"
+          ]
+        }
+      }
+    },
+    {
+      "id": "back-wall",
+      "name": "Back Wall",
+      "components": {
+        "transform": {},
+        "meshRenderer": {
+          "mesh": "cornell-box.mesh.cornellbox-empty-co.backwall-2",
+          "materials": [
+            "cornell-box.material.cornellbox-empty-co.floor-8887b2fd5a"
+          ]
+        }
+      }
+    },
+    {
+      "id": "right-wall",
+      "components": {
+        "transform": {},
+        "meshRenderer": {
+          "mesh": "cornell-box.mesh.cornellbox-empty-co.rightwall-3",
+          "materials": [
+            "cornell-box.material.cornellbox-empty-co.rightwall-0ad7c1a073"
+          ]
+        }
+      }
+    },
+    {
+      "id": "left-wall",
+      "components": {
+        "transform": {},
+        "meshRenderer": {
+          "mesh": "cornell-box.mesh.cornellbox-empty-co.leftwall-4",
+          "materials": [
+            "cornell-box.material.cornellbox-empty-co.leftwall-230c92c30d"
+          ]
+        }
+      }
+    },
+    {
+      "id": "short-box",
+      "name": "Point Light Receiver",
+      "components": {
+        "transform": {},
+        "meshRenderer": {
+          "mesh": "cornell-box.mesh.cornellbox-glossy-floor.shortbox-1",
+          "materials": [
+            "cornell-box.material.cornellbox-glossy-floor.shortbox-ec0d99f669"
+          ]
+        }
+      }
+    },
+    {
+      "id": "sphere",
+      "name": "Spot Light Receiver",
+      "components": {
+        "transform": {},
+        "meshRenderer": {
+          "mesh": "cornell-box.mesh.cornellbox-glossy-floor.sphere-0",
+          "materials": [
+            "cornell-box.material.cornellbox-glossy-floor.sphere-2e0254e822"
+          ]
+        }
+      }
+    },
+    {
+      "id": "emissive-panel",
+      "name": "HDR Emissive Panel",
+      "components": {
+        "transform": {},
+        "meshRenderer": {
+          "mesh": "cornell-box.mesh.cornellbox-empty-co.light-5",
+          "materials": [
+            "test.material.bloom-emissive"
+          ]
+        }
+      }
+    },
+    {
+      "id": "directional-light",
+      "name": "Soft Directional Light",
+      "components": {
+        "transform": {
+          "rotation": [
+            -0.36964381,
+            -0.23911762,
+            -0.09904576,
+            0.8923991
+          ]
+        },
+        "directionalLight": {
+          "color": [
+            1.0,
+            0.95,
+            0.85
+          ],
+          "intensity": 1.2
+        }
+      }
+    },
+    {
+      "id": "warm-point-light",
+      "name": "Warm Point Light",
+      "components": {
+        "transform": {
+          "translation": [
+            -0.55,
+            1.05,
+            0.35
+          ]
+        },
+        "pointLight": {
+          "color": [
+            1.0,
+            0.12,
+            0.025
+          ],
+          "intensity": 8.0,
+          "range": 3.5
+        }
+      }
+    },
+    {
+      "id": "cool-spot-light",
+      "name": "Cool Spot Light",
+      "components": {
+        "transform": {
+          "translation": [
+            0.5,
+            1.4,
+            0.55
+          ],
+          "rotation": [
+            -0.37939227,
+            0.06556121,
+            0.02696258,
+            0.92251626
+          ]
+        },
+        "spotLight": {
+          "color": [
+            0.08,
+            0.3,
+            1.0
+          ],
+          "intensity": 25.0,
+          "range": 4.0,
+          "innerAngleDegrees": 12.0,
+          "outerAngleDegrees": 26.0
+        }
+      }
+    }
+  ],
+  "prefabs": [],
+  "assetCatalog": "Catalog.json"
+}

@@ -1,0 +1,59 @@
+{
+  "type": "haki.scene",
+  "version": 1,
+  "id": "scripting",
+  "script": "rules.lua",
+  "entities": [
+    {
+      "id": "camera",
+      "components": {
+        "transform": {},
+        "camera": {
+          "primary": true
+        }
+      }
+    },
+    {
+      "id": "mover",
+      "components": {
+        "transform": {},
+        "script": {
+          "path": "mover.lua",
+          "properties": {
+            "speed": 7.5,
+            "active": true,
+            "label": "hero",
+            "spawn": [
+              1,
+              2,
+              3
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "manager",
+      "components": {
+        "script": {
+          "path": "rules.lua"
+        }
+      }
+    }
+  ],
+  "prefabs": [
+    {
+      "source": "Scripted.prefab.json",
+      "instance": "minion",
+      "overrides": {
+        "root": {
+          "script": {
+            "properties": {
+              "speed": 3
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "type": "haki.scene-manifest",
+  "version": 1,
+  "assetCatalog": "../Engine/Catalog.json",
+  "entry": "arena-01",
+  "scenes": [
+    {
+      "id": "arena-01",
+      "source": "Scenes/arena-01/arena-01.scene.json"
+    }
+  ]
+}

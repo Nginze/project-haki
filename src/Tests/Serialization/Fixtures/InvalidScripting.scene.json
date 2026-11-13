@@ -1,0 +1,13 @@
+{
+  "type": "haki.scene",
+  "version": 1,
+  "id": "invalid-scripting",
+  "script": "missing_rules.lua",
+  "entities": [
+    { "id": "missing", "components": { "script": { "path": "nope.lua" } } },
+    { "id": "extension", "components": { "script": { "path": "mover.txt" } } },
+    { "id": "object", "components": { "script": { "path": "mover.lua", "properties": { "bad": { "x": 1 } } } } },
+    { "id": "escape", "components": { "script": { "path": "../Physics.scene.lua" } } },
+    { "id": "nopath", "components": { "script": { "properties": { "speed": 1 } } } }
+  ]
+}

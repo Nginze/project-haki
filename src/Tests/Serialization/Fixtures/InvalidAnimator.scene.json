@@ -1,0 +1,27 @@
+{
+  "type": "haki.scene",
+  "version": 1,
+  "id": "invalid-animator",
+  "entities": [
+    {
+      "id": "camera",
+      "components": {
+        "camera": { "primary": true }
+      }
+    },
+    {
+      "id": "character",
+      "components": {
+        "skinnedMeshRenderer": {
+          "mesh": "mesh.character",
+          "skeleton": "skeleton.character",
+          "materials": ["material.character"]
+        },
+        "animator": {
+          "clips": { "idle": "animation.idle" },
+          "currentClip": "run"
+        }
+      }
+    }
+  ]
+}

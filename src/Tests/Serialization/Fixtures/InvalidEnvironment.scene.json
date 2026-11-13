@@ -1,0 +1,19 @@
+{
+  "type": "haki.scene",
+  "version": 1,
+  "id": "invalid-environment",
+  "environment": {
+    "texture": "texture.environment",
+    "intensity": -1.0
+  },
+  "entities": [
+    {
+      "id": "camera",
+      "components": {
+        "camera": {
+          "primary": true
+        }
+      }
+    }
+  ]
+}

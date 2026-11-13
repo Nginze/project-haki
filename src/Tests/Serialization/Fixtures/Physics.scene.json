@@ -1,0 +1,131 @@
+{
+  "type": "haki.scene",
+  "version": 1,
+  "id": "physics",
+  "entities": [
+    {
+      "id": "camera",
+      "components": {
+        "transform": {},
+        "camera": {
+          "primary": true
+        }
+      }
+    },
+    {
+      "id": "floor",
+      "components": {
+        "transform": {
+          "scale": [
+            10.0,
+            1.0,
+            10.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "static"
+        },
+        "collider": {
+          "shape": "box",
+          "halfExtents": [
+            1.0,
+            0.5,
+            1.0
+          ]
+        }
+      }
+    },
+    {
+      "id": "player",
+      "components": {
+        "transform": {
+          "translation": [
+            3.0,
+            0.5,
+            0.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "kinematic",
+          "layer": "character",
+          "friction": 0.0
+        },
+        "collider": {
+          "shape": "capsule",
+          "radius": 0.35,
+          "halfHeight": 0.55,
+          "offset": [
+            0.0,
+            0.9,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "id": "zone",
+      "components": {
+        "transform": {},
+        "rigidBody": {
+          "motion": "static",
+          "sensor": true
+        },
+        "collider": {
+          "shape": "box",
+          "halfExtents": [
+            3.0,
+            2.0,
+            3.0
+          ]
+        }
+      }
+    },
+    {
+      "id": "hero",
+      "components": {
+        "transform": {
+          "translation": [
+            -3.0,
+            0.5,
+            0.0
+          ]
+        },
+        "characterController": {
+          "radius": 0.4,
+          "halfHeight": 0.5,
+          "maxSlopeDegrees": 40.0,
+          "stepHeight": 0.25,
+          "mass": 80.0,
+          "maxStrength": 150.0
+        },
+        "playerInput": {
+          "moveSpeed": 6.5
+        }
+      }
+    }
+  ],
+  "prefabs": [
+    {
+      "source": "PhysicsBody.prefab.json",
+      "instance": "ball",
+      "transform": {
+        "translation": [
+          0.0,
+          4.0,
+          0.0
+        ]
+      },
+      "overrides": {
+        "root": {
+          "rigidBody": {
+            "restitution": 0.5,
+            "lockRotation": true
+          },
+          "collider": {
+            "radius": 0.25
+          }
+        }
+      }
+    }
+  ]
+}
