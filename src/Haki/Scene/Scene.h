@@ -51,6 +51,18 @@ private:
     const std::any &payload_;
 };
 
+// CPU time (ms) spent in each runtime stage, summed over the fixed ticks since the last Reset.
+struct SceneCpuTimings
+{
+    float ScriptsMs = 0.0f;
+    float PhysicsMs = 0.0f;   // Jolt step, character sweeps and contact dispatch
+    float AnimationMs = 0.0f;
+    float SceneMs = 0.0f;     // transform hierarchy
+    int Ticks = 0;
+
+    void Reset() { *this = {}; }
+};
+
 class Scene
 {
 public:
@@ -85,7 +97,21 @@ public:
     void SetScripting(std::filesystem::path scriptRoot, std::string sceneScript);
     const std::string &GetSceneScript() const { return sceneScript_; }
     // False while the debug free-look camera or ImGui owns the keyboard: Lua input then reads as idle.
-    void SetGameplayInputEnabled(bool enabled) { gameplayInputEnabled_ = enabled; }
+    // mouseEnabled is false while ImGui owns the mouse (Lua mouse buttons then read as released).
+    void SetGameplayInputEnabled(bool enabled, bool mouseEnabled = true)
+    {
+        gameplayInputEnabled_ = enabled;
+        gameplayMouseEnabled_ = mouseEnabled;
+    }
+
+    // While paused, scripts, physics and animation time stand still; transforms still resolve so edits
+    // show. RequestStep runs exactly one more tick.
+    void SetSimulationPaused(bool paused) { simulationPaused_ = paused; }
+    bool IsSimulationPaused() const { return simulationPaused_; }
+    void RequestStep() { stepRequested_ = true; }
+
+    const SceneCpuTimings &GetCpuTimings() const { return cpuTimings_; }
+    void ResetCpuTimings() { cpuTimings_.Reset(); }
 
     // The primary camera's view and projection, or nothing if the scene has no primary camera.
     std::optional<SceneCameraOverride> GetPrimaryCameraView() const;
@@ -119,6 +145,10 @@ private:
     std::filesystem::path scriptRoot_ = "Assets/Scripts";
     std::string sceneScript_;
     bool gameplayInputEnabled_ = true;
+    bool gameplayMouseEnabled_ = true;
+    bool simulationPaused_ = false;
+    bool stepRequested_ = false;
+    SceneCpuTimings cpuTimings_;
     EnvironmentData environment_;
     std::optional<RenderStorageSummary> lastRenderStorageSummary_;
 };

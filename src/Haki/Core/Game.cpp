@@ -111,12 +111,18 @@ bool Game::InitializeSystems()
     {
         Logger::Warning() << "Default font unavailable, canvas text is disabled: " << fontError;
     }
+    if (!telemetryFont_.LoadFromFile("Assets/Engine/Fonts/JetBrainsMono-Regular.ttf", 32.0f, &fontError))
+    {
+        Logger::Warning() << "Telemetry font unavailable, using the default font: " << fontError;
+    }
+    telemetry_.Initialize();
 
 #if HAKI_ENABLE_IMGUI
     if (!imguiManager_.Initialize(window_.GetNativeWindow()))
     {
         Logger::Error() << "ImGui manager initialization failed";
         defaultFont_.Reset();
+        telemetryFont_.Reset();
         renderer_.Shutdown();
         Input::InputManager::shutdown();
         PhysicsCore::Shutdown();
@@ -137,6 +143,7 @@ bool Game::InitializeSystems()
         imguiManager_.Shutdown();
 #endif
         defaultFont_.Reset();
+        telemetryFont_.Reset();
         renderer_.Shutdown();
         Input::InputManager::shutdown();
         PhysicsCore::Shutdown();
@@ -174,17 +181,30 @@ bool Game::Run()
         window_.PollEvents();
         Input::InputManager::update();
 
-#if HAKI_ENABLE_IMGUI
-        imguiManager_.BeginFrame();
-        imguiManager_.Draw(renderer_, sceneManager_.GetActiveScene());
-#endif
+        if (Scene *scene = sceneManager_.GetActiveScene())
+        {
+            scene->ResetCpuTimings();
+        }
+        float editorMs = 0.0f;
+        const auto msSince = [](Clock::time_point start) {
+            return std::chrono::duration<float, std::milli>(Clock::now() - start).count();
+        };
 
         bool freeLook = false;
         bool keyboardCaptured = false;
+        bool mouseCaptured = false;
 #if HAKI_ENABLE_IMGUI
+        auto editorStart = Clock::now();
+        imguiManager_.BeginFrame();
+        imguiManager_.Draw(renderer_, sceneManager_.GetActiveScene());
+        editorMs += msSince(editorStart);
+        ApplyEditorRequests();
+
         keyboardCaptured = imguiManager_.WantsCaptureKeyboard();
+        mouseCaptured = imguiManager_.WantsCaptureMouse();
 #if HAKI_ENABLE_DEBUG_CAMERA
-        freeLook = imguiManager_.GetCameraMode() == DebugCameraMode::FreeLook;
+        // Playtest always plays through the gameplay camera.
+        freeLook = imguiManager_.GetCameraMode() == DebugCameraMode::FreeLook && !imguiManager_.GetEditorState().Playtest;
 #endif
 #endif
 #if HAKI_ENABLE_DEBUG_CAMERA
@@ -214,7 +234,7 @@ bool Game::Run()
             {
                 scene->GetScripts().SetViewportSize(window_.GetWidth(), window_.GetHeight());
                 PlayerControllerSystem::Update(scene->GetRegistry(), playerInput);
-                scene->SetGameplayInputEnabled(!freeLook && !keyboardCaptured);
+                scene->SetGameplayInputEnabled(!freeLook && !keyboardCaptured, !mouseCaptured);
             }
             sceneManager_.Update(static_cast<float>(FixedDeltaTime));
             accumulator -= FixedDeltaTime;
@@ -279,10 +299,16 @@ bool Game::Run()
         }
         PollShaderHotReload(elapsed);
         PollScriptHotReload(elapsed);
+        QueueTelemetry(static_cast<float>(elapsed));
+        const auto renderStart = Clock::now();
         sceneManager_.Render(renderContext);
+        lastRenderMs_ = msSince(renderStart);
 #if HAKI_ENABLE_IMGUI
+        editorStart = Clock::now();
         imguiManager_.Render();
+        editorMs += msSince(editorStart);
 #endif
+        lastEditorMs_ = editorMs;
         window_.SwapBuffers();
     }
 
@@ -381,6 +407,77 @@ void Game::PollScriptHotReload(double frameTime)
     }
 }
 
+void Game::ApplyEditorRequests()
+{
+#if HAKI_ENABLE_IMGUI
+    EditorState &state = imguiManager_.GetEditorState();
+    // Playtest goes fullscreen; leaving it restores the windowed size.
+    if (state.Playtest != window_.IsFullscreen())
+    {
+        window_.SetFullscreen(state.Playtest);
+        if (state.Playtest && !window_.IsFullscreen())
+        {
+            // Fullscreen refused (no monitor): playtest still hides the editor, just inside the window.
+            static bool warned = false;
+            if (!warned) Logger::Warning() << "Playtest continues in a window";
+            warned = true;
+        }
+    }
+    if (state.RequestedWidth > 0 && state.RequestedHeight > 0)
+    {
+        window_.SetSize(state.RequestedWidth, state.RequestedHeight);
+        state.Playtest = false;
+    }
+    if (state.RequestMaximize)
+    {
+        window_.Maximize();
+        state.Playtest = false;
+    }
+    state.RequestedWidth = state.RequestedHeight = 0;
+    state.RequestMaximize = false;
+
+    if (Scene *scene = sceneManager_.GetActiveScene())
+    {
+        scene->SetSimulationPaused(state.SimulationPaused);
+        if (state.StepRequested)
+        {
+            scene->RequestStep();
+        }
+    }
+    state.StepRequested = false;
+#endif
+}
+
+void Game::QueueTelemetry(float frameSeconds)
+{
+    const Scene *scene = sceneManager_.GetActiveScene();
+    const SceneCpuTimings *sceneCpu = scene ? &scene->GetCpuTimings() : nullptr;
+    bool paused = false;
+    bool visible = true;
+    glm::vec2 origin = ComputeTelemetryOrigin(false, 0.0f, false, 0.0f);
+    float scale = 1.0f;
+#if HAKI_ENABLE_IMGUI
+    const EditorState &state = imguiManager_.GetEditorState();
+    paused = state.SimulationPaused;
+    visible = state.TelemetryVisible();
+    // Panes are laid out in window units; the canvas works in framebuffer pixels.
+    scale = imguiManager_.GetFramebufferScale();
+    origin = ComputeTelemetryOrigin(state.MenuBarHeight > 0.0f, state.MenuBarHeight, state.HierarchyWidth > 0.0f,
+                                    state.HierarchyWidth) * scale;
+#endif
+    telemetry_.Update(frameSeconds, sceneCpu, lastRenderMs_, lastEditorMs_, renderer_.GetGpuTimings(),
+                      renderer_.GetSettings(), paused);
+    if (!visible)
+    {
+        return;
+    }
+    const Font *font = telemetryFont_.IsValid() ? &telemetryFont_ : GetDefaultFont();
+    if (font)
+    {
+        telemetry_.Draw(renderer_.GetCanvas(), *font, origin, 14.0f * scale);
+    }
+}
+
 void Game::ShutdownSystems()
 {
     if (!initialized_)
@@ -397,6 +494,7 @@ void Game::ShutdownSystems()
     imguiManager_.Shutdown();
 #endif
     defaultFont_.Reset();
+    telemetryFont_.Reset();
     renderer_.Shutdown();
     Input::InputManager::shutdown();
     PhysicsCore::Shutdown();

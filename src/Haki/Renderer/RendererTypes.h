@@ -103,7 +103,10 @@ struct RendererSettings
     bool FrustumCullingEnabled = true;
     bool ShowBounds = false;
     bool GpuTimingsEnabled = true;
-    // Internal resolution as a fraction of the viewport; the final image is upscaled when presented.
+    // Draws scene geometry as lines (View > Wireframe). Disables the depth prepass and SSAO while on.
+    bool Wireframe = false;
+    // Internal resolution as a fraction of the viewport (0.25-2.0). Below 1 the image is upscaled when
+    // presented; above 1 it is supersampled and filtered down.
     float RenderScale = 1.0f;
     // Fixed internal render height (e.g. 720). 0 follows the window. Width keeps the window's aspect
     // ratio, and the image is upscaled to the window when presented. RenderScale still applies on top.

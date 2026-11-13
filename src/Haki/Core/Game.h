@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Haki/Debug/TelemetryOverlay.h"
 #include "Haki/Platform/Window.h"
 #include "Haki/Renderer/Font.h"
 #include "Haki/Renderer/Renderer.h"
@@ -51,11 +52,19 @@ private:
     void PollScriptHotReload(double frameTime);
     void ApplyProjectionOverride(SceneCameraOverride &view, DebugProjectionMode mode, bool modeChanged,
                                  bool freeLook);
+    // Applies editor UI requests: playtest fullscreen, window size, simulation pause/step.
+    void ApplyEditorRequests();
+    // Updates and queues the telemetry HUD on the canvas (drawn with the next scene render).
+    void QueueTelemetry(float frameSeconds);
 
     // The window is declared first so its OpenGL context is destroyed last.
     Window window_;
     Renderer renderer_;
     Font defaultFont_;
+    Font telemetryFont_; // JetBrains Mono for the telemetry HUD
+    TelemetryOverlay telemetry_;
+    float lastRenderMs_ = 0.0f; // CPU time of the previous frame's scene render
+    float lastEditorMs_ = 0.0f; // CPU time of the previous frame's editor UI
 #if HAKI_ENABLE_IMGUI
     ImGuiManager imguiManager_;
 #endif

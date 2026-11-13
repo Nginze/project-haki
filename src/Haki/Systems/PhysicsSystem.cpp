@@ -715,7 +715,54 @@ std::optional<glm::vec3> PhysicsSystem::GetLinearVelocity(const entt::registry &
     return ToGlm(state_->Interface().GetLinearVelocity(JPH::BodyID(body->BodyId)));
 }
 
-void PhysicsSystem::DrawColliders(const entt::registry &registry, DebugDraw &draw) const
+bool PhysicsSystem::Teleport(const entt::registry &registry, entt::entity entity)
+{
+    const auto *body = state_ ? registry.try_get<RigidBodyComponent>(entity) : nullptr;
+    const auto *transform = registry.try_get<TransformComponent>(entity);
+    if (!body || !transform || body->BodyId == InvalidPhysicsBodyId)
+    {
+        return false;
+    }
+    JPH::BodyInterface &bodyInterface = state_->Interface();
+    const JPH::BodyID bodyId(body->BodyId);
+    const bool movable = body->Motion != PhysicsMotionType::Static;
+    bodyInterface.SetPositionAndRotation(bodyId, ToJolt(transform->Translation), ToJolt(SafeRotation(transform->Rotation)),
+                                         movable ? JPH::EActivation::Activate : JPH::EActivation::DontActivate);
+    if (body->Motion == PhysicsMotionType::Dynamic)
+    {
+        bodyInterface.SetLinearAndAngularVelocity(bodyId, JPH::Vec3::sZero(), JPH::Vec3::sZero());
+    }
+    return true;
+}
+
+bool PhysicsSystem::ApplyBodyMaterial(const entt::registry &registry, entt::entity entity)
+{
+    const auto *body = state_ ? registry.try_get<RigidBodyComponent>(entity) : nullptr;
+    if (!body || body->BodyId == InvalidPhysicsBodyId)
+    {
+        return false;
+    }
+    JPH::BodyInterface &bodyInterface = state_->Interface();
+    const JPH::BodyID bodyId(body->BodyId);
+    const auto finiteOr = [](float value, float fallback) { return std::isfinite(value) ? value : fallback; };
+    bodyInterface.SetFriction(bodyId, std::max(finiteOr(body->Friction, 0.5f), 0.0f));
+    bodyInterface.SetRestitution(bodyId, std::clamp(finiteOr(body->Restitution, 0.0f), 0.0f, 1.0f));
+    if (body->Motion == PhysicsMotionType::Dynamic)
+    {
+        bodyInterface.SetGravityFactor(bodyId, finiteOr(body->GravityFactor, 1.0f));
+        bodyInterface.ActivateBody(bodyId);
+    }
+    return true;
+}
+
+bool PhysicsSystem::IsBodyAwake(const entt::registry &registry, entt::entity entity) const
+{
+    const auto *body = state_ ? registry.try_get<RigidBodyComponent>(entity) : nullptr;
+    return body && body->BodyId != InvalidPhysicsBodyId && state_->Interface().IsActive(JPH::BodyID(body->BodyId));
+}
+
+void PhysicsSystem::DrawColliders(const entt::registry &registry, DebugDraw &draw,
+                                  const ColliderDrawFilter &filter) const
 {
     static const glm::vec4 StaticColor{0.6f, 0.6f, 0.6f, 1.0f};
     static const glm::vec4 DynamicColor{0.2f, 1.0f, 0.3f, 1.0f};
@@ -731,6 +778,10 @@ void PhysicsSystem::DrawColliders(const entt::registry &registry, DebugDraw &dra
         const auto &body = view.get<RigidBodyComponent>(entity);
         const ScaledCollider collider = ScaleCollider(view.get<ColliderComponent>(entity), transform.Scale);
 
+        if (body.IsSensor ? !filter.Sensors : !filter.Bodies)
+        {
+            continue;
+        }
         glm::vec4 color = StaticColor;
         if (body.IsSensor)
         {
@@ -760,6 +811,12 @@ void PhysicsSystem::DrawColliders(const entt::registry &registry, DebugDraw &dra
         }
     }
 
+    if (!filter.Characters)
+    {
+        return;
+    }
+    static const glm::vec4 DesiredColor{1.0f, 1.0f, 1.0f, 1.0f};
+    static const glm::vec4 GroundColor{0.3f, 1.0f, 0.3f, 1.0f};
     auto characters = registry.view<TransformComponent, CharacterControllerComponent>();
     for (const entt::entity entity : characters)
     {
@@ -769,10 +826,19 @@ void PhysicsSystem::DrawColliders(const entt::registry &registry, DebugDraw &dra
         const glm::vec3 feet = characters.get<TransformComponent>(entity).Translation;
         DrawCapsule(draw, feet + glm::vec3(0.0f, halfHeight + radius, 0.0f), glm::quat(1.0f, 0.0f, 0.0f, 0.0f),
                     halfHeight, radius, CharacterColor);
+        // Motion of the CharacterVirtual sweep: what gameplay asked for vs. what the character did.
+        const glm::vec3 waist = feet + glm::vec3(0.0f, halfHeight + radius, 0.0f);
+        if (glm::dot(controller.DesiredVelocity, controller.DesiredVelocity) > 0.0001f)
+        {
+            draw.Line(waist, waist + controller.DesiredVelocity * 0.25f, DesiredColor, false);
+        }
         if (glm::dot(controller.Velocity, controller.Velocity) > 0.0001f)
         {
-            draw.Line(feet, feet + glm::vec3(controller.Velocity.x, 0.0f, controller.Velocity.z) * 0.25f,
-                      CharacterColor);
+            draw.Line(feet, feet + controller.Velocity * 0.25f, CharacterColor, false);
+        }
+        if (controller.Grounded)
+        {
+            draw.Line(feet, feet + controller.GroundNormal * 0.6f, GroundColor, false);
         }
     }
 }

@@ -1,11 +1,14 @@
 #pragma once
 
+#include "Haki/Scene/Components.h"
+
 #include <entt/entt.hpp>
 
 #include <cstddef>
 #include <filesystem>
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace Haki
@@ -52,7 +55,8 @@ public:
     ScriptReloadResult ReloadChanged(bool force = false);
 
     // When false, the Lua input API reports nothing pressed (free-look camera or ImGui has the keyboard).
-    void SetInputEnabled(bool enabled);
+    // mouseEnabled additionally gates the mouse buttons (false while the editor UI owns the mouse).
+    void SetInputEnabled(bool enabled, bool mouseEnabled = true);
     // Screen-space camera queries use the current viewport, including before Lua initializes.
     void SetViewportSize(int width, int height);
 
@@ -64,6 +68,12 @@ public:
     // Most recent script errors, oldest first (capped).
     const std::vector<std::string> &GetErrors() const;
     void ClearErrors();
+
+    // Live values of the properties declared in an entity's script `properties` table, by name (sorted).
+    // Empty when the entity has no running instance. Values other than bool/number/string/vec3 are skipped.
+    std::vector<std::pair<std::string, ScriptValue>> GetInstanceProperties(entt::entity entity) const;
+    // Writes self.<name> on the entity's running instance (editor tweaks). False if there is no instance.
+    bool SetInstanceProperty(entt::entity entity, const std::string &name, const ScriptValue &value);
 
 private:
     struct State;

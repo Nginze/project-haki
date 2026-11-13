@@ -33,6 +33,14 @@ public:
     int GetWidth() const { return m_width; }
     int GetHeight() const { return m_height; }
 
+    // Resizes the window (screen coordinates). Leaves fullscreen first.
+    void SetSize(int width, int height);
+    // Fills the monitor's work area as a normal decorated window.
+    void Maximize();
+    // Borderless fullscreen on the monitor the window is on. Leaving restores the previous size and position.
+    void SetFullscreen(bool fullscreen);
+    bool IsFullscreen() const { return m_fullscreen; }
+
     // Set user-defined callbacks
     void SetResizeCallback(ResizeCallback callback)
     {
@@ -46,6 +54,11 @@ private:
     int m_height;
     std::string m_title;
     ResizeCallback m_resizeCallback = nullptr;
+    bool m_fullscreen = false;
+    int m_windowedX = 0;
+    int m_windowedY = 0;
+    int m_windowedWidth = 0;
+    int m_windowedHeight = 0;
 
     void Init();
     void Shutdown();

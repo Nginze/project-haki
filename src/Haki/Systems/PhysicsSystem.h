@@ -83,9 +83,25 @@ public:
     bool SetLinearVelocity(const entt::registry &registry, entt::entity entity, const glm::vec3 &velocity);
     std::optional<glm::vec3> GetLinearVelocity(const entt::registry &registry, entt::entity entity) const;
 
+    // Moves a body to its entity's current TransformComponent (an editor or gameplay teleport). Dynamic
+    // bodies stop moving. Characters and kinematic bodies follow their transforms on their own.
+    bool Teleport(const entt::registry &registry, entt::entity entity);
+    // Applies RigidBodyComponent friction, restitution and gravity factor to the live body.
+    bool ApplyBodyMaterial(const entt::registry &registry, entt::entity entity);
+    bool IsBodyAwake(const entt::registry &registry, entt::entity entity) const;
+
+    // Which collider wireframes DrawColliders queues.
+    struct ColliderDrawFilter
+    {
+        bool Bodies = true;     // static, dynamic and kinematic solids
+        bool Sensors = true;    // trigger volumes
+        bool Characters = true; // CharacterVirtual capsules and their motion
+    };
     // Wireframes for every collider: grey static, green awake dynamic, blue sleeping, yellow kinematic,
-    // magenta sensor, cyan character.
-    void DrawColliders(const entt::registry &registry, DebugDraw &draw) const;
+    // magenta sensor, cyan character. Characters also show their requested velocity (white), actual
+    // velocity (cyan) and ground normal (green, while grounded).
+    void DrawColliders(const entt::registry &registry, DebugDraw &draw) const { DrawColliders(registry, draw, {}); }
+    void DrawColliders(const entt::registry &registry, DebugDraw &draw, const ColliderDrawFilter &filter) const;
 
     std::size_t GetBodyCount() const;
     std::size_t GetCharacterCount() const;

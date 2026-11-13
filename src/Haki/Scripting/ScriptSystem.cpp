@@ -635,11 +635,12 @@ void ScriptSystem::SetViewportSize(int width, int height)
     if (state_) state_->Runtime.ViewportAspect = viewportAspect_;
 }
 
-void ScriptSystem::SetInputEnabled(bool enabled)
+void ScriptSystem::SetInputEnabled(bool enabled, bool mouseEnabled)
 {
     if (state_)
     {
         state_->Runtime.InputEnabled = enabled;
+        state_->Runtime.MouseEnabled = mouseEnabled;
     }
 }
 
@@ -695,6 +696,68 @@ void ScriptSystem::ClearErrors()
     {
         state_->Errors.clear();
     }
+}
+
+std::vector<std::pair<std::string, ScriptValue>> ScriptSystem::GetInstanceProperties(entt::entity entity) const
+{
+    std::vector<std::pair<std::string, ScriptValue>> properties;
+    if (!state_)
+    {
+        return properties;
+    }
+    const auto found = state_->Instances.find(entity);
+    if (found == state_->Instances.end())
+    {
+        return properties;
+    }
+    const auto record = state_->Classes.find(found->second.Path);
+    if (record == state_->Classes.end())
+    {
+        return properties;
+    }
+    const sol::object defaults = record->second.Class["properties"];
+    if (defaults.get_type() != sol::type::table)
+    {
+        return properties;
+    }
+    const sol::table &self = found->second.Self;
+    for (const auto &[key, unused] : defaults.as<sol::table>())
+    {
+        if (key.get_type() != sol::type::string)
+        {
+            continue;
+        }
+        const std::string name = key.as<std::string>();
+        const sol::object value = self.raw_get<sol::object>(name);
+        switch (value.get_type())
+        {
+        case sol::type::boolean: properties.emplace_back(name, value.as<bool>()); break;
+        case sol::type::number: properties.emplace_back(name, value.as<double>()); break;
+        case sol::type::string: properties.emplace_back(name, value.as<std::string>()); break;
+        case sol::type::userdata:
+            if (value.is<glm::vec3>()) properties.emplace_back(name, value.as<glm::vec3>());
+            break;
+        default: break;
+        }
+    }
+    std::sort(properties.begin(), properties.end(),
+              [](const auto &left, const auto &right) { return left.first < right.first; });
+    return properties;
+}
+
+bool ScriptSystem::SetInstanceProperty(entt::entity entity, const std::string &name, const ScriptValue &value)
+{
+    if (!state_)
+    {
+        return false;
+    }
+    auto found = state_->Instances.find(entity);
+    if (found == state_->Instances.end())
+    {
+        return false;
+    }
+    std::visit([&](const auto &v) { found->second.Self[name] = v; }, value);
+    return true;
 }
 
 void ScriptSystem::OnScriptDestroyed(entt::registry & /*registry*/, entt::entity entity)

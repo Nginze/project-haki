@@ -29,6 +29,7 @@ struct ScriptRuntime
     entt::registry *Registry = nullptr;
     PhysicsSystem *Physics = nullptr;
     bool InputEnabled = true;
+    bool MouseEnabled = true; // false while the editor UI owns the mouse
     float ViewportAspect = 16.0f / 9.0f;
 
     float DeltaTime = 0.0f;

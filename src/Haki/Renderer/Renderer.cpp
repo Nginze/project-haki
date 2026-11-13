@@ -1330,7 +1330,7 @@ public:
             return false;
         }
         const float renderScale =
-            std::clamp(std::isfinite(settings_.RenderScale) ? settings_.RenderScale : 1.0f, 0.25f, 1.0f);
+            std::clamp(std::isfinite(settings_.RenderScale) ? settings_.RenderScale : 1.0f, 0.25f, 2.0f);
         float baseWidth = static_cast<float>(viewportWidth);
         float baseHeight = static_cast<float>(viewportHeight);
         if (settings_.RenderHeight > 0)
@@ -1613,8 +1613,10 @@ public:
         }
         WriteTimerMarker(TimerShadowEnd);
         depthPrepassValid_ = false;
-        const bool wantSsao = settings_.SsaoEnabled && !visibleOpaque.empty();
-        const bool wantPrepass = settings_.DepthPrepassEnabled && !visibleOpaque.empty();
+        // Wireframe lines never match prepass triangle depth, so the prepass (and SSAO) is skipped.
+        const bool wireframe = settings_.Wireframe;
+        const bool wantSsao = settings_.SsaoEnabled && !wireframe && !visibleOpaque.empty();
+        const bool wantPrepass = settings_.DepthPrepassEnabled && !wireframe && !visibleOpaque.empty();
         if (wantSsao || wantPrepass)
         {
             if (ExecuteDepthPrepass(visibleOpaque, wantSsao))
@@ -1638,6 +1640,7 @@ public:
         }
         WriteTimerMarker(TimerSsaoEnd);
 
+        forceWireframe_ = wireframe;
         if (depthPrepassValid_)
         {
             // Depth is already final: shade only the front-most surface and leave the depth buffer alone.
@@ -1668,6 +1671,7 @@ public:
         {
             Draw(item, false);
         }
+        forceWireframe_ = false;
         glDepthMask(GL_TRUE);
         ResetStateCache();
         WriteTimerMarker(TimerForwardEnd);
@@ -2881,6 +2885,10 @@ private:
     void ApplyState(const MaterialState &state)
     {
         MaterialState effectiveState = state;
+        if (forceWireframe_)
+        {
+            effectiveState.Wireframe = true;
+        }
         if (effectiveState.Blend == BlendMode::AlphaBlend || forceDepthWriteOff_)
         {
             effectiveState.DepthWrite = false;
@@ -3387,6 +3395,7 @@ private:
     std::uint32_t shadowResolution_ = DefaultShadowMapResolution;
     bool depthPrepassValid_ = false;
     bool forceDepthWriteOff_ = false;
+    bool forceWireframe_ = false; // View > Wireframe: forward-pass geometry only
     // Per-frame object transforms, uploaded once and bound per draw with glBindBufferRange.
     GLuint objectRingBuffer_ = 0;
     std::size_t objectRingCapacity_ = 0;

@@ -708,6 +708,7 @@ void RegisterInput(sol::state &lua, ScriptRuntime &rt)
 {
     // Every query reports "nothing pressed" while gameplay input is disabled or there is no window.
     auto active = [&rt] { return rt.InputEnabled && InputManager::isInitialized(); };
+    auto mouseActive = [&rt] { return rt.InputEnabled && rt.MouseEnabled && InputManager::isInitialized(); };
 
     sol::table input = lua.create_named_table("input");
     input["key_down"] = [active](const std::string &name) {
@@ -722,13 +723,13 @@ void RegisterInput(sol::state &lua, ScriptRuntime &rt)
         const gainput::Key key = Lookup(KeyNames(), name, "key");
         return active() && InputManager::isKeyReleased(key);
     };
-    input["mouse_down"] = [active](const std::string &name) {
+    input["mouse_down"] = [mouseActive](const std::string &name) {
         const gainput::MouseButton button = Lookup(MouseNames(), name, "mouse button");
-        return active() && InputManager::isMouseButtonDown(button);
+        return mouseActive() && InputManager::isMouseButtonDown(button);
     };
-    input["mouse_pressed"] = [active](const std::string &name) {
+    input["mouse_pressed"] = [mouseActive](const std::string &name) {
         const gainput::MouseButton button = Lookup(MouseNames(), name, "mouse button");
-        return active() && InputManager::isMouseButtonPressed(button);
+        return mouseActive() && InputManager::isMouseButtonPressed(button);
     };
     input["gamepad_connected"] = [active](int pad) {
         return active() && InputManager::isGamepadConnected(PadIndex(pad));

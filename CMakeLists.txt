@@ -137,7 +137,7 @@ if(NOT HAKI_ENABLE_DEBUG_CAMERA)
     list(FILTER ENGINE_SOURCES EXCLUDE REGEX "/Systems/CameraSystem\.cpp$")
 endif()
 if(NOT HAKI_ENABLE_IMGUI)
-    list(FILTER ENGINE_SOURCES EXCLUDE REGEX "/Debug/ImGuiManager\.cpp$")
+    list(FILTER ENGINE_SOURCES EXCLUDE REGEX "/Debug/(ImGuiManager|EditorPanels|EditorTheme)\.cpp$")
 endif()
 
 set(THIRDPARTY_SOURCES
@@ -257,6 +257,12 @@ if(BUILD_TESTING)
     add_executable(TransformHierarchySystemTests src/Tests/Systems/TransformHierarchySystemTests.cpp)
     target_link_libraries(TransformHierarchySystemTests PRIVATE HakiEngine)
     add_test(NAME TransformHierarchySystem.Attachments COMMAND TransformHierarchySystemTests)
+
+    if(HAKI_ENABLE_IMGUI)
+        add_executable(EditorTests src/Tests/Debug/EditorTests.cpp)
+        target_link_libraries(EditorTests PRIVATE HakiEngine)
+        add_test(NAME Editor.Overlay COMMAND EditorTests)
+    endif()
 
     add_executable(AnimationSystemTests src/Tests/Systems/AnimationSystemTests.cpp)
     target_link_libraries(AnimationSystemTests PRIVATE HakiEngine)

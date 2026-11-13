@@ -101,6 +101,89 @@ void Window::Shutdown()
     }
 }
 
+namespace
+{
+// The monitor containing the window's centre, or the primary monitor.
+GLFWmonitor *MonitorForWindow(GLFWwindow *window)
+{
+    int x = 0, y = 0, width = 0, height = 0;
+    glfwGetWindowPos(window, &x, &y);
+    glfwGetWindowSize(window, &width, &height);
+    const int centerX = x + width / 2;
+    const int centerY = y + height / 2;
+    int count = 0;
+    GLFWmonitor **monitors = glfwGetMonitors(&count);
+    for (int index = 0; index < count; ++index)
+    {
+        int monitorX = 0, monitorY = 0;
+        glfwGetMonitorPos(monitors[index], &monitorX, &monitorY);
+        const GLFWvidmode *mode = glfwGetVideoMode(monitors[index]);
+        if (mode && centerX >= monitorX && centerX < monitorX + mode->width && centerY >= monitorY &&
+            centerY < monitorY + mode->height)
+        {
+            return monitors[index];
+        }
+    }
+    return glfwGetPrimaryMonitor();
+}
+} // namespace
+
+void Window::SetSize(int width, int height)
+{
+    if (!m_window || width <= 0 || height <= 0)
+    {
+        return;
+    }
+    if (m_fullscreen)
+    {
+        SetFullscreen(false);
+    }
+    glfwRestoreWindow(m_window);
+    glfwSetWindowSize(m_window, width, height);
+}
+
+void Window::Maximize()
+{
+    if (!m_window)
+    {
+        return;
+    }
+    if (m_fullscreen)
+    {
+        SetFullscreen(false);
+    }
+    glfwMaximizeWindow(m_window);
+}
+
+void Window::SetFullscreen(bool fullscreen)
+{
+    if (!m_window || fullscreen == m_fullscreen)
+    {
+        return;
+    }
+    if (fullscreen)
+    {
+        GLFWmonitor *monitor = MonitorForWindow(m_window);
+        const GLFWvidmode *mode = monitor ? glfwGetVideoMode(monitor) : nullptr;
+        if (!mode)
+        {
+            Logger::Warning() << "Fullscreen unavailable: no monitor video mode";
+            return;
+        }
+        glfwGetWindowPos(m_window, &m_windowedX, &m_windowedY);
+        glfwGetWindowSize(m_window, &m_windowedWidth, &m_windowedHeight);
+        // Using the monitor's current mode gives borderless fullscreen without a display mode switch.
+        glfwSetWindowMonitor(m_window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+    }
+    else
+    {
+        const int width = m_windowedWidth > 0 ? m_windowedWidth : 1280;
+        const int height = m_windowedHeight > 0 ? m_windowedHeight : 720;
+        glfwSetWindowMonitor(m_window, nullptr, m_windowedX, m_windowedY, width, height, GLFW_DONT_CARE);
+    }
+    m_fullscreen = fullscreen;
+}
+
 bool Window::ShouldClose() const
 {
     return glfwWindowShouldClose(m_window);

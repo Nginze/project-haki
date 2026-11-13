@@ -575,9 +575,47 @@ void RunAssetLayoutTests(int &failures)
 
 } // namespace
 
+// Editor pause / single-step: scripts and animation time stand still until a step is requested.
+void RunPauseTests(int &failures)
+{
+    ScriptFolder folder;
+    folder.Write("counter.lua", R"(
+local Counter = {}
+function Counter:on_start() self.updates = 0 end
+function Counter:on_update() self.updates = self.updates + 1 end
+return Counter
+)");
+    Haki::Scene scene;
+    scene.SetScripting(folder.Root, {});
+    CreateScripted(scene, "counter", "counter.lua");
+    Tick(scene, 2);
+    Haki::ScriptSystem &scripts = scene.GetScripts();
+    Check(scripts.Execute("assert(scene.find('counter'):script().updates == 2)"), "the counter runs before pausing",
+          failures);
+
+    scene.SetSimulationPaused(true);
+    scene.ResetCpuTimings();
+    Tick(scene, 5);
+    Check(scripts.Execute("assert(scene.find('counter'):script().updates == 2)"), "a paused scene does not update scripts",
+          failures);
+    Check(scene.GetCpuTimings().Ticks == 5, "paused ticks still run (transforms resolve) and are timed", failures);
+
+    scene.RequestStep();
+    Tick(scene, 3);
+    Check(scripts.Execute("assert(scene.find('counter'):script().updates == 3)"),
+          "a requested step advances exactly one tick", failures);
+
+    scene.SetSimulationPaused(false);
+    Tick(scene, 2);
+    Check(scripts.Execute("assert(scene.find('counter'):script().updates == 5)"), "resuming continues normally",
+          failures);
+}
+
 int main()
 {
     int failures = 0;
+    std::cout << "=== pause and step ===\n";
+    RunPauseTests(failures);
     std::cout << "=== lifecycle ===\n";
     RunLifecycleTests(failures);
     RunAssetLayoutTests(failures);

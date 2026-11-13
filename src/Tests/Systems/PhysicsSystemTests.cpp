@@ -227,6 +227,43 @@ void RunCharacterTests(int &failures)
     }
 }
 
+// Editor support: moving bodies by hand and tweaking their material while the game runs.
+void RunEditorTests(int &failures)
+{
+    using namespace Haki;
+    World world;
+    const entt::entity ball = CreateBody(world.registry, {0.0f, 5.0f, 0.0f}, PhysicsMotionType::Dynamic,
+                                         PhysicsLayer::Dynamic, Sphere(0.5f));
+    world.physics.Update(world.registry, 0.0f);
+    Simulate(world.physics, world.registry, 20); // falling
+    Check(world.physics.GetLinearVelocity(world.registry, ball)->y < -1.0f, "the ball is falling before the teleport",
+          failures);
+
+    world.registry.get<TransformComponent>(ball).Translation = {8.0f, 3.0f, -2.0f};
+    Check(world.physics.Teleport(world.registry, ball), "teleport accepts a dynamic body", failures);
+    const glm::vec3 velocity = *world.physics.GetLinearVelocity(world.registry, ball);
+    Check(glm::length(velocity) < 0.0001f, "teleport stops a dynamic body", failures);
+    world.physics.Update(world.registry, Step);
+    const glm::vec3 &position = world.registry.get<TransformComponent>(ball).Translation;
+    Check(Near(position.x, 8.0f, 0.01f) && Near(position.z, -2.0f, 0.01f) && position.y > 2.9f,
+          "the body continues from the teleported position", failures);
+
+    Check(world.physics.IsBodyAwake(world.registry, ball), "a teleported dynamic body is awake", failures);
+
+    world.registry.get<RigidBodyComponent>(ball).GravityFactor = 0.0f;
+    Check(world.physics.ApplyBodyMaterial(world.registry, ball), "material changes apply to a live body", failures);
+    world.physics.Teleport(world.registry, ball);
+    const float heightBefore = world.registry.get<TransformComponent>(ball).Translation.y;
+    Simulate(world.physics, world.registry, 30);
+    Check(Near(world.registry.get<TransformComponent>(ball).Translation.y, heightBefore, 0.01f),
+          "a zero gravity factor applied at runtime makes the body float", failures);
+
+    const entt::entity loose = world.registry.create();
+    world.registry.emplace<TransformComponent>(loose);
+    Check(!world.physics.Teleport(world.registry, loose) && !world.physics.ApplyBodyMaterial(world.registry, loose),
+          "entities without a body are ignored", failures);
+}
+
 } // namespace
 
 int main()
@@ -325,6 +362,7 @@ int main()
         registry.destroy(floor); // hooks are disconnected; must not touch the destroyed world
     }
     RunCharacterTests(failures);
+    RunEditorTests(failures);
     PhysicsCore::Shutdown();
     Check(!PhysicsCore::IsInitialized(), "PhysicsCore shuts down", failures);
     return failures == 0 ? 0 : 1;

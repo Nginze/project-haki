@@ -15,6 +15,7 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 #include <vector>
 
@@ -42,21 +43,47 @@ void Scene::UpdateRuntime(float deltaTime)
         scripts_.Initialize(registry_, &physics_, scriptRoot_, sceneScript_);
     }
 
+    if (simulationPaused_)
+    {
+        // Paused: only a requested step advances time.
+        if (stepRequested_) stepRequested_ = false;
+        else deltaTime = 0.0f;
+    }
+
+    using Clock = std::chrono::steady_clock;
+    const auto elapsedMs = [](Clock::time_point start) {
+        return std::chrono::duration<float, std::milli>(Clock::now() - start).count();
+    };
+
     // Scripts steer characters and push bodies before the step, then react to its contacts.
     // A zero-length update (e.g. right after loading) only creates physics bodies; scripts start on the first tick.
     const bool ticking = deltaTime > 0.0f;
-    scripts_.SetInputEnabled(gameplayInputEnabled_);
+    scripts_.SetInputEnabled(gameplayInputEnabled_, gameplayMouseEnabled_);
+    auto start = Clock::now();
     if (ticking)
     {
         scripts_.Update(registry_, deltaTime);
     }
+    cpuTimings_.ScriptsMs += elapsedMs(start);
+
+    start = Clock::now();
     physics_.Update(registry_, deltaTime);
+    cpuTimings_.PhysicsMs += elapsedMs(start);
     if (ticking)
     {
+        start = Clock::now();
         scripts_.DispatchContacts(registry_);
+        cpuTimings_.ScriptsMs += elapsedMs(start);
     }
+
+    start = Clock::now();
     TransformHierarchySystem::Update(registry_);
+    cpuTimings_.SceneMs += elapsedMs(start);
+
+    start = Clock::now();
     AnimationSystem::Update(registry_, deltaTime);
+    cpuTimings_.AnimationMs += elapsedMs(start);
+    ++cpuTimings_.Ticks;
 }
 
 SceneCameraOverride Scene::MakeCameraView(const TransformComponent &transform, const CameraComponent &camera)
