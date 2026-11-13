@@ -17,7 +17,7 @@ def stage(source,destination):
  for directory in roots:
   if directory.exists():files.extend(directory.rglob('*'))
  for file in files:
-  if not file.is_file() or file.suffix.lower() in {'.blend','.blend1','.blend2'} or file.name in {'ImportReceipt.json','README.md'} or any(part.startswith('.') for part in file.relative_to(source).parts):continue
+  if not file.is_file() or file.suffix.lower() in {'.blend','.blend1','.blend2'} or file.name.endswith('.settings.tmp') or file.name in {'ImportReceipt.json','README.md'} or any(part.startswith('.') for part in file.relative_to(source).parts):continue
   target=destination/file.relative_to(source);target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(file,target)
  destination.mkdir(parents=True,exist_ok=True);(destination/'.haki-assets.stamp').touch()
 if __name__=='__main__':

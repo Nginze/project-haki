@@ -218,6 +218,13 @@ float ImGuiManager::DrawMainMenuBar(Renderer &renderer, Scene *scene)
         return 0.0f;
     }
     const float height = ImGui::GetWindowHeight();
+    if (ImGui::BeginMenu("Project"))
+    {
+        if (ImGui::MenuItem("Save Project Settings")) state_.SaveProjectSettings = true;
+        ImGui::MenuItem("Autosave Project Settings", nullptr, &state_.AutosaveProjectSettings);
+        if (!state_.ProjectSaveStatus.empty()) ImGui::TextWrapped("%s",state_.ProjectSaveStatus.c_str());
+        ImGui::EndMenu();
+    }
     if (ImGui::BeginMenu("View"))
     {
         DrawViewMenu(renderer);
@@ -485,6 +492,8 @@ void ImGuiManager::DrawPhysicsMenu(Scene *scene)
 
 void ImGuiManager::DrawWindowMenu(Renderer &renderer)
 {
+    ImGui::MenuItem("Fullscreen Window", nullptr, &state_.Fullscreen);
+    ImGui::MenuItem("VSync", nullptr, &state_.Vsync);
     ImGui::MenuItem("Fullscreen Playtest", "F11", &state_.Playtest);
     ImGui::SetItemTooltip("Hides the editor and debug overlays and goes fullscreen. F11 again to return.");
     ImGui::Separator();

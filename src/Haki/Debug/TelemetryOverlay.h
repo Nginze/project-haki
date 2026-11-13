@@ -54,6 +54,9 @@ struct CpuTimings
 // Everything the telemetry block shows; built once per refresh.
 struct TelemetrySnapshot
 {
+    int WindowWidth = 0, WindowHeight = 0;
+    int GameWidth = 0, GameHeight = 0;
+    int RenderWidth = 0, RenderHeight = 0;
     std::string Gpu;
     float AverageFps = 0.0f;
     float MinimumFps = 0.0f;
@@ -87,7 +90,8 @@ public:
     void Initialize();
     // Call once per frame. sceneCpu may be null (no active scene).
     void Update(float frameSeconds, const SceneCpuTimings *sceneCpu, float renderMs, float editorMs,
-                const RendererGpuTimings &gpuTimings, const RendererSettings &settings, bool paused);
+                const RendererGpuTimings &gpuTimings, const RendererSettings &settings, bool paused, int windowWidth = 0, int windowHeight = 0,
+                int gameWidth = 0, int gameHeight = 0, int renderWidth = 0, int renderHeight = 0);
     void Draw(Canvas &canvas, const Font &font, glm::vec2 origin, float pixelSize = 14.0f) const;
 
     const std::vector<TelemetryLine> &GetLines() const { return lines_; }

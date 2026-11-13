@@ -1,6 +1,7 @@
 #pragma once
 
 #include <entt/entt.hpp>
+#include <string>
 
 namespace Haki
 {
@@ -33,6 +34,11 @@ struct EditorState
     int RequestedWidth = 0;
     int RequestedHeight = 0;
     bool RequestMaximize = false;
+    bool Fullscreen = false;
+    bool Vsync = true;
+    bool AutosaveProjectSettings = true;
+    bool SaveProjectSettings = false;
+    std::string ProjectSaveStatus;
 
     // Layout of the visible editor UI this frame, in window pixels (0 when hidden).
     float MenuBarHeight = 0.0f;

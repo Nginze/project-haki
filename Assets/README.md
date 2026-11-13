@@ -42,3 +42,41 @@ Only registered scene directories, Shared and Engine are packaged.
 Original experiments are retained at `../Archive/Experiments/Assets`, outside runtime discovery and builds.
 They are archival sources, not registered playable scenes. `tools/migrate_assets.py` documents the migration,
 previews it by default, refuses archive collisions, and is a no-op once Game/Project.json exists.
+
+## Project window and rendering settings
+
+`Game/Project.json` owns `window`, `rendering`, and `editor` settings alongside its scene registrations.
+They load before the window is created. Missing options keep engine defaults; malformed settings report an
+error instead of being silently replaced. Example:
+
+```json
+"window": {
+  "title": "My Game", "width": 1600, "height": 900,
+  "fullscreen": false, "maximized": false, "vsync": true
+},
+"rendering": {
+  "renderScale": 1.0, "renderHeight": 720,
+  "shadowsEnabled": true, "shadowMapResolution": 2048, "shadowFilter": "pcf",
+  "ssaoEnabled": true, "bloomEnabled": true, "exposure": 1.0, "fxaaEnabled": true
+},
+"editor": { "autosaveProjectSettings": true }
+```
+
+The editor's **Project > Save Project Settings** persists current rendering and window choices.
+**Project > Autosave Project Settings** defaults on, saving after one second without further changes and
+on clean shutdown. If autosave is off, use Save explicitly (including to persist disabling autosave).
+Saves preserve the latest scene registrations and unrelated fields. Importers/add-ons only update scene
+registrations and entry selection; they preserve these settings, including changes made during export.
+Renderer option keys are lower-camel versions of RendererSettings fields; color vectors are three-number
+arrays. All existing renderer options are supported. `shadowFilter` accepts `pcf` or `pcss`.
+
+Window dimensions are logical desktop units. Fullscreen/maximized output dimensions do not overwrite the
+saved windowed dimensions. **Window > Fullscreen Window** and **VSync** are persistent choices; F11 fullscreen
+playtesting is temporary and never becomes the saved fullscreen preference. Camera and debug projection
+choices remain scene/editor controls and are not silently converted into renderer settings.
+
+Telemetry distinguishes **Window** logical dimensions, **Game** framebuffer pixels (including display scaling),
+and **Render** actual internal rendering pixels after base-height and render-scale settings. The game currently
+renders across the full framebuffer underneath editor overlays; panes do not define a separate render target.
+Restart to apply manual Project.json edits; live editor changes apply immediately. Run the engine from the
+project root when editing source settings. A packaged build persists to its own loaded Project.json.

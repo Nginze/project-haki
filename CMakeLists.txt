@@ -264,6 +264,10 @@ if(BUILD_TESTING)
         add_test(NAME Editor.Overlay COMMAND EditorTests)
     endif()
 
+    add_executable(ProjectSettingsTests src/Tests/Debug/ProjectSettingsTests.cpp)
+    target_link_libraries(ProjectSettingsTests PRIVATE HakiEngine)
+    add_test(NAME Project.Settings COMMAND ProjectSettingsTests)
+
     add_executable(AnimationSystemTests src/Tests/Systems/AnimationSystemTests.cpp)
     target_link_libraries(AnimationSystemTests PRIVATE HakiEngine)
     add_test(NAME AnimationSystem.Sampling COMMAND AnimationSystemTests)

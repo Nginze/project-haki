@@ -1,12 +1,69 @@
 {
-  "type": "haki.scene-manifest",
-  "version": 1,
   "assetCatalog": "../Engine/Catalog.json",
+  "editor": {
+    "autosaveProjectSettings": true
+  },
   "entry": "arena-01",
+  "rendering": {
+    "ambientGroundColor": [
+      0.30000001192092896,
+      0.25,
+      0.20000000298023224
+    ],
+    "ambientIntensity": 0.30000001192092896,
+    "ambientSkyColor": [
+      0.6000000238418579,
+      0.699999988079071,
+      0.8999999761581421
+    ],
+    "bloomDiffusion": 7.0,
+    "bloomEnabled": true,
+    "bloomIntensity": 0.10000000149011612,
+    "bloomSoftKnee": 0.5,
+    "bloomThreshold": 1.0,
+    "cascadeSplitLambda": 0.75,
+    "depthPrepassEnabled": true,
+    "exposure": 1.0,
+    "frustumCullingEnabled": true,
+    "fxaaContrastThreshold": 0.031199999153614044,
+    "fxaaEnabled": true,
+    "fxaaRelativeThreshold": 0.06300000101327896,
+    "fxaaSubpixelBlending": 0.75,
+    "gpuTimingsEnabled": true,
+    "indirectDiffuseEnabled": true,
+    "indirectSpecularEnabled": true,
+    "renderHeight": 0,
+    "renderScale": 1.0,
+    "shadowDistance": 200.0,
+    "shadowFilter": "pcf",
+    "shadowMapResolution": 2048,
+    "shadowsEnabled": true,
+    "showBounds": false,
+    "showCascadeZones": false,
+    "skyboxEnabled": true,
+    "ssaoBias": 0.02500000037252903,
+    "ssaoBlurEnabled": true,
+    "ssaoEnabled": true,
+    "ssaoHalfResolution": true,
+    "ssaoPower": 1.5,
+    "ssaoRadius": 0.5,
+    "ssaoSampleCount": 16,
+    "wireframe": false
+  },
   "scenes": [
     {
       "id": "arena-01",
       "source": "Scenes/arena-01/arena-01.scene.json"
     }
-  ]
+  ],
+  "type": "haki.scene-manifest",
+  "version": 1,
+  "window": {
+    "fullscreen": false,
+    "height": 1024,
+    "maximized": true,
+    "title": "Sandbox",
+    "vsync": true,
+    "width": 1920
+  }
 }

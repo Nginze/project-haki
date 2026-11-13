@@ -89,6 +89,9 @@ int main()
 
     std::cout << "=== telemetry text ===\n";
     TelemetrySnapshot snapshot;
+    snapshot.WindowWidth=1600; snapshot.WindowHeight=900;
+    snapshot.GameWidth=3200; snapshot.GameHeight=1800;
+    snapshot.RenderWidth=1280; snapshot.RenderHeight=720;
     snapshot.Gpu = "Test GPU";
     snapshot.GpuTimings.Valid = true;
     snapshot.GpuTimings.SsaoMs = 1.0f;
@@ -102,6 +105,10 @@ int main()
                                         [&](const TelemetryLine &l) { return l.Label == label; });
         return found != lines.end() ? found->Value : std::string("<missing>");
     };
+    Check(line("Window").find("1600 x 900")!=std::string::npos &&
+              line("Game").find("3200 x 1800")!=std::string::npos &&
+              line("Render").find("1280 x 720")!=std::string::npos,
+          "telemetry distinguishes logical window, framebuffer and internal rendering dimensions",failures);
     Check(line("GPU") == "Test GPU" && line("VRAM") == "1500 / 8192 MB", "GPU name and VRAM usage are shown",
           failures);
     Check(line("GPU ms").find("ssao") == std::string::npos && line("GPU ms").find("shadow") != std::string::npos,

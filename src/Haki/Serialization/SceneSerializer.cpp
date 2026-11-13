@@ -1340,7 +1340,7 @@ bool SceneSerializer::LoadManifest(const std::filesystem::path &source, SceneMan
     {
         return false;
     }
-    bool valid = JsonUtils::ValidateFields(document, {"type", "version", "assetCatalog", "entry", "scenes"},
+    bool valid = JsonUtils::ValidateFields(document, {"type", "version", "assetCatalog", "entry", "scenes", "window", "rendering", "editor"},
                                            source, "", errors);
     valid = JsonUtils::ValidateHeader(document, "haki.scene-manifest", source, errors) && valid;
     if (!document.contains("assetCatalog") || !document["assetCatalog"].is_string() ||

@@ -12,7 +12,14 @@ class LayoutTests(unittest.TestCase):
    args=importer.parse_args([str(source),'--pack','demo','--scene','demo','--project-root',str(root),'--set-entry'])
    importer.PackImporter(args).run()
    scene=game/'Scenes/demo';(scene/'demo.blend').write_bytes(b'authored blend');(scene/'Scripts').mkdir();(scene/'Scripts/behaviour.lua').write_text('return {}')
+   project=json.loads((game/'Project.json').read_text())
+   project['window']={'width':1920,'height':1080,'vsync':False}
+   project['rendering']={'renderScale':0.75,'futureOption':42}
+   project['editor']={'autosaveProjectSettings':False}
+   (game/'Project.json').write_text(json.dumps(project))
    importer.PackImporter(args).run()
+   after=json.loads((game/'Project.json').read_text())
+   for section in ('window','rendering','editor'):self.assertEqual(after[section],project[section])
    self.assertEqual((scene/'demo.blend').read_bytes(),b'authored blend')
    self.assertEqual((scene/'Scripts/behaviour.lua').read_text(),'return {}')
    self.assertEqual(json.loads((scene/'demo.scene.json').read_text())['assetCatalog'],'Catalog.json')

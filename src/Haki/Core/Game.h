@@ -1,3 +1,4 @@
+#include "Haki/Core/ProjectSettings.h"
 #pragma once
 
 #include "Haki/Debug/TelemetryOverlay.h"
@@ -58,6 +59,10 @@ private:
     void QueueTelemetry(float frameSeconds);
 
     // The window is declared first so its OpenGL context is destroyed last.
+    ProjectSettings projectSettings_;
+    std::string savedSettings_, pendingSettings_;
+    double settingsQuietTime_ = 0;
+    void PersistProjectSettings(double frameTime, bool closing = false);
     Window window_;
     Renderer renderer_;
     Font defaultFont_;

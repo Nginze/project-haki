@@ -502,6 +502,12 @@ class PackImporter:
         try:
             if not self.modern:
                 atomic_json_write(self.assets_root / "AssetCatalog.json", catalog)
+            if self.modern:
+                latest = load_json(self.assets_root / "Game/Project.json")
+                registration = next(e for e in manifest["scenes"] if e["id"] == self.scene_id)
+                latest["scenes"] = [e for e in latest["scenes"] if e["id"] != self.scene_id] + [registration]
+                if self.args.set_entry: latest["entry"] = self.scene_id
+                manifest = latest
             atomic_json_write(self.assets_root / "Game/Project.json" if self.modern else self.assets_root / "Scenes/SceneManifest.json", manifest)
         except Exception:
             if self.modern:

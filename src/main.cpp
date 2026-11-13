@@ -9,7 +9,11 @@ int main(int argc, char const *argv[]) {
 
   Logger::Debug() << "Powered By Haki Engine";
 
-  Haki::Game game("Sandbox", 1280, 720);
-
-  return game.Run() ? 0 : 1;
+  try {
+    Haki::Game game("Sandbox", 1280, 720);
+    return game.Run() ? 0 : 1;
+  } catch (const std::exception &error) {
+    Logger::Error() << error.what();
+    return 1;
+  }
 }

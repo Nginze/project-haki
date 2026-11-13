@@ -37,10 +37,26 @@ constexpr double ScriptReloadPollInterval = 0.5;
 } // namespace
 
 Game::Game(std::string title, unsigned int width, unsigned int height, std::filesystem::path sceneManifest)
-    : window_(static_cast<int>(width), static_cast<int>(height), std::move(title)),
+    : projectSettings_(ProjectSettings::Load(sceneManifest, [&] {
+          ProjectSettings defaults; defaults.Title=title; defaults.Width=static_cast<int>(width);
+          defaults.Height=static_cast<int>(height); return defaults; }())),
+      window_(projectSettings_.Width, projectSettings_.Height, projectSettings_.Title),
       assetCatalog_(std::make_shared<AssetCatalog>()),
       sceneSerializer_(std::make_shared<SceneSerializer>(assetCatalog_)), sceneManifest_(std::move(sceneManifest))
 {
+    renderer_.GetSettings() = projectSettings_.Rendering;
+    if(window_.GetNativeWindow()) {
+        glfwSwapInterval(projectSettings_.Vsync?1:0);
+        if(projectSettings_.Maximized) window_.Maximize();
+        window_.SetFullscreen(projectSettings_.Fullscreen);
+    }
+#if HAKI_ENABLE_IMGUI
+    auto &state=imguiManager_.GetEditorState();
+    state.Fullscreen=projectSettings_.Fullscreen;
+    state.Vsync=projectSettings_.Vsync;
+    state.AutosaveProjectSettings=projectSettings_.Autosave;
+#endif
+    savedSettings_=pendingSettings_=projectSettings_.Sections().dump();
 }
 
 Game::~Game()
@@ -199,6 +215,7 @@ bool Game::Run()
         imguiManager_.Draw(renderer_, sceneManager_.GetActiveScene());
         editorMs += msSince(editorStart);
         ApplyEditorRequests();
+        PersistProjectSettings(elapsed);
 
         keyboardCaptured = imguiManager_.WantsCaptureKeyboard();
         mouseCaptured = imguiManager_.WantsCaptureMouse();
@@ -412,9 +429,9 @@ void Game::ApplyEditorRequests()
 #if HAKI_ENABLE_IMGUI
     EditorState &state = imguiManager_.GetEditorState();
     // Playtest goes fullscreen; leaving it restores the windowed size.
-    if (state.Playtest != window_.IsFullscreen())
+    if ((state.Playtest || state.Fullscreen) != window_.IsFullscreen())
     {
-        window_.SetFullscreen(state.Playtest);
+        window_.SetFullscreen(state.Playtest || state.Fullscreen);
         if (state.Playtest && !window_.IsFullscreen())
         {
             // Fullscreen refused (no monitor): playtest still hides the editor, just inside the window.
@@ -427,11 +444,13 @@ void Game::ApplyEditorRequests()
     {
         window_.SetSize(state.RequestedWidth, state.RequestedHeight);
         state.Playtest = false;
+        state.Fullscreen = false;
     }
     if (state.RequestMaximize)
     {
         window_.Maximize();
         state.Playtest = false;
+        state.Fullscreen = false;
     }
     state.RequestedWidth = state.RequestedHeight = 0;
     state.RequestMaximize = false;
@@ -445,6 +464,41 @@ void Game::ApplyEditorRequests()
         }
     }
     state.StepRequested = false;
+#endif
+}
+
+void Game::PersistProjectSettings(double frameTime, bool closing)
+{
+#if HAKI_ENABLE_IMGUI
+    auto &state=imguiManager_.GetEditorState();
+    projectSettings_.Rendering=renderer_.GetSettings();
+    projectSettings_.Autosave=state.AutosaveProjectSettings;
+    projectSettings_.Fullscreen=state.Fullscreen;
+    if(projectSettings_.Vsync!=state.Vsync && window_.GetNativeWindow()) glfwSwapInterval(state.Vsync?1:0);
+    projectSettings_.Vsync=state.Vsync;
+    // Fullscreen/playtest framebuffer sizes must not replace the saved windowed dimensions.
+    if(window_.GetNativeWindow() && !window_.IsFullscreen()) {
+        projectSettings_.Maximized=glfwGetWindowAttrib(window_.GetNativeWindow(),GLFW_MAXIMIZED)!=0;
+        if(!projectSettings_.Maximized) {
+            int w=0,h=0; glfwGetWindowSize(window_.GetNativeWindow(),&w,&h);
+            if(w>=64 && h>=64) {projectSettings_.Width=w;projectSettings_.Height=h;}
+        }
+    }
+    const auto current=projectSettings_.Sections().dump();
+    if(current!=pendingSettings_) { pendingSettings_=current; settingsQuietTime_=0;
+        state.ProjectSaveStatus=current!=savedSettings_?"Unsaved project settings":"Project settings saved"; }
+    else settingsQuietTime_+=frameTime;
+    if(state.SaveProjectSettings || (projectSettings_.Autosave && current!=savedSettings_ && (closing || settingsQuietTime_>=1))) {
+        std::string error;
+        if(projectSettings_.Save(sceneManifest_,error)) {
+            savedSettings_=current; state.ProjectSaveStatus="Project settings saved";
+        } else {
+            state.ProjectSaveStatus="Save failed: "+error;
+            Logger::Error()<<state.ProjectSaveStatus;
+            settingsQuietTime_=0;
+        }
+        state.SaveProjectSettings=false;
+    }
 #endif
 }
 
@@ -465,8 +519,11 @@ void Game::QueueTelemetry(float frameSeconds)
     origin = ComputeTelemetryOrigin(state.MenuBarHeight > 0.0f, state.MenuBarHeight, state.HierarchyWidth > 0.0f,
                                     state.HierarchyWidth) * scale;
 #endif
+    int logicalWidth=0,logicalHeight=0;
+    if(window_.GetNativeWindow()) glfwGetWindowSize(window_.GetNativeWindow(),&logicalWidth,&logicalHeight);
     telemetry_.Update(frameSeconds, sceneCpu, lastRenderMs_, lastEditorMs_, renderer_.GetGpuTimings(),
-                      renderer_.GetSettings(), paused);
+                      renderer_.GetSettings(), paused, logicalWidth, logicalHeight,window_.GetWidth(),window_.GetHeight(),
+                      static_cast<int>(renderer_.GetStats().RenderWidth),static_cast<int>(renderer_.GetStats().RenderHeight));
     if (!visible)
     {
         return;
@@ -488,6 +545,7 @@ void Game::ShutdownSystems()
 #if HAKI_ENABLE_DEBUG_CAMERA
     debugCameraSystem_.Reset();
 #endif
+    PersistProjectSettings(0,true);
     sceneManager_.Shutdown();
 #if HAKI_ENABLE_IMGUI
     imguiManager_.SetDefaultFont(nullptr);

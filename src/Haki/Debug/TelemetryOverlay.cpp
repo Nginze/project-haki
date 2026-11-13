@@ -79,6 +79,10 @@ glm::vec2 ComputeTelemetryOrigin(bool menuBarVisible, float menuBarHeight, bool 
 std::vector<TelemetryLine> BuildTelemetryLines(const TelemetrySnapshot &snapshot)
 {
     std::vector<TelemetryLine> lines;
+    lines.push_back({"Window", Format("%d x %d (window units)",snapshot.WindowWidth,snapshot.WindowHeight)});
+    lines.push_back({"Game", Format("%d x %d (framebuffer px)",snapshot.GameWidth,snapshot.GameHeight)});
+    lines.push_back({"Render", snapshot.RenderWidth>0 && snapshot.RenderHeight>0
+        ? Format("%d x %d (internal px)",snapshot.RenderWidth,snapshot.RenderHeight) : "waiting for first frame"});
     lines.push_back({"GPU", snapshot.Gpu});
     lines.push_back({"FPS", Format("avg %.0f  min %.0f  |  %.2f ms%s", snapshot.AverageFps, snapshot.MinimumFps,
                                    snapshot.FrameMs, snapshot.Paused ? "  |  PAUSED" : "")});
@@ -132,7 +136,9 @@ void TelemetryOverlay::Initialize()
 }
 
 void TelemetryOverlay::Update(float frameSeconds, const SceneCpuTimings *sceneCpu, float renderMs, float editorMs,
-                              const RendererGpuTimings &gpuTimings, const RendererSettings &settings, bool paused)
+                              const RendererGpuTimings &gpuTimings, const RendererSettings &settings, bool paused,
+                              int windowWidth, int windowHeight, int gameWidth, int gameHeight,
+                              int renderWidth, int renderHeight)
 {
     frames_.AddFrame(frameSeconds);
     const bool first = !hasCpu_;
@@ -159,6 +165,9 @@ void TelemetryOverlay::Update(float frameSeconds, const SceneCpuTimings *sceneCp
     sinceRefresh_ = 0.0f;
 
     TelemetrySnapshot snapshot;
+    snapshot.WindowWidth=windowWidth; snapshot.WindowHeight=windowHeight;
+    snapshot.GameWidth=gameWidth; snapshot.GameHeight=gameHeight;
+    snapshot.RenderWidth=renderWidth; snapshot.RenderHeight=renderHeight;
     snapshot.Gpu = gpu_.GetRenderer();
     snapshot.AverageFps = frames_.GetAverageFps();
     snapshot.MinimumFps = frames_.GetMinimumFps();
