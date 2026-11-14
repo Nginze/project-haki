@@ -421,6 +421,35 @@ assert(#physics.overlap_sphere(vec3(2, 1.5, 0), 0.2) == 0)
 assert(#physics.overlap_sphere(vec3(2, 1.5, 0), 0.2, true) == 1)
 )"),
               "raycast and overlap_sphere from Lua hit characters and skip triggers by default", failures);
+
+        // Carrying: a kinematic body follows set_position; switched back it falls and can be thrown.
+        const entt::entity box = registry.create();
+        registry.emplace<Haki::EntityIdComponent>(box, "box");
+        registry.emplace<Haki::TransformComponent>(box).Translation = {6.0f, 3.0f, 6.0f};
+        Haki::RigidBodyComponent dynamicBody;
+        dynamicBody.Motion = Haki::PhysicsMotionType::Dynamic;
+        dynamicBody.Layer = Haki::PhysicsLayer::Dynamic;
+        dynamicBody.Mass = 10.0f;
+        registry.emplace<Haki::RigidBodyComponent>(box, dynamicBody);
+        registry.emplace<Haki::ColliderComponent>(box).HalfExtents = {0.25f, 0.25f, 0.25f};
+        Tick(scene, 2);
+        Check(scripts.Execute("local b = scene.find('box'); assert(b:set_kinematic(true) and b:is_kinematic())") &&
+                  !scripts.Execute("assert(scene.find('floor'):set_kinematic(true))"),
+              "set_kinematic switches dynamic bodies and refuses static ones", failures);
+        for (int i = 0; i < 30; ++i)
+        {
+            scripts.Execute("scene.find('box'):set_position(vec3(6, 4, 6 + " + std::to_string(i * 0.05f) + "))");
+            Tick(scene);
+        }
+        const glm::vec3 held = registry.get<Haki::TransformComponent>(box).Translation;
+        Check(std::abs(held.y - 4.0f) < 0.01f && std::abs(held.z - 7.45f) < 0.06f,
+              "a kinematic body follows set_position without falling", failures);
+        Check(scripts.Execute("local b = scene.find('box'); assert(b:set_kinematic(false) and not b:is_kinematic());"
+                              "assert(b:set_velocity(vec3(4, 0, 0)))"),
+              "set_kinematic(false) makes the body dynamic again", failures);
+        Tick(scene, 20);
+        const glm::vec3 thrown = registry.get<Haki::TransformComponent>(box).Translation;
+        Check(thrown.y < 3.9f && thrown.x > 6.5f, "the released body falls and keeps its thrown velocity", failures);
     }
     Haki::PhysicsCore::Shutdown();
 }

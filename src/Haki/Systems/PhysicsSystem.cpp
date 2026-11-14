@@ -340,6 +340,8 @@ void PhysicsSystem::CreatePendingBodies(entt::registry &registry)
             settings.mOverrideMassProperties = JPH::EOverrideMassProperties::CalculateInertia;
             settings.mMassPropertiesOverride.mMass = body.Mass;
         }
+        // Lets scripts switch movable bodies between dynamic and kinematic later (SetMotionType).
+        settings.mAllowDynamicOrKinematic = body.Motion != PhysicsMotionType::Static;
         if (body.Motion == PhysicsMotionType::Dynamic && body.LockRotation)
         {
             settings.mAllowedDOFs = JPH::EAllowedDOFs::TranslationX | JPH::EAllowedDOFs::TranslationY |
@@ -752,6 +754,29 @@ bool PhysicsSystem::ApplyBodyMaterial(const entt::registry &registry, entt::enti
         bodyInterface.SetGravityFactor(bodyId, finiteOr(body->GravityFactor, 1.0f));
         bodyInterface.ActivateBody(bodyId);
     }
+    return true;
+}
+
+bool PhysicsSystem::SetMotionType(entt::registry &registry, entt::entity entity, PhysicsMotionType motion)
+{
+    auto *body = state_ ? registry.try_get<RigidBodyComponent>(entity) : nullptr;
+    if (!body || body->BodyId == InvalidPhysicsBodyId || body->Motion == PhysicsMotionType::Static ||
+        motion == PhysicsMotionType::Static)
+    {
+        return false;
+    }
+    if (body->Motion == motion)
+    {
+        return true;
+    }
+    JPH::BodyInterface &bodyInterface = state_->Interface();
+    const JPH::BodyID bodyId(body->BodyId);
+    if (motion == PhysicsMotionType::Kinematic)
+    {
+        bodyInterface.SetLinearAndAngularVelocity(bodyId, JPH::Vec3::sZero(), JPH::Vec3::sZero());
+    }
+    bodyInterface.SetMotionType(bodyId, ToJoltMotion(motion), JPH::EActivation::Activate);
+    body->Motion = motion;
     return true;
 }
 

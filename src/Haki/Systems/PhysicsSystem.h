@@ -89,6 +89,10 @@ public:
     // Applies RigidBodyComponent friction, restitution and gravity factor to the live body.
     bool ApplyBodyMaterial(const entt::registry &registry, entt::entity entity);
     bool IsBodyAwake(const entt::registry &registry, entt::entity entity) const;
+    // Switches a non-static body between dynamic and kinematic at runtime (e.g. an item being carried:
+    // kinematic bodies follow their TransformComponent). Velocity is cleared when becoming kinematic and
+    // kept when becoming dynamic. Returns false for static bodies, characters or bodies not created yet.
+    bool SetMotionType(entt::registry &registry, entt::entity entity, PhysicsMotionType motion);
 
     // Which collider wireframes DrawColliders queues.
     struct ColliderDrawFilter

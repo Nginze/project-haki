@@ -588,6 +588,17 @@ void RegisterEntity(sol::state &lua, ScriptRuntime &rt)
         RequireValid(rt, e);
         return rt.Physics && rt.Physics->SetLinearVelocity(*rt.Registry, e.Value, Finite(velocity, "velocity"));
     };
+    entity["set_kinematic"] = [&rt](const LuaEntity &e, bool kinematic) {
+        RequireValid(rt, e);
+        return rt.Physics && rt.Physics->SetMotionType(*rt.Registry, e.Value,
+                                                       kinematic ? PhysicsMotionType::Kinematic
+                                                                 : PhysicsMotionType::Dynamic);
+    };
+    entity["is_kinematic"] = [&rt](const LuaEntity &e) {
+        RequireValid(rt, e);
+        const auto *body = rt.Registry->try_get<RigidBodyComponent>(e.Value);
+        return body && body->Motion == PhysicsMotionType::Kinematic;
+    };
     entity["has_body"] = [&rt](const LuaEntity &e) {
         RequireValid(rt, e);
         const auto *body = rt.Registry->try_get<RigidBodyComponent>(e.Value);

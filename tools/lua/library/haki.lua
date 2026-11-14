@@ -221,6 +221,16 @@ function Entity:locomotion_speed() end
 ---@return boolean
 function Entity:has_body() end
 
+---Switches a dynamic body to kinematic (true) or back (false). A kinematic body ignores gravity and
+---follows set_position/set_rotation, still pushing dynamic bodies: use it to carry things.
+---Velocity is cleared when becoming kinematic; set it after switching back to throw.
+---@param kinematic boolean
+---@return boolean ok false for static bodies or entities without a body
+function Entity:set_kinematic(kinematic) end
+
+---@return boolean
+function Entity:is_kinematic() end
+
 ---@param position HakiVec3
 function Entity:set_position(position) end
 
