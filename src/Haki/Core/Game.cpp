@@ -264,6 +264,8 @@ bool Game::Run()
         }
 
         SceneRenderContext renderContext{&renderer_, window_.GetWidth(), window_.GetHeight()};
+        renderContext.DeltaTime = static_cast<float>(frameTime);
+        renderContext.TextFont = GetDefaultFont();
         // The view is only overridden for free look or a View > Camera > Projection override; otherwise the
         // scene renders its own primary camera exactly as authored.
         std::optional<SceneCameraOverride> viewOverride;

@@ -6,6 +6,8 @@
 #include "Haki/AssetManager/AssetManager.h"
 #include "Haki/Input/InputManager.h"
 #include "Haki/Logging/Logger.h"
+#include "Haki/Renderer/Canvas.h"
+#include "Haki/Renderer/Font.h"
 #include "Haki/Scene/Components.h"
 #include "Haki/Systems/AnimationSystem.h"
 #include "Haki/Systems/PhysicsSystem.h"
@@ -19,6 +21,7 @@
 #include <cmath>
 #include <sstream>
 #include <stdexcept>
+#include <tuple>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
@@ -798,6 +801,156 @@ void RegisterLog(sol::state &lua)
     };
 }
 
+// ---------------------------------------------------------------- draw (on_draw only)
+
+struct DrawOptions
+{
+    glm::vec4 Color{1.0f};
+    float Size = 18.0f;
+    float OffsetY = 0.0f;
+    float Outline = 0.0f;
+    bool DepthTest = true;
+    float MaxDistance = 0.0f;
+    int Layer = 10;
+};
+
+float OptionNumber(const sol::table &table, const char *key, float fallback)
+{
+    const sol::object value = table[key];
+    if (value.get_type() == sol::type::lua_nil)
+    {
+        return fallback;
+    }
+    if (value.get_type() != sol::type::number || !std::isfinite(value.as<float>()))
+    {
+        throw std::runtime_error(std::string("draw option '") + key + "' must be a finite number");
+    }
+    return value.as<float>();
+}
+
+// Colours are {r, g, b[, a]} or {r=, g=, b=, a=} with 0..1 components.
+glm::vec4 ParseColor(const sol::object &value)
+{
+    if (value.get_type() != sol::type::table)
+    {
+        throw std::runtime_error("draw color must be a table {r, g, b, a}");
+    }
+    const sol::table table = value;
+    const bool named = table["r"].get_type() != sol::type::lua_nil;
+    const auto component = [&](int index, const char *name, float fallback) {
+        const sol::object c = named ? sol::object(table[name]) : sol::object(table[index]);
+        if (c.get_type() == sol::type::lua_nil)
+        {
+            return fallback;
+        }
+        if (c.get_type() != sol::type::number || !std::isfinite(c.as<float>()))
+        {
+            throw std::runtime_error("draw color components must be finite numbers");
+        }
+        return std::clamp(c.as<float>(), 0.0f, 1.0f);
+    };
+    return {component(1, "r", 1.0f), component(2, "g", 1.0f), component(3, "b", 1.0f), component(4, "a", 1.0f)};
+}
+
+DrawOptions ParseDrawOptions(const sol::optional<sol::table> &options)
+{
+    DrawOptions result;
+    if (!options)
+    {
+        return result;
+    }
+    const sol::table &table = *options;
+    if (const sol::object color = table["color"]; color.get_type() != sol::type::lua_nil)
+    {
+        result.Color = ParseColor(color);
+    }
+    result.Size = std::max(OptionNumber(table, "size", result.Size), 1.0f);
+    result.OffsetY = OptionNumber(table, "offset_y", result.OffsetY);
+    result.Outline = std::max(OptionNumber(table, "outline", result.Outline), 0.0f);
+    result.MaxDistance = std::max(OptionNumber(table, "max_distance", result.MaxDistance), 0.0f);
+    result.Layer = static_cast<int>(OptionNumber(table, "layer", static_cast<float>(result.Layer)));
+    if (const sol::object depth = table["depth_test"]; depth.get_type() == sol::type::boolean)
+    {
+        result.DepthTest = depth.as<bool>();
+    }
+    return result;
+}
+
+Canvas &RequireCanvas(const ScriptRuntime &rt)
+{
+    if (!rt.DrawCanvas)
+    {
+        throw std::runtime_error("draw.* only works inside on_draw");
+    }
+    return *rt.DrawCanvas;
+}
+
+void RegisterDraw(sol::state &lua, ScriptRuntime &rt)
+{
+    sol::table draw = lua.create_named_table("draw");
+
+    // World-anchored (billboards): always face the camera and keep a constant pixel size.
+    draw["label"] = [&rt](const glm::vec3 &position, const std::string &text, sol::optional<sol::table> options) {
+        Canvas &canvas = RequireCanvas(rt);
+        const DrawOptions o = ParseDrawOptions(options);
+        if (!rt.DrawFont)
+        {
+            return;
+        }
+        const CanvasAnchor anchor{Finite(position, "label position"), o.DepthTest, o.MaxDistance};
+        canvas.DrawLabel(anchor, *rt.DrawFont, text, o.Size, o.Color, o.OffsetY, o.Layer);
+    };
+    draw["rect"] = [&rt](const glm::vec3 &position, float x, float y, float w, float h,
+                         sol::optional<sol::table> options) {
+        Canvas &canvas = RequireCanvas(rt);
+        const DrawOptions o = ParseDrawOptions(options);
+        const CanvasAnchor anchor{Finite(position, "rect position"), o.DepthTest, o.MaxDistance};
+        const CanvasRect rect{x, y, w, h};
+        if (o.Outline > 0.0f)
+        {
+            canvas.StrokeRect(anchor, rect, o.Color, o.Outline, o.Layer);
+        }
+        else
+        {
+            canvas.FillRect(anchor, rect, o.Color, o.Layer);
+        }
+    };
+
+    // Screen space (HUD), window pixels with the origin top-left.
+    draw["screen_text"] = [&rt](float x, float y, const std::string &text, sol::optional<sol::table> options) {
+        Canvas &canvas = RequireCanvas(rt);
+        const DrawOptions o = ParseDrawOptions(options);
+        if (rt.DrawFont)
+        {
+            canvas.DrawText(*rt.DrawFont, text, {x, y}, o.Size, o.Color, o.Layer);
+        }
+    };
+    draw["screen_rect"] = [&rt](float x, float y, float w, float h, sol::optional<sol::table> options) {
+        Canvas &canvas = RequireCanvas(rt);
+        const DrawOptions o = ParseDrawOptions(options);
+        const CanvasRect rect{x, y, w, h};
+        if (o.Outline > 0.0f)
+        {
+            canvas.StrokeRect(rect, o.Color, o.Outline, o.Layer);
+        }
+        else
+        {
+            canvas.FillRect(rect, o.Color, o.Layer);
+        }
+    };
+    draw["screen_size"] = [&rt]() {
+        const glm::vec2 size = RequireCanvas(rt).GetSize();
+        return std::make_tuple(size.x, size.y);
+    };
+    // Pixel size of a text block (0, 0 without a font), e.g. for a backing panel behind a label.
+    draw["measure"] = [&rt](const std::string &text, sol::optional<float> size) {
+        RequireCanvas(rt);
+        const float pixelSize = std::max(size.value_or(18.0f), 1.0f);
+        const glm::vec2 measured = rt.DrawFont ? rt.DrawFont->MeasureText(text, pixelSize) : glm::vec2(0.0f);
+        return std::make_tuple(measured.x, measured.y);
+    };
+}
+
 } // namespace
 
 void RegisterScriptBindings(sol::state &lua, ScriptRuntime &runtime)
@@ -808,6 +961,7 @@ void RegisterScriptBindings(sol::state &lua, ScriptRuntime &runtime)
     RegisterScene(lua, runtime);
     RegisterPhysics(lua, runtime);
     RegisterInput(lua, runtime);
+    RegisterDraw(lua, runtime);
     RegisterLog(lua);
     lua.create_named_table("time");
     UpdateScriptTime(lua, runtime);

@@ -1,6 +1,7 @@
 #include "Haki/Serialization/SceneSerializer.h"
 #include "Haki/AssetManager/AssetCatalog.h"
 #include "Haki/Physics/PhysicsCore.h"
+#include "Haki/Renderer/Canvas.h"
 #include "Haki/Scene/Components.h"
 #include "Haki/Scene/Scene.h"
 #include "Haki/Scripting/ScriptSystem.h"
@@ -611,11 +612,67 @@ return Counter
           failures);
 }
 
+void RunDrawTests(int &failures)
+{
+    ScriptFolder folder;
+    folder.Write("painter.lua", R"(
+local Painter = {}
+function Painter:on_start() self.draws = 0; self.last_dt = -1 end
+function Painter:on_draw(dt)
+    self.draws = self.draws + 1
+    self.last_dt = dt
+    local p = self.entity:position()
+    draw.rect(p, -40, -30, 80, 8, { color = { 0.2, 0.9, 0.3, 1 } })
+    draw.rect(p, -41, -31, 82, 10, { color = { r = 0, g = 0, b = 0 }, outline = 1 })
+    draw.label(p, "hello", { size = 20, offset_y = 12 }) -- no font in tests: skipped quietly
+    draw.screen_rect(10, 10, 50, 20)
+    local w, h = draw.measure("hello")
+    self.measured = w == 0 and h == 0
+end
+return Painter
+)");
+    folder.Write("eager.lua", R"(
+local Eager = {}
+function Eager:on_update() draw.screen_rect(0, 0, 1, 1) end
+return Eager
+)");
+    Haki::Scene scene;
+    scene.SetScripting(folder.Root, {});
+    CreateScripted(scene, "painter", "painter.lua");
+    Haki::ScriptSystem &scripts = scene.GetScripts();
+
+    Tick(scene, 3);
+    Check(scripts.Execute("assert(scene.find('painter'):script().draws == 0)"), "fixed ticks never call on_draw",
+          failures);
+
+    Haki::Canvas canvas;
+    scripts.Draw(scene.GetRegistry(), canvas, nullptr, 0.25f);
+    Check(scripts.Execute("local s = scene.find('painter'):script(); assert(s.draws == 1 and s.last_dt == 0.25)"),
+          "on_draw runs once per Draw with the frame dt", failures);
+    // fill + 4 outline edges + screen rect
+    Check(canvas.GetQuadCount() == 6, "draw.rect/screen_rect queue canvas quads", failures);
+    Check(scripts.Execute("assert(scene.find('painter'):script().measured)"), "draw.measure is 0x0 without a font",
+          failures);
+
+    scripts.ClearErrors();
+    CreateScripted(scene, "eager", "eager.lua");
+    Tick(scene);
+    bool rejected = false;
+    for (const std::string &error : scripts.GetErrors())
+    {
+        rejected = rejected || error.find("only works inside on_draw") != std::string::npos;
+    }
+    Check(rejected, "draw.* outside on_draw raises a script error", failures);
+    Check(!scripts.Execute("draw.screen_rect(0, 0, 1, 1)"), "draw.* from the console is rejected too", failures);
+}
+
 int main()
 {
     int failures = 0;
     std::cout << "=== pause and step ===\n";
     RunPauseTests(failures);
+    std::cout << "=== draw ===\n";
+    RunDrawTests(failures);
     std::cout << "=== lifecycle ===\n";
     RunLifecycleTests(failures);
     RunAssetLayoutTests(failures);

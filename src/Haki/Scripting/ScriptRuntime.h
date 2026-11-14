@@ -15,6 +15,8 @@ namespace Haki
 {
 
 class PhysicsSystem;
+class Canvas;
+class Font;
 
 // Lua-side entity handle. Every method checks that the entity still exists.
 struct LuaEntity
@@ -36,6 +38,10 @@ struct ScriptRuntime
     double Elapsed = 0.0;
     std::uint64_t Frame = 0;
 
+    // Set only while on_draw callbacks run (the `draw` API errors otherwise).
+    Canvas *DrawCanvas = nullptr;
+    const Font *DrawFont = nullptr;
+
     // Destroys requested from Lua; applied after the current batch of callbacks.
     std::vector<entt::entity> PendingDestroy;
 
@@ -43,7 +49,7 @@ struct ScriptRuntime
     std::function<sol::object(entt::entity)> FindInstance;
 };
 
-// Registers vec3, quat, Entity, scene, physics, input, time and log in the given state.
+// Registers vec3, quat, Entity, scene, physics, input, draw, time and log in the given state.
 void RegisterScriptBindings(sol::state &lua, ScriptRuntime &runtime);
 // Refreshes the `time` table before a tick.
 void UpdateScriptTime(sol::state &lua, const ScriptRuntime &runtime);

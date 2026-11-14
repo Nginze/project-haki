@@ -15,6 +15,8 @@ namespace Haki
 {
 
 class PhysicsSystem;
+class Canvas;
+class Font;
 
 struct ScriptReloadResult
 {
@@ -24,7 +26,8 @@ struct ScriptReloadResult
 
 // Runs Lua gameplay scripts for one scene (one sandboxed Lua 5.4 state per scene).
 //  - Each entity with a ScriptComponent gets an instance of the class table its script returns:
-//    on_start, on_update(dt), on_contact_begin/end(other), on_trigger_enter/exit(other), on_destroy.
+//    on_start, on_update(dt), on_contact_begin/end(other), on_trigger_enter/exit(other), on_destroy,
+//    and on_draw(dt) once per rendered frame (the only place the `draw` billboard/HUD API works).
 //  - An optional scene script receives the same callbacks with self.entity = nil.
 //  - A script error logs once and disables that instance until its script is reloaded.
 //  - ReloadChanged re-runs edited files and swaps their functions in place, keeping instance state.
@@ -48,6 +51,9 @@ public:
 
     // Creates instances for new ScriptComponents, calls on_start for new ones, then on_update for all.
     void Update(entt::registry &registry, float deltaTime);
+    // Calls on_draw(dt) on started instances once per rendered frame; `draw.*` queues onto canvas.
+    // dt is the frame time (0 while paused). font may be null: text calls are then skipped.
+    void Draw(entt::registry &registry, Canvas &canvas, const Font *font, float deltaTime);
     // Delivers the physics contact events of the most recent step to the scripts of both entities.
     void DispatchContacts(entt::registry &registry);
 

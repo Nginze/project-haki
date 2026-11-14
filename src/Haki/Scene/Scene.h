@@ -26,6 +26,9 @@ struct SceneRenderContext
     int Height = 0;
     // When set, rendered instead of the scene's primary camera (debug free-look).
     const SceneCameraOverride *CameraOverride = nullptr;
+    // Real time since the previous rendered frame (passed to Lua on_draw) and the font draw.* text uses.
+    float DeltaTime = 0.0f;
+    const Font *TextFont = nullptr;
 };
 
 class SceneEnterContext

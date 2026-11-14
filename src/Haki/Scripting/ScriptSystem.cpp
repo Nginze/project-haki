@@ -523,6 +523,41 @@ void ScriptSystem::Update(entt::registry &registry, float deltaTime)
     state.FlushDestroys(registry);
 }
 
+void ScriptSystem::Draw(entt::registry &registry, Canvas &canvas, const Font *font, float deltaTime)
+{
+    if (!state_ || &registry != registry_)
+    {
+        return;
+    }
+    State &state = *state_;
+    const float dt = std::isfinite(deltaTime) ? std::max(deltaTime, 0.0f) : 0.0f;
+    state.Runtime.DrawCanvas = &canvas;
+    state.Runtime.DrawFont = font;
+
+    if (state.SceneInstance && state.SceneInstance->Started)
+    {
+        state.Call(*state.SceneInstance, "on_draw", dt);
+    }
+    std::vector<entt::entity> scripted;
+    {
+        auto view = registry.view<ScriptComponent>();
+        scripted.assign(view.begin(), view.end());
+        std::reverse(scripted.begin(), scripted.end());
+    }
+    for (const entt::entity entity : scripted)
+    {
+        auto found = state.Instances.find(entity);
+        if (found != state.Instances.end() && found->second.Started && registry.valid(entity))
+        {
+            state.Call(found->second, "on_draw", dt);
+        }
+    }
+
+    state.Runtime.DrawCanvas = nullptr;
+    state.Runtime.DrawFont = nullptr;
+    state.FlushDestroys(registry);
+}
+
 void ScriptSystem::DispatchContacts(entt::registry &registry)
 {
     if (!state_ || &registry != registry_ || !state_->Runtime.Physics)

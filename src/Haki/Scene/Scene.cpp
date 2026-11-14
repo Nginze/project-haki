@@ -272,6 +272,10 @@ void Scene::OnRender(const SceneRenderContext &context)
         }
     }
 
+    // Lua billboards/HUD queue onto the canvas, which the renderer draws over the finished frame.
+    scripts_.Draw(registry_, context.Render->GetCanvas(), context.TextFont,
+                  simulationPaused_ ? 0.0f : context.DeltaTime);
+
     context.Render->Render();
     context.Render->EndFrame();
     LogRenderStorageIfChanged(summary);

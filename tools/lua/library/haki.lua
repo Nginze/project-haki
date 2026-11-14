@@ -348,6 +348,58 @@ function input.gamepad_axis(pad, name) end
 ---@return HakiMoveInput
 function input.move() end
 
+---Colours are {r, g, b, a} (or {r=, g=, b=, a=}) with 0..1 components.
+---@alias HakiColor number[]|{r: number, g: number, b: number, a: number?}
+
+---@class HakiDrawOptions
+---@field color HakiColor? default white
+---@field size number? text size in pixels (default 18)
+---@field offset_y number? label: pixels between the anchor and the text's bottom edge
+---@field outline number? rect: draw an outline of this thickness instead of filling
+---@field depth_test boolean? world shapes: hide when scene geometry covers the anchor (default true)
+---@field max_distance number? world shapes: hide beyond this camera distance in metres (0 = never)
+---@field layer integer? higher layers draw on top (default 10)
+
+---Immediate-mode drawing. Only valid inside on_draw; queued shapes last one frame.
+---World shapes (label, rect) are billboards: anchored to a 3D point, sized in pixels, always facing the camera.
+---@class HakiDrawAPI
+draw = {}
+---Text centred horizontally above `position`.
+---@param position HakiVec3
+---@param text string
+---@param options HakiDrawOptions?
+function draw.label(position, text, options) end
+
+---Rectangle in pixels relative to the anchor's screen position (y down), e.g. -40, -30, 80, 8.
+---@param position HakiVec3
+---@param x number
+---@param y number
+---@param w number
+---@param h number
+---@param options HakiDrawOptions?
+function draw.rect(position, x, y, w, h, options) end
+
+---@param x number
+---@param y number
+---@param text string
+---@param options HakiDrawOptions?
+function draw.screen_text(x, y, text, options) end
+
+---@param x number
+---@param y number
+---@param w number
+---@param h number
+---@param options HakiDrawOptions?
+function draw.screen_rect(x, y, w, h, options) end
+
+---@return number width, number height
+function draw.screen_size() end
+
+---@param text string
+---@param size number?
+---@return number width, number height
+function draw.measure(text, size) end
+
 ---@class HakiTime
 ---@field dt number Fixed tick duration in seconds.
 ---@field elapsed number Simulation elapsed time in seconds.
@@ -375,6 +427,8 @@ function log.error(...) end
 ---@field on_trigger_exit? fun(self: HakiEntityScript, other: HakiEntity)
 ---@field on_contact_begin? fun(self: HakiEntityScript, other: HakiEntity)
 ---@field on_contact_end? fun(self: HakiEntityScript, other: HakiEntity)
+---Called once per rendered frame (dt = frame time, 0 while paused). The only place `draw.*` works.
+---@field on_draw? fun(self: HakiEntityScript, dt: number)
 
 ---Scene callbacks receive both contact participants and have no self.entity.
 ---@class HakiSceneScript
@@ -386,6 +440,7 @@ function log.error(...) end
 ---@field on_trigger_exit? fun(self: HakiSceneScript, first: HakiEntity, second: HakiEntity)
 ---@field on_contact_begin? fun(self: HakiSceneScript, first: HakiEntity, second: HakiEntity)
 ---@field on_contact_end? fun(self: HakiSceneScript, first: HakiEntity, second: HakiEntity)
+---@field on_draw? fun(self: HakiSceneScript, dt: number)
 
 ---@param value HakiVec3
 ---@return number
