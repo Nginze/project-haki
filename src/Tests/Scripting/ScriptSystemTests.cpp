@@ -654,7 +654,7 @@ function Painter:on_draw(dt)
     draw.rect(p, -40, -30, 80, 8, { color = { 0.2, 0.9, 0.3, 1 } })
     draw.rect(p, -41, -31, 82, 10, { color = { r = 0, g = 0, b = 0 }, outline = 1 })
     draw.label(p, "hello", { size = 20, offset_y = 12 }) -- no font in tests: skipped quietly
-    draw.screen_rect(10, 10, 50, 20)
+    draw.screen_rect(10, 10, 50, 20, { color = { 0.2, 0.9, 0.3, 1 } })
     local w, h = draw.measure("hello")
     self.measured = w == 0 and h == 0
 end
@@ -680,6 +680,18 @@ return Eager
           "on_draw runs once per Draw with the frame dt", failures);
     // fill + 4 outline edges + screen rect
     Check(canvas.GetQuadCount() == 6, "draw.rect/screen_rect queue canvas quads", failures);
+    {
+        std::vector<Haki::CanvasVertex> vertices;
+        std::vector<std::uint32_t> indices;
+        std::vector<Haki::CanvasBatch> batches;
+        canvas.BuildBatches(nullptr, vertices, indices, batches);
+        bool green = false;
+        for (const Haki::CanvasVertex &v : vertices)
+        {
+            green = green || (std::abs(v.Color.g - 0.9f) < 1e-4f && std::abs(v.Color.r - 0.2f) < 1e-4f);
+        }
+        Check(green, "draw option colours reach the canvas", failures);
+    }
     Check(scripts.Execute("assert(scene.find('painter'):script().measured)"), "draw.measure is 0x0 without a font",
           failures);
 

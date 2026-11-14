@@ -849,9 +849,9 @@ glm::vec4 ParseColor(const sol::object &value)
         throw std::runtime_error("draw color must be a table {r, g, b, a}");
     }
     const sol::table table = value;
-    const bool named = table["r"].get_type() != sol::type::lua_nil;
+    const bool named = table.raw_get<sol::object>("r").get_type() != sol::type::lua_nil;
     const auto component = [&](int index, const char *name, float fallback) {
-        const sol::object c = named ? sol::object(table[name]) : sol::object(table[index]);
+        const sol::object c = named ? table.raw_get<sol::object>(name) : table.raw_get<sol::object>(index);
         if (c.get_type() == sol::type::lua_nil)
         {
             return fallback;
