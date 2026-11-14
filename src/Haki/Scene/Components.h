@@ -150,6 +150,7 @@ namespace Haki
         AnimatorSource Source = AnimatorSource::Clip;
         float ClipSpeed = 1.0f;          // per-play multiplier on top of PlaybackSpeed
         bool OneShotFinished = false;    // a non-looping clip reached its end
+        bool HoldOnFinish = false;       // a finished one-shot keeps its last pose instead of returning to locomotion
         float FadeDuration = 0.0f;
         float FadeElapsed = 0.0f;
         AnimationPose FadeFrom;          // pose on screen when the current fade started

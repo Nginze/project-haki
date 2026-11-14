@@ -529,6 +529,7 @@ void RegisterEntity(sol::state &lua, ScriptRuntime &rt)
         float fade = -1.0f;
         bool loop = false;
         float speed = 1.0f;
+        bool hold = false;
         if (options)
         {
             if (const sol::optional<float> value = (*options)["fade"]; value)
@@ -537,10 +538,11 @@ void RegisterEntity(sol::state &lua, ScriptRuntime &rt)
                 fade = *value;
             }
             loop = (*options)["loop"].get_or(false);
+            hold = (*options)["hold"].get_or(false);
             speed = (*options)["speed"].get_or(1.0f);
             if (!std::isfinite(speed)) throw std::runtime_error("speed must be finite");
         }
-        if (!AnimationSystem::Play(component, name, fade, loop, speed))
+        if (!AnimationSystem::Play(component, name, fade, loop, speed, hold))
         {
             throw std::runtime_error(UnknownClipMessage(component, name));
         }

@@ -190,6 +190,16 @@ void BlendingTests(const Haki::Skeleton &skeleton, int &failures)
     Check(animator.Source == AnimatorSource::Locomotion && Near(x(), 0.0f),
           "returning to locomotion with no fade switches immediately", failures);
 
+    AnimationSystem::Play(animator, "Punch", 0.0f, false, 1.0f, true);
+    AnimationSystem::Update(registry, 1.0f);
+    AnimationSystem::Update(registry, 0.5f);
+    Check(animator.Source == AnimatorSource::Clip && animator.OneShotFinished && Near(x(), 100.0f),
+          "a held one-shot stays on its last pose instead of returning to locomotion", failures);
+    AnimationSystem::ReturnToLocomotion(animator, 0.0f);
+    AnimationSystem::Update(registry, 0.0f);
+    Check(animator.Source == AnimatorSource::Locomotion && !animator.HoldOnFinish && Near(x(), 0.0f),
+          "ReturnToLocomotion releases a held clip", failures);
+
     // An animator without locomotion still honours direct clip changes (snaps, no fade).
     registry.remove<LocomotionAnimationComponent>(visual);
     animator.Source = AnimatorSource::Clip;

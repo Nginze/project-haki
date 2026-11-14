@@ -39,9 +39,10 @@ public:
 
     // Fades from the current on-screen pose to `clip` over `fade` seconds (negative = the animator's
     // DefaultFade). Suspends locomotion until the clip finishes (one-shot) or ReturnToLocomotion is called.
+    // hold: a one-shot stays on its last pose when it ends (e.g. a death) until the next Play/Return.
     // Returns false if the animator has no clip with that name.
     static bool Play(AnimatorComponent &animator, const std::string &clip, float fade = -1.0f, bool loop = false,
-                     float speed = 1.0f);
+                     float speed = 1.0f, bool hold = false);
     // Fades back to the locomotion blend (negative fade = the animator's DefaultFade).
     static void ReturnToLocomotion(AnimatorComponent &animator, float fade = -1.0f);
 

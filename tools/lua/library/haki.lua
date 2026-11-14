@@ -187,6 +187,7 @@ function Entity:has_animation(name) end
 ---@field fade number? seconds to blend from the current pose (default: the animator's defaultFade)
 ---@field loop boolean? default false: play once, then return to locomotion
 ---@field speed number? playback speed multiplier (default 1)
+---@field hold boolean? one-shot only: stay on the last pose when it ends (e.g. death) until the next play/stop
 
 ---Plays a clip on this entity's animator (or its child's), crossfading from the current pose.
 ---A one-shot pauses locomotion and blends back into it when it ends.

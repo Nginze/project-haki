@@ -325,7 +325,8 @@ void AnimationSystem::Evaluate(const Skeleton &skeleton, const AnimationClip *cl
     ComposePose(skeleton, pose, globalPoses, boneMatrices);
 }
 
-bool AnimationSystem::Play(AnimatorComponent &animator, const std::string &clip, float fade, bool loop, float speed)
+bool AnimationSystem::Play(AnimatorComponent &animator, const std::string &clip, float fade, bool loop, float speed,
+                          bool hold)
 {
     if (!animator.Clips.contains(clip))
     {
@@ -345,6 +346,7 @@ bool AnimationSystem::Play(AnimatorComponent &animator, const std::string &clip,
     animator.Loop = loop;
     animator.IsPlaying = true;
     animator.OneShotFinished = false;
+    animator.HoldOnFinish = hold && !loop;
     return true;
 }
 
@@ -353,6 +355,7 @@ void AnimationSystem::ReturnToLocomotion(AnimatorComponent &animator, float fade
     StartFade(animator, fade);
     animator.Source = AnimatorSource::Locomotion;
     animator.OneShotFinished = false;
+    animator.HoldOnFinish = false;
     animator.ClipSpeed = 1.0f;
 }
 
@@ -437,7 +440,7 @@ void AnimationSystem::Update(entt::registry &registry, float deltaTime)
                 animator->Source = AnimatorSource::Locomotion;
                 snapLocomotion = true;
             }
-            else if (animator->Source == AnimatorSource::Clip && animator->OneShotFinished)
+            else if (animator->Source == AnimatorSource::Clip && animator->OneShotFinished && !animator->HoldOnFinish)
             {
                 ReturnToLocomotion(*animator, locomotion->Fade);
             }
