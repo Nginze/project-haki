@@ -4,8 +4,13 @@
 --   idle   - stand still for a few seconds
 --   wander - walk to a random reachable point near home, steering around obstacles
 --   watch  - stop and look at the player while they are close
+--   flinch - knocked back for a moment after taking a hit
+--   dead   - plays the death clip, then respawns at home with full health
 --
--- The body's locomotion blend picks Idle/Run from the velocity, so no clips are played here.
+-- NPCs can be hurt through the duck-typed damage contract (take_damage, see lib/damage.lua).
+-- The body's locomotion blend picks Idle/Run from the velocity; only hits and death play clips.
+local anim = require("shared.lib.anim")
+local Health = require("shared.lib.health")
 
 ---@class Npc : HakiEntityScript
 ---@field walk_speed number
@@ -18,7 +23,12 @@
 ---@field watch_cooldown number
 ---@field avoid_distance number
 ---@field player_name string
+---@field max_health number
+---@field flinch_time number
+---@field knockback number
+---@field respawn_time number
 ---@field debug boolean
+---@field health Health
 local Npc = {
 	properties = {
 		walk_speed = 2.2, -- m/s
@@ -31,6 +41,10 @@ local Npc = {
 		watch_cooldown = 4.0, -- seconds before the player can be noticed again
 		avoid_distance = 1.2, -- how far ahead obstacles are felt (m)
 		player_name = "Player",
+		max_health = 60,
+		flinch_time = 0.35, -- seconds stunned after a hit
+		knockback = 3.5, -- m/s pushed away from the hit at the start of a flinch
+		respawn_time = 4.0, -- seconds lying down before respawning at home
 		debug = false, -- log state changes
 	},
 }
@@ -78,13 +92,35 @@ end
 function Npc:on_start()
 	self.home = self.entity:position()
 	self.notice_cooldown = math.random() * 1.0
+	self.health = Health.new(self.entity, self.max_health, {
+		on_hurt = function(_, source, info)
+			self.knock_direction = info.direction and info.direction:flat()
+				or (source and flat_dir(source:position(), self.entity:position()))
+				or vec3.zero()
+			self.attacker = source
+			self:set_state("flinch")
+		end,
+		on_death = function()
+			self:set_state("dead")
+		end,
+	})
 	self:set_state("idle")
 end
 
 function Npc:on_update(dt)
+	self.health:update(dt)
 	self.state_time = self.state_time + dt
 	self.notice_cooldown = math.max(self.notice_cooldown - dt, 0)
 	self.states[self.state].update(self, dt)
+end
+
+function Npc:on_draw(dt)
+	self.health:draw(dt)
+end
+
+-- Duck-typed damage receiver (see lib/damage.lua).
+function Npc:take_damage(amount, source, info)
+	return self.health:take(amount, source, info)
 end
 
 ---@param name string
@@ -260,6 +296,41 @@ Npc.states = {
 			if not player or self.state_time >= self.watch_time then
 				self.notice_cooldown = self.watch_cooldown
 				self:set_state("wander")
+			end
+		end,
+	},
+
+	flinch = {
+		enter = function(self) end,
+		update = function(self, dt)
+			local t = math.min(self.state_time / self.flinch_time, 1)
+			local direction = self.knock_direction or vec3.zero()
+			if direction:length() > 0.001 then
+				direction = direction:normalized()
+			end
+			self.entity:set_move_velocity(direction * (self.knockback * (1 - t)))
+			if self.attacker and self.attacker:valid() then
+				self:face(flat_dir(self.entity:position(), self.attacker:position()), dt)
+			end
+			if t >= 1 then
+				self:set_state("idle", "recovered")
+			end
+		end,
+	},
+
+	dead = {
+		enter = function(self)
+			self.entity:set_move_velocity(vec3.zero())
+			anim.play(self.entity, "Death", { fade = 0.1, hold = true })
+		end,
+		update = function(self, _)
+			if self.state_time >= self.respawn_time then
+				self.entity:set_position(self.home)
+				self.health:reset()
+				if self.entity:has_animator() then
+					self.entity:stop_animation(0.2)
+				end
+				self:set_state("idle", "respawned")
 			end
 		end,
 	},
