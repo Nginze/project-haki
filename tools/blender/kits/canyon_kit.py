@@ -449,6 +449,122 @@ def cliff_block(name="cliff_block", height=1.0):
     return p.build()
 
 
+# ---------------------------------------------------------------- continuous cover walls
+WALL_HEIGHT = 1.0
+WALL_LOW_HEIGHT = 0.5
+WALL_CHAMFER = 0.035
+DIRECTIONS = {"E": (1, 0), "N": (0, 1), "W": (-1, 0), "S": (0, -1)}
+
+
+def cell_outline(cells):
+    """Counter-clockwise outline of a union of unit cells centred on integer coordinates."""
+    cells = set(cells)
+    edges = {}
+    for i, j in cells:
+        x0, y0, x1, y1 = i - 0.5, j - 0.5, i + 0.5, j + 0.5
+        for a, b in (((x0, y0), (x1, y0)), ((x1, y0), (x1, y1)), ((x1, y1), (x0, y1)), ((x0, y1), (x0, y0))):
+            if (b, a) in edges:
+                del edges[(b, a)]
+            else:
+                edges[(a, b)] = True
+    following = {a: b for a, b in edges}
+    start = min(following)
+    loop, point = [start], following[start]
+    while point != start:
+        loop.append(point)
+        point = following[point]
+    # drop collinear vertices
+    out = []
+    n = len(loop)
+    for k in range(n):
+        a, b, c = Vector(loop[k - 1]), Vector(loop[k]), Vector(loop[(k + 1) % n])
+        if abs((b - a).to_3d().cross((c - b).to_3d()).z) > 1e-9:
+            out.append(loop[k])
+    return out
+
+
+def _wall_ring(outline, inset, chamfer, z, clamp):
+    """Offset a rectilinear outline inward by `inset`, chamfer convex corners, clamp to the module."""
+    n = len(outline)
+    ring = []
+    for k in range(n):
+        prev, cur, nxt = Vector(outline[k - 1]), Vector(outline[k]), Vector(outline[(k + 1) % n])
+        a, b = (cur - prev).normalized(), (nxt - cur).normalized()
+        na, nb = Vector((-a.y, a.x)), Vector((-b.y, b.x))  # inward (left) normals of a CCW outline
+        v = cur + (na + nb) * inset
+        if a.x * b.y - a.y * b.x > 0:  # convex corner: chamfer
+            points = [v - a * chamfer, v + b * chamfer]
+        else:
+            points = [v]
+        for point in points:
+            ring.append((min(max(point.x, -clamp), clamp), min(max(point.y, -clamp), clamp), z))
+    return ring
+
+
+def wall_module(name, open_sides="", height=WALL_HEIGHT):
+    """One cell of continuous cover wall. `open_sides` (any of "ENWS") are flush joins to the next
+    module, so walls of any length and shape assemble without seams, repeated folds or gaps:
+    "" pillar, "E" end, "EW" straight, "EN" corner, "EWN" T-junction, "ENWS" cross.
+    Light rounded top over brown sides that darken softly toward the base (contact shading)."""
+    p = Piece(name)
+    p.gradient_range = (0.0, height)
+    p.sharp_angle = math.radians(50)
+    cells = [(0, 0)] + [DIRECTIONS[d] for d in open_sides]
+    outline = cell_outline(cells)
+    # (height, inset) profile: soft foot, one shallow 3.5 mm stratum, rounded top edge.
+    seam = 0.45 * height
+    profile = [(0.0, 0.006), (0.03, 0.0), (seam - 0.01, 0.0), (seam, 0.0035), (seam + 0.01, 0.0),
+               (height - 0.06, 0.0), (height - 0.022, 0.009), (height - 0.005, 0.026), (height, 0.04)]
+    rings = [_wall_ring(outline, inset, WALL_CHAMFER, z, 0.5) for z, inset in profile]
+    assert len({len(r) for r in rings}) == 1, "wall rings must match"
+    bm = loft(rings)
+    bmesh.ops.dissolve_degenerate(bm, edges=bm.edges, dist=1e-6)
+    bm.normal_update()
+    # Faces lying on an open side are hidden inside the joined wall.
+    doomed = []
+    for face in bm.faces:
+        c = face.calc_center_median()
+        for d in open_sides:
+            dx, dy = DIRECTIONS[d]
+            if abs(c.x * dx + c.y * dy - 0.5) < 1e-4 and (face.normal.x * dx + face.normal.y * dy) > 0.9:
+                doomed.append(face)
+                break
+    bmesh.ops.delete(bm, geom=doomed, context="FACES")
+    p.add(bm, by_normal("wall_top", "wall_side"), cull_bottom=True)
+    return p.build()
+
+
+WALL_MODULES = {"pillar": "", "end": "E", "straight": "EW", "corner": "EN", "t": "EWN", "cross": "ENWS"}
+
+
+def _wall_builder(kind, low):
+    def build():
+        name = f"wall_{kind}" + ("_low" if low else "")
+        return wall_module(name, WALL_MODULES[kind], WALL_LOW_HEIGHT if low else WALL_HEIGHT)
+
+    build.__name__ = f"wall_{kind}" + ("_low" if low else "")
+    return build
+
+
+WALL_PIECES = [_wall_builder(kind, low) for low in (False, True) for kind in WALL_MODULES]
+
+
+def wall_piece_for(cells, cell):
+    """(module name suffix, quarter turns) for `cell` inside a set of wall cells.
+    The base modules open toward E, EW, EN, EWN; rotate them to match the neighbours."""
+    i, j = cell
+    sides = "".join(d for d, (dx, dy) in DIRECTIONS.items() if (i + dx, j + dy) in cells)
+    order = "ENWS"
+    for kind, base in WALL_MODULES.items():
+        if len(base) != len(sides):
+            continue
+        for turns in range(4):
+            rotated_sides = {order[(order.index(c) + turns) % 4] for c in base}
+            if rotated_sides == set(sides):
+                return kind, turns
+    raise ValueError(f"no wall module for {sides}")
+
+
 def cliff_block_low():
     return cliff_block("cliff_block_low", height=0.5)
 
@@ -746,6 +862,7 @@ PIECES = [
     crate_debris,
     fence_post,
     fence_rail,
+    *WALL_PIECES,
 ]
 
 
@@ -923,9 +1040,11 @@ def build_sample(origin=(0.0, -15.0)):
             r = rng.random()
             put("sand_tile_cracked" if r < 0.1 else "sand_tile_pebbles" if r < 0.18 else "sand_tile", x, y, rng.randrange(4))
             if (x, y) in walls:
-                put("cliff_block", x, y)
+                kind, turns = wall_piece_for(walls, (x, y))
+                put("wall_" + kind, x, y, turns)
             elif (x, y) in low:
-                put("cliff_block_low", x, y)
+                kind, turns = wall_piece_for(low, (x, y))
+                put("wall_" + kind + "_low", x, y, turns)
     for x, y in [(5, 4), (6, 4), (6, 5), (6, 3)]:  # L-shaped hedge
         put("bush_1x1", x, y)
     for x in range(1, 5):  # fence: posts on each cell, rails linking neighbours, turning a corner
