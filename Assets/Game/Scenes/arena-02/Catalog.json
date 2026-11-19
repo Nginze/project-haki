@@ -3,63 +3,56 @@
   "version": 1,
   "assets": [
     {
-      "id": "arena-02.material.arena.cactus-body-482a34c2e4",
+      "id": "arena-02.material.arena.arena02-ground-ae7cc44f9f",
       "type": "material",
-      "source": "Materials/arena-cactus-body-482a34c2e4.material.json"
+      "source": "Materials/arena-arena02-ground-ae7cc44f9f.material.json"
     },
     {
-      "id": "arena-02.material.arena.cactus-petal-7d0b5bf059",
+      "id": "arena-02.material.arena.cactus-body-a497b0eadb",
       "type": "material",
-      "source": "Materials/arena-cactus-petal-7d0b5bf059.material.json"
+      "source": "Materials/arena-cactus-body-a497b0eadb.material.json"
     },
     {
-      "id": "arena-02.material.arena.cactus-pollen-bb14ca82c2",
+      "id": "arena-02.material.arena.cactus-petal-131c91db84",
       "type": "material",
-      "source": "Materials/arena-cactus-pollen-bb14ca82c2.material.json"
+      "source": "Materials/arena-cactus-petal-131c91db84.material.json"
     },
     {
-      "id": "arena-02.material.arena.cactus-rib-13877257bf",
+      "id": "arena-02.material.arena.cactus-pollen-33353defc4",
       "type": "material",
-      "source": "Materials/arena-cactus-rib-13877257bf.material.json"
+      "source": "Materials/arena-cactus-pollen-33353defc4.material.json"
     },
     {
-      "id": "arena-02.material.arena.cactus-spine-7edf026586",
+      "id": "arena-02.material.arena.cactus-rib-8123793b0c",
       "type": "material",
-      "source": "Materials/arena-cactus-spine-7edf026586.material.json"
+      "source": "Materials/arena-cactus-rib-8123793b0c.material.json"
     },
     {
-      "id": "arena-02.material.arena.cactus-tip-73bdce9447",
+      "id": "arena-02.material.arena.cactus-spine-cfc7561830",
       "type": "material",
-      "source": "Materials/arena-cactus-tip-73bdce9447.material.json"
+      "source": "Materials/arena-cactus-spine-cfc7561830.material.json"
     },
     {
-      "id": "arena-02.material.arena.canyon-palette-498ba0c95c",
+      "id": "arena-02.material.arena.cactus-tip-df3a7989a6",
       "type": "material",
-      "source": "Materials/arena-canyon-palette-498ba0c95c.material.json"
+      "source": "Materials/arena-cactus-tip-df3a7989a6.material.json"
     },
     {
-      "id": "arena-02.mesh.arena.arena02-continuoussand-001",
+      "id": "arena-02.material.arena.canyon-palette-b83d1dbe0f",
+      "type": "material",
+      "source": "Materials/arena-canyon-palette-b83d1dbe0f.material.json"
+    },
+    {
+      "id": "arena-02.mesh.arena.arena02-ground",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "Arena02_ContinuousSand.001"
+      "mesh": "Arena02_Ground"
     },
     {
-      "id": "arena-02.mesh.arena.arena02-sand-tile-cracked-detail-001",
+      "id": "arena-02.mesh.arena.arena02-stream",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "Arena02_sand_tile_cracked_detail.001"
-    },
-    {
-      "id": "arena-02.mesh.arena.arena02-sand-tile-pebbles-detail-001",
-      "type": "mesh",
-      "source": "Models/arena.glb",
-      "mesh": "Arena02_sand_tile_pebbles_detail.001"
-    },
-    {
-      "id": "arena-02.mesh.arena.bush-1x1",
-      "type": "mesh",
-      "source": "Models/arena.glb",
-      "mesh": "bush_1x1"
+      "mesh": "Arena02_Stream"
     },
     {
       "id": "arena-02.mesh.arena.cactus-barrel",
@@ -72,42 +65,6 @@
       "type": "mesh",
       "source": "Models/arena.glb",
       "mesh": "cactus_tall"
-    },
-    {
-      "id": "arena-02.mesh.arena.canyon-boundary",
-      "type": "mesh",
-      "source": "Models/arena.glb",
-      "mesh": "canyon_boundary"
-    },
-    {
-      "id": "arena-02.mesh.arena.canyon-boundary-low",
-      "type": "mesh",
-      "source": "Models/arena.glb",
-      "mesh": "canyon_boundary_low"
-    },
-    {
-      "id": "arena-02.mesh.arena.canyon-corner",
-      "type": "mesh",
-      "source": "Models/arena.glb",
-      "mesh": "canyon_corner"
-    },
-    {
-      "id": "arena-02.mesh.arena.canyon-corner-low",
-      "type": "mesh",
-      "source": "Models/arena.glb",
-      "mesh": "canyon_corner_low"
-    },
-    {
-      "id": "arena-02.mesh.arena.cliff-block",
-      "type": "mesh",
-      "source": "Models/arena.glb",
-      "mesh": "cliff_block"
-    },
-    {
-      "id": "arena-02.mesh.arena.cliff-block-low",
-      "type": "mesh",
-      "source": "Models/arena.glb",
-      "mesh": "cliff_block_low"
     },
     {
       "id": "arena-02.mesh.arena.crate",
@@ -128,10 +85,142 @@
       "mesh": "fence_rail"
     },
     {
+      "id": "arena-02.mesh.arena.grass-corner",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "grass_corner"
+    },
+    {
+      "id": "arena-02.mesh.arena.grass-end",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "grass_end"
+    },
+    {
+      "id": "arena-02.mesh.arena.grass-straight",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "grass_straight"
+    },
+    {
+      "id": "arena-02.mesh.arena.grass-tuft",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "grass_tuft"
+    },
+    {
       "id": "arena-02.mesh.arena.rock-boulder",
       "type": "mesh",
       "source": "Models/arena.glb",
       "mesh": "rock_boulder"
+    },
+    {
+      "id": "arena-02.mesh.arena.rock-mass-0",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "rock_mass_0"
+    },
+    {
+      "id": "arena-02.mesh.arena.rock-mass-1",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "rock_mass_1"
+    },
+    {
+      "id": "arena-02.mesh.arena.rock-mass-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "rock_mass_2"
+    },
+    {
+      "id": "arena-02.mesh.arena.rock-mass-3",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "rock_mass_3"
+    },
+    {
+      "id": "arena-02.mesh.arena.rock-mass-4",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "rock_mass_4"
+    },
+    {
+      "id": "arena-02.mesh.arena.rock-mass-5",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "rock_mass_5"
+    },
+    {
+      "id": "arena-02.mesh.arena.rock-pebbles",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "rock_pebbles"
+    },
+    {
+      "id": "arena-02.mesh.arena.shrub-a",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "shrub_a"
+    },
+    {
+      "id": "arena-02.mesh.arena.shrub-b",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "shrub_b"
+    },
+    {
+      "id": "arena-02.mesh.arena.shrub-c",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "shrub_c"
+    },
+    {
+      "id": "arena-02.mesh.arena.south-ledge-0",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "south_ledge_0"
+    },
+    {
+      "id": "arena-02.mesh.arena.south-ledge-1",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "south_ledge_1"
+    },
+    {
+      "id": "arena-02.mesh.arena.south-ledge-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "south_ledge_2"
+    },
+    {
+      "id": "arena-02.mesh.arena.south-ledge-3",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "south_ledge_3"
+    },
+    {
+      "id": "arena-02.mesh.arena.wall-corner",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "wall_corner"
+    },
+    {
+      "id": "arena-02.mesh.arena.wall-end",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "wall_end"
+    },
+    {
+      "id": "arena-02.mesh.arena.wall-end-low",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "wall_end_low"
+    },
+    {
+      "id": "arena-02.mesh.arena.wall-straight",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "wall_straight"
     },
     {
       "id": "arena-02.mesh.arena.water-corner-outer",
@@ -140,9 +229,16 @@
       "mesh": "water_corner_outer"
     },
     {
-      "id": "arena-02.texture.arena.canyon-palette-srgb-fdb6965b77",
+      "id": "arena-02.texture.arena.canyon-palette-srgb-4f835c6168",
       "type": "texture",
-      "source": "Textures/arena-canyon-palette-fdb6965b77.png",
+      "source": "Textures/arena-canyon-palette-4f835c6168.png",
+      "srgb": true,
+      "flipY": false
+    },
+    {
+      "id": "arena-02.texture.arena.ground-color-srgb-b939fe718c",
+      "type": "texture",
+      "source": "Textures/arena-ground-color-b939fe718c.png",
       "srgb": true,
       "flipY": false
     }

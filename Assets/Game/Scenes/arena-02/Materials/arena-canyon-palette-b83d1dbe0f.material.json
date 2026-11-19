@@ -14,15 +14,15 @@
     "BaseColorFactor": {
       "type": "vec4",
       "value": [
-        0.22322796285152435,
-        0.46207699179649353,
-        0.07818742096424103,
+        1.0,
+        1.0,
+        1.0,
         1.0
       ]
     },
     "UseBaseColorTexture": {
       "type": "int",
-      "value": 0
+      "value": 1
     },
     "PbrWorkflow": {
       "type": "int",
@@ -46,7 +46,7 @@
     },
     "RoughnessFactor": {
       "type": "float",
-      "value": 0.8799999952316284
+      "value": 0.8500000238418579
     },
     "UseMetallicRoughnessTexture": {
       "type": "int",
@@ -119,6 +119,10 @@
     "Ior": {
       "type": "float",
       "value": 1.5
+    },
+    "BaseColorTexture": {
+      "type": "texture2D",
+      "value": "arena-02.texture.arena.canyon-palette-srgb-4f835c6168"
     }
   }
 }
