@@ -157,15 +157,15 @@ Approval checklist:
 
 ## 10. Current implementation and next work
 
-As reviewed on **19 November 2026**, this pass updates the specification and removes old art-direction output. It does not approve the current arena as visually finished.
+As reviewed on **19 November 2026**. The arena-02 look-development pass (palette wiring, cover walls, foliage, outskirts, camera, render settings) has landed; it is not yet approved as visually finished.
 
 | Area | Current state / required work |
 | --- | --- |
-| Arena coverage | The visible floor is finite and needs a camera-footprint check across startup, follow positions, and aspect ratios; extend the visible landscape and align its clamp accordingly. |
-| Outskirts | Current rim/corner modules repeat around the perimeter. Replace that composition with the three bands and grouped variation described above. |
-| Foliage | The arena concept's natural broad-leaf outskirts direction is approved. Gameplay concealment grass needs slightly thinner blades and greater density; update the recipe's canopy/silhouette using section 6 as the target. |
-| Camera consistency | The refinement recipe sets an orthographic camera, while the current exported arena-02 scene stores a perspective camera. Choose and preserve one benchmark profile before approving asset scale or coverage. |
-| Palette | Current generators have hard-coded swatches and existing exports contain baked colors. Connect future generation/material roles to `palette.json`; runtime palette loading/tinting is not present yet. |
+| Arena coverage | arena-02 terrain is sized from the union of benchmark-camera footprints over every focus in the playable square at 16:9, 16:10 and 21:9 plus 4 m, and `arena_rules.lua` clamps the frustum footprint to that rectangle. Checked in Blender and in-engine captures (centre, edges, corners, 16:9 and 21:9); not yet play-tested by hand. |
+| Outskirts | arena-02 uses the three bands: a rocky rise north, a dry bank with brush/cacti east, a stream with a fence section west and low ledges south, then grouped outskirts clusters. Needs a by-eye review against the approved concept. |
+| Foliage | Concealment grass is now `grass_*` modules (canopy mass plus tapered blades, skirt only on exposed edges, seamless joins); outskirts use broad-leaf `shrub_a/b/c`. Review blade width and density beside a character. |
+| Camera consistency | Resolved: the section 1 benchmark profile is authored in the arena-02 recipe and exported unchanged (perspective, 57°, 25° FOV). |
+| Palette | Kit and arena generators read `palette.json` roles; baked darkening respects `minBakedBrightness`. Runtime palette loading/tinting is not present yet. |
 | Shading | The current renderer is glTF PBR with shadows, environment lighting, SSAO, bloom, exposure/tone mapping, and FXAA. Two-tone shading with protected macro light/shade regions is a target, not an existing mode. |
 | Texture filtering | Texture mipmap support exists; maximum supported anisotropic filtering still needs integration. |
 | Look-dev tooling | Add repeatable gameplay captures and a plain-vs-styled switch as implementation work. |
