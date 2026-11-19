@@ -25,33 +25,33 @@ MATERIAL = "canyon_palette"
 
 # ---------------------------------------------------------------- palette (4x4 swatches, 16 px)
 PALETTE = {
-    "clay_top": "F0936A",
-    "clay_mid": "DB7A52",
-    "clay_dark": "C0623F",
-    "sand": "FFC98A",
-    "sand_side": "EBA463",
-    "bank": "FBE6C0",
-    "water": "2AA6F5",
-    "water_side": "1C8BDB",
-    "leaf": "3AD9A8",
-    "leaf_grad": "22B488",  # gradient swatch, see GRADIENTS
-    "wood": "E39A4C",
-    "wood_dark": "B06A30",
-    "rope": "DDB073",
-    "rock": "EFA47A",
-    "rock_dark": "CC7650",
-    "wood_panel": "C97E3E",
+    "clay_top": "E56640",
+    "clay_mid": "C44F2F",
+    "clay_dark": "9D3D25",
+    "sand": "FFA85D",
+    "sand_side": "DD793B",
+    "bank": "F8D59D",
+    "water": "53BDE9",
+    "water_side": "399DCB",
+    "wood_cap": "E5A15B",
+    "leaf_grad": "15925F",  # gradient swatch, see GRADIENTS
+    "wood": "D88B47",
+    "wood_dark": "9E5F2D",
+    "rope": "D7AA6B",
+    "rock": "E37A4F",
+    "rock_dark": "AD4B2E",
+    "wood_panel": "B7773D",
 }
 SWATCHES = list(PALETTE)
 # Swatches drawn as a vertical 16-step gradient instead of a flat colour: name -> (bottom, top).
 # Faces using them get their V coordinate from vertex height (see Piece.gradient_range).
-GRADIENTS = {"leaf_grad": ("1C9E77", "48E2B2")}
+GRADIENTS = {
+    "leaf_grad": ("11734C", "28CD89"),
+    "clay_mid": ("B16A45", "D4774E"),
+    "wood": ("CD8543", "E4A05A"),
+}
 GRID = 4
 SWATCH_PX = 16
-
-
-def _srgb_to_linear(c):
-    return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
 
 
 def swatch_uv(name):
@@ -76,15 +76,18 @@ def palette_image():
                 t = (y % SWATCH_PX) / (SWATCH_PX - 1)
                 lo, hi = GRADIENTS[swatch]
                 rgb = [
-                    _srgb_to_linear(((1 - t) * int(lo[k : k + 2], 16) + t * int(hi[k : k + 2], 16)) / 255)
+                    ((1 - t) * int(lo[k : k + 2], 16) + t * int(hi[k : k + 2], 16)) / 255
                     for k in (0, 2, 4)
                 ]
             else:
                 hexcolor = PALETTE[swatch]
-                rgb = [_srgb_to_linear(int(hexcolor[k : k + 2], 16) / 255) for k in (0, 2, 4)]
+                # This is a byte-buffer sRGB image. Store encoded swatches; the image
+                # texture performs the sRGB-to-linear conversion when it is sampled.
+                rgb = [int(hexcolor[k : k + 2], 16) / 255 for k in (0, 2, 4)]
             o = (y * size + x) * 4
             pixels[o : o + 4] = [*rgb, 1.0]
     image.pixels[:] = pixels
+    image.update()
     os.makedirs(os.path.join(KIT_DIR, "Textures"), exist_ok=True)
     image.filepath_raw = os.path.join(KIT_DIR, "Textures", "canyon_palette.png")
     image.file_format = "PNG"
@@ -134,6 +137,9 @@ class Piece:
         """Merge bmesh `part` in. `color` is a swatch name or a face -> swatch rule.
         cull_bottom drops downward faces (resting on the ground / another part);
         cull_below drops faces entirely below that height (hidden under the floor)."""
+        # Weld only within this part. Separate overlapping solids can share positions
+        # without sharing a surface (e.g. a shoreline bank and its water slab).
+        bmesh.ops.remove_doubles(part, verts=part.verts, dist=1e-5)
         part.normal_update()
         doomed = []
         for face in part.faces:
@@ -144,7 +150,7 @@ class Piece:
                 doomed.append(face)
         if doomed:
             bmesh.ops.delete(part, geom=doomed, context="FACES")
-        uv = part.loops.layers.uv.verify()
+        uv = part.loops.layers.uv.get("UVMap") or part.loops.layers.uv.new("UVMap")
         for face in part.faces:
             swatch = color(face) if callable(color) else color
             u, v = swatch_uv(swatch)
@@ -164,20 +170,35 @@ class Piece:
         bpy.data.meshes.remove(mesh)
         return self
 
-    def build(self, location=(0, 0, 0), flat=False):
+    def build(self, location=(0, 0, 0), flat=False, materials=None):
         mesh = bpy.data.meshes.get(self.name)
         if mesh is None:
             mesh = bpy.data.meshes.new(self.name)
-        bmesh.ops.remove_doubles(self.bm, verts=self.bm.verts, dist=1e-5)
-        bmesh.ops.recalc_face_normals(self.bm, faces=self.bm.faces)
+        # Parts already have outward winding. Recalculating after merging their open,
+        # intersecting shells can reverse an entire bank and darken its top in-game.
+        self.bm.normal_update()
         self.bm.to_mesh(mesh)
         self.bm.free()
+        # The palette must be on TEXCOORD_0 in the GLB as well as in Blender.
+        for layer in list(mesh.uv_layers):
+            if layer.name != "UVMap":
+                mesh.uv_layers.remove(layer)
+        mesh.uv_layers.active_index = 0
+        mesh.uv_layers[0].active_render = True
+        material_indices = [poly.material_index for poly in mesh.polygons]
         mesh.materials.clear()
-        mesh.materials.append(palette_material())
+        for material in materials or [palette_material()]:
+            mesh.materials.append(material)
+        for poly, index in zip(mesh.polygons, material_indices):
+            poly.material_index = index
         for poly in mesh.polygons:
             poly.use_smooth = not flat
         if not flat:
             mesh.set_sharp_from_angle(angle=self.sharp_angle)
+        leaf_normals = mesh.attributes.get("_leaf_normal")
+        if leaf_normals:
+            mesh.normals_split_custom_set_from_vertices([tuple(d.vector.normalized()) for d in leaf_normals.data])
+            mesh.attributes.remove(leaf_normals)
         obj = bpy.data.objects.get(self.name)
         if obj is None:
             obj = bpy.data.objects.new(self.name, mesh)
@@ -262,7 +283,9 @@ def capsule(centre, radius, height, segments=8, rings=6, bulge=0.0):
     bulge > 0 makes the body swell towards its middle, like a leaf."""
     bm = bmesh.new()
     bmesh.ops.create_uvsphere(bm, u_segments=segments, v_segments=rings, radius=radius)
+    normals = bm.verts.layers.float_vector.new("_leaf_normal")
     for v in bm.verts:
+        v[normals] = v.co.normalized()
         if v.co.z > 1e-6:
             v.co.z += height - 2 * radius
     if bulge:
@@ -285,26 +308,58 @@ def rotated(bm, angle_z=0.0, angle_x=0.0, angle_y=0.0, pivot=(0, 0, 0)):
     return bm
 
 
+def loft(rings):
+    """Join equally sized counter-clockwise cross sections into one continuous shell."""
+    bm = bmesh.new()
+    vertices = [[bm.verts.new(co) for co in ring] for ring in rings]
+    count = len(vertices[0])
+    bm.faces.new(list(reversed(vertices[0])))
+    bm.faces.new(vertices[-1])
+    for lower, upper in zip(vertices, vertices[1:]):
+        for i in range(count):
+            j = (i + 1) % count
+            bm.faces.new((lower[i], lower[j], upper[j], upper[i]))
+    bm.normal_update()
+    return bm
+
+
+def tube_path(points, radius, sides=4):
+    """Small low-poly rope/grain tube following a path, with capped ends."""
+    points = [Vector(p) for p in points]
+    rings = []
+    for i, point in enumerate(points):
+        tangent = (points[min(i + 1, len(points) - 1)] - points[max(0, i - 1)]).normalized()
+        up = Vector((0, 0, 1)) if abs(tangent.z) < 0.9 else Vector((1, 0, 0))
+        a = tangent.cross(up).normalized()
+        b = tangent.cross(a).normalized()
+        rings.append([point + radius * (a * math.cos(j * math.tau / sides) +
+                                       b * math.sin(j * math.tau / sides)) for j in range(sides)])
+    return loft(rings)
+
+
 # ---------------------------------------------------------------- pieces
 TILE_DEPTH = 0.2  # floor tiles hang 0.2 m below the walkable surface
 WATER_LEVEL = -0.08
 
 
 def cliff_block(name="cliff_block", height=1.0):
-    """Layered red-clay wall block. Stacks of these make walls of any shape (2x1, L, ...)."""
+    """Continuous clay block with restrained strata, without separately bevelled stack gaps."""
     p = Piece(name)
-    if height >= 0.75:
-        bands = [(0.0, 0.36, "clay_dark", 0.0), (0.36, 0.7, "clay_mid", 0.015), (0.7, height, "clay_top", 0.0)]
-    else:
-        bands = [(0.0, 0.25, "clay_dark", 0.0), (0.25, height, "clay_top", 0.0)]
-    for i, (z0, z1, colour, inset) in enumerate(bands):
-        last = i == len(bands) - 1
-        h = 0.5 - inset
-        part = box((-h, -h, z0), (h, h, z1), bevel=0.06 if last else 0.035, segments=2 if last else 1, edges="all")
-        side = "clay_mid" if last else colour
-        p.add(part, by_normal("clay_top" if last else colour, side), cull_bottom=True)
+    p.gradient_range = (0.0, height)
+    profiles = [(0.0, 0.49), (0.025, 0.5)]
+    for seam in ([0.36, 0.7] if height >= 0.75 else [0.25]):
+        profiles.extend([(seam - 0.009, 0.5), (seam, 0.4965), (seam + 0.009, 0.5)])
+    profiles.extend([(height - 0.045, 0.5), (height - 0.012, 0.49), (height, 0.47)])
+    rings = []
+    for z, half in profiles:
+        cut = 0.035
+        points = [(-half + cut, -half), (half - cut, -half), (half, -half + cut),
+                  (half, half - cut), (half - cut, half), (-half + cut, half),
+                  (-half, half - cut), (-half, -half + cut)]
+        rings.append([(x, y, z) for x, y in points])
+    p.add(loft(rings), by_normal("clay_top", "clay_mid"), cull_bottom=True)
     # small square stud on top, as on the reference blocks
-    p.add(box((-0.13, -0.05, height), (0.11, 0.17, height + 0.045), bevel=0.02, segments=1), by_normal("clay_top", "clay_dark"), cull_bottom=True)
+    p.add(box((-0.13, -0.05, height), (0.11, 0.17, height + 0.045), bevel=0.02, segments=1), by_normal("clay_top", "clay_mid"), cull_bottom=True)
     return p.build()
 
 
@@ -429,39 +484,51 @@ def water_corner_inner():
 
 
 def bush_1x1():
-    """Hedge cell made of leaf capsules. All capsules end at the same height, so the top is flat
-    and level (the old grass patch peaked in the middle) and neighbouring bushes read as one hedge."""
+    """Dense tile of varied, overlapping oval leaves, following the grass GLB's layered silhouette."""
     rng = random.Random(5)
     p = Piece("bush_1x1")
     p.sharp_angle = math.radians(80)
-    n = 3
-    step = 1.0 / n
-    top = 0.9
-    radius = 0.17
-    p.gradient_range = (0.0, top)
-    shade = "leaf_grad"  # dark at the roots, light at the tips: cheap fake ambient occlusion
+    p.gradient_range = (0.0, 0.96)
 
-    for ix in range(n):
-        for iy in range(n):
-            x = -0.5 + step * (ix + 0.5) + rng.uniform(-0.015, 0.015)
-            y = -0.5 + step * (iy + 0.5) + rng.uniform(-0.015, 0.015)
-            # Tall leaves all end at the same height (+-1 cm), so the hedge top is flat and level.
-            height = top + rng.uniform(-0.01, 0.01)
-            p.add(capsule((x, y, -radius), radius, height + radius, segments=8, rings=8, bulge=0.12), shade, cull_below=0.0)
-    # A skirt of shorter leaves round the edge, sitting in the gaps between the tall ones and
-    # leaning out, for the layered look of the reference. They stay inside the cell.
+    def leaf(x, y, radius, height, lean, heading):
+        part = capsule((0, 0, -radius), radius, height + radius,
+                       segments=8, rings=6, bulge=rng.uniform(0.08, 0.16))
+        depth = rng.uniform(0.72, 0.92)
+        bmesh.ops.transform(part, matrix=Matrix.Diagonal((1.0, depth, 1.0, 1.0)), verts=part.verts)
+        rotated(part, angle_y=lean, angle_z=heading)
+        normal_layer = part.verts.layers.float_vector.get("_leaf_normal")
+        normal_rotation = Matrix.Rotation(heading, 3, "Z") @ Matrix.Rotation(lean, 3, "Y")
+        for vertex in part.verts:
+            normal = Vector(vertex[normal_layer])
+            normal.y /= depth
+            vertex[normal_layer] = (normal_rotation @ normal).normalized()
+        bmesh.ops.translate(part, vec=Vector((x, y, 0)), verts=part.verts)
+        # Preserve the authored one-metre footprint, even on the outward-leaning skirt.
+        for axis in (0, 1):
+            lo = min(v.co[axis] for v in part.verts)
+            hi = max(v.co[axis] for v in part.verts)
+            shift = min(0.0, 0.5 - hi) + max(0.0, -0.5 - lo)
+            if shift:
+                offset = Vector((0, 0, 0)); offset[axis] = shift
+                bmesh.ops.translate(part, vec=offset, verts=part.verts)
+        p.add(part, "leaf_grad", cull_below=0.0)
+
+    heights = (0.81, 0.96, 0.73, 0.89, 0.77, 0.92, 0.75, 0.86, 0.94)
+    for ix in range(3):
+        for iy in range(3):
+            x = (ix - 1) * 0.29 + rng.uniform(-0.045, 0.045)
+            y = (iy - 1) * 0.29 + rng.uniform(-0.045, 0.045)
+            leaf(x, y, rng.uniform(0.16, 0.20), heights[ix * 3 + iy],
+                 math.radians(rng.uniform(4, 13)), rng.uniform(0, math.tau))
+    # Unequal short leaves cover the roots and break the perimeter's repeated rhythm.
     skirt = [(t, -0.35) for t in (-0.17, 0.17)] + [(-0.34, -0.34)]
     for quarter in range(4):
         rot = Matrix.Rotation(quarter * math.pi / 2, 3, "Z")
         for sx, sy in skirt:
             pos = rot @ Vector((sx, sy, 0))
-            lean = Vector((pos.x, pos.y, 0)).normalized()
-            r = 0.13
-            leaf = capsule((0, 0, -r), r, 0.6 + rng.uniform(-0.04, 0.04), segments=8, rings=8, bulge=0.15)
-            axis = Vector((0, 0, 1)).cross(lean)
-            bmesh.ops.rotate(leaf, verts=leaf.verts, cent=Vector((0, 0, 0)), matrix=Matrix.Rotation(math.radians(16), 4, axis))
-            bmesh.ops.translate(leaf, vec=pos, verts=leaf.verts)
-            p.add(leaf, shade, cull_below=0.0)
+            leaf(pos.x + rng.uniform(-0.025, 0.025), pos.y + rng.uniform(-0.025, 0.025),
+                 rng.uniform(0.11, 0.155), rng.uniform(0.39, 0.65),
+                 math.radians(rng.uniform(12, 24)), math.atan2(pos.y, pos.x))
     return p.build()
 
 
@@ -534,14 +601,24 @@ RAIL_LEVELS = (0.24, 0.5)
 
 def fence_post():
     p = Piece("fence_post")
-    r = 0.12
-    p.add(cylinder((0, 0), r, 0.0, POST_HEIGHT, segments=10, bevel=0.035), by_normal("wood", "wood"), cull_bottom=True)
-    # top cap ring and rope band
-    p.add(cylinder((0, 0), r * 0.6, POST_HEIGHT - 0.01, POST_HEIGHT + 0.015, segments=10), by_normal("wood_dark", "wood_dark"), cull_bottom=True)
-    rope = bmesh.new()
-    bmesh.ops.create_cone(rope, segments=10, radius1=r + 0.03, radius2=r + 0.03, depth=0.07, cap_ends=False)
-    bmesh.ops.translate(rope, vec=Vector((0, 0, 0.37)), verts=rope.verts)
-    p.add(rope, "rope")
+    profiles = [(0.0, 0.125), (0.025, 0.146), (0.10, 0.151), (0.28, 0.154),
+                (0.48, 0.147), (0.65, 0.156), (0.70, 0.149), (POST_HEIGHT, 0.128)]
+    rings = [[(math.cos(i * math.tau / 12) * r, math.sin(i * math.tau / 12) * r, z)
+              for i in range(12)] for z, r in profiles]
+    p.sharp_angle = math.radians(65)
+    p.gradient_range = (0.0, POST_HEIGHT)
+    p.add(loft(rings), by_normal("wood_cap", "wood"), cull_bottom=True)
+    # Real rounded rope turns, rather than a flat sleeve around the post.
+    rope = []
+    for i in range(33):
+        t = i / 32
+        angle = t * math.tau * 1.85
+        rope.append((0.169 * math.cos(angle), 0.169 * math.sin(angle), 0.327 + t * 0.058))
+    p.add(tube_path(rope, 0.018, sides=4), "rope")
+    # Restrained end-grain on a rounded wooden cap; no dark filled disk.
+    cap_ring = [(0.083 * math.cos(i * math.tau / 12),
+                 0.083 * math.sin(i * math.tau / 12), POST_HEIGHT + 0.001) for i in range(13)]
+    p.add(tube_path(cap_ring, 0.0035, sides=3), "wood_panel")
     return p.build()
 
 
@@ -550,8 +627,18 @@ def fence_rail():
     posts at both ends). Place fence_post on every fence cell and a rail between each pair;
     rotate the rail 90/180/270 degrees to run in the other directions (corners need no extra piece)."""
     p = Piece("fence_rail")
-    for z in RAIL_LEVELS:
-        p.add(box((0.0, -0.04, z - 0.055), (1.0, 0.04, z + 0.055), bevel=0.02, segments=1, edges="all"), by_normal("wood", "wood_dark", "wood_dark"))
+    p.sharp_angle = math.radians(65)
+    for i, z in enumerate(RAIL_LEVELS):
+        rail = box((0.0, -0.067, z - 0.073), (1.0, 0.067, z + 0.073),
+                   bevel=0.026, segments=2, edges="all")
+        for v in rail.verts:
+            t = v.co.x
+            v.co.z += math.sin(t * math.pi) * (0.009 if i else -0.006)
+            v.co.y += math.sin(t * math.pi) * (0.008 if i else -0.006)
+        p.add(rail, by_normal("wood", "wood", "wood_panel"))
+        grain = [(x, -0.069 + math.sin(x * math.pi) * (0.008 if i else -0.006),
+                  z - 0.01 + math.sin(x * 5 + i) * 0.008) for x in (0.17, 0.34, 0.55, 0.77, 0.84)]
+        p.add(tube_path(grain, 0.0025), "wood_panel")
     return p.build()
 
 
@@ -609,22 +696,84 @@ def render_preview(path=None):
     if cam.name not in scene.collection.objects:
         scene.collection.objects.link(cam)
     cam_data.type = "ORTHO"
-    cam_data.ortho_scale = radius * 1.9
     cam_data.clip_end = 500
     direction = Vector((0.3, -1, 1.3)).normalized()
     cam.location = centre + direction * (radius * 4 + 5)
     cam.rotation_euler = (-direction).to_track_quat("-Z", "Y").to_euler()
-    hidden = [o for o in bpy.data.collections[COLLECTION].objects]
-    for o in hidden:
+    camera_axes = cam.rotation_euler.to_matrix().transposed()
+    framed = [camera_axes @ (point - centre) for point in pts]
+    width = max(p.x for p in framed) - min(p.x for p in framed)
+    height = max(p.y for p in framed) - min(p.y for p in framed)
+    cam_data.ortho_scale = max(width, height * 1400 / 800) * 1.12
+    hidden = [(o, o.hide_render) for o in bpy.data.collections[COLLECTION].objects]
+    for o, _ in hidden:
         o.hide_render = True
     old_camera = scene.camera
     scene.camera = cam
     scene.render.resolution_x, scene.render.resolution_y = 1400, 800
     scene.render.filepath = path or os.path.join(KIT_DIR, "preview.png")
-    bpy.ops.render.render(write_still=True)
-    scene.camera = old_camera
-    for o in hidden:
-        o.hide_render = False
+    try:
+        bpy.ops.render.render(write_still=True)
+    finally:
+        scene.camera = old_camera
+        for o, hide_render in hidden:
+            o.hide_render = hide_render
+
+
+def render_details(path=None):
+    """Close view of the wall, varied bush, complete fence and light-blue water modules."""
+    scene = bpy.context.scene
+    collection = bpy.data.collections.new("_CanyonDetails")
+    scene.collection.children.link(collection)
+    copies = []
+
+    def put(name, location, angle=0):
+        obj = bpy.data.objects.new("_Detail_" + name, bpy.data.objects[name].data)
+        obj.location = location
+        obj.rotation_euler.z = angle
+        collection.objects.link(obj)
+        copies.append(obj)
+
+    put("cliff_block", (0, 1.8, 0))
+    put("cliff_block_low", (1.1, 1.8, 0))
+    put("bush_1x1", (3.3, 1.8, 0))
+    put("bush_1x1", (4.3, 1.8, 0), math.pi / 2)
+    put("fence_post", (0, -0.2, 0))
+    put("fence_post", (1, -0.2, 0))
+    put("fence_rail", (0, -0.2, 0))
+    for x in (3.1, 4.1):
+        for y in (-1.1, -0.1):
+            put("water_tile", (x, y, 0))
+    put("water_edge", (3.1, -0.1, 0))
+    put("water_corner_outer", (4.1, -0.1, 0))
+    camera_data = bpy.data.cameras.new("_DetailCamera")
+    camera = bpy.data.objects.new("_DetailCamera", camera_data)
+    collection.objects.link(camera)
+    centre = Vector((2.05, 0.55, 0.3))
+    camera.location = centre + Vector((0.5, -7, 10))
+    camera.rotation_euler = (centre - camera.location).to_track_quat("-Z", "Y").to_euler()
+    camera_data.type = "ORTHO"
+    camera_data.ortho_scale = 6.8
+    hidden = [(obj, obj.hide_render) for obj in scene.objects if obj.type == "MESH" and obj not in copies]
+    old_camera = scene.camera
+    old_render = (scene.render.resolution_x, scene.render.resolution_y, scene.render.resolution_percentage, scene.render.filepath)
+    try:
+        for obj, _ in hidden:
+            obj.hide_render = True
+        scene.camera = camera
+        scene.render.resolution_x, scene.render.resolution_y = 1600, 1100
+        scene.render.resolution_percentage = 100
+        scene.render.filepath = path or os.path.join(KIT_DIR, "details.png")
+        bpy.ops.render.render(write_still=True)
+    finally:
+        scene.camera = old_camera
+        scene.render.resolution_x, scene.render.resolution_y, scene.render.resolution_percentage, scene.render.filepath = old_render
+        for obj, hidden_before in hidden:
+            obj.hide_render = hidden_before
+        for obj in list(collection.objects):
+            bpy.data.objects.remove(obj, do_unlink=True)
+        bpy.data.collections.remove(collection)
+        bpy.data.cameras.remove(camera_data)
 
 
 def export_all():

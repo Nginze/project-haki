@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "colorSpace": "sRGB",
+  "notes": "Provisional authoring swatches for docs/artdirection.md. Validate these colors together in the gameplay test arena before approving the final palette. The current engine does not load this file or apply palette tinting yet. Baked exports must be rebuilt when their authored colors change. Team colors are reserved; environment shading may interpolate within its assigned color families.",
+  "rules": {
+    "shadowColor": "#3A3550",
+    "minBakedBrightness": 0.33,
+    "maxTintShift": 0.25
+  },
+  "environment": {
+    "floor_sand": { "base": "#C9B98F", "shade": "#8E8AA0", "edge": "#B39B78" },
+    "floor_grass": { "base": "#9DB06A", "shade": "#5F7A6E" },
+    "floor_stone": { "base": "#7E8A99", "shade": "#56566E" },
+    "wall_top": { "base": "#E6D3A3", "alt": "#B9C4CF" },
+    "wall_side": { "base": "#8A6A4A", "alt": "#5E6B7A" },
+    "crate_wood": { "base": "#C98A4B", "highlight": "#DCAD75", "band": "#6B4A2E" },
+    "bush": { "base": "#3F8F4A", "highlight": "#7CC46A", "shade": "#386B53" },
+    "water": { "shallow": "#7FD1D9", "deep": "#2F7A9A" },
+    "shoreline": { "base": "#E3D4B3", "shade": "#A49AA8" },
+    "rope": { "base": "#CDB082", "highlight": "#E1CBA5" },
+    "cactus": { "base": "#648C58", "shade": "#436A52", "highlight": "#A4BC75", "thorn": "#D9CEAD" },
+    "flower": { "petal": "#C989A0", "center": "#D8BC77" }
+  },
+  "teams": {
+    "ally": "#3FA9F5",
+    "enemy": "#F2484B"
+  },
+  "powers": {
+    "fire": "#FF8A2A",
+    "ice": "#BFF4FF",
+    "thunder": "#FFE34D",
+    "shadow": "#9B5CFF"
+  },
+  "ui": {
+    "outline": "#1E1A2E",
+    "text": "#FFFFFF"
+  }
+}

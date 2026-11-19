@@ -3,7 +3,7 @@
   "editor": {
     "autosaveProjectSettings": true
   },
-  "entry": "arena-01",
+  "entry": "arena-02",
   "rendering": {
     "ambientGroundColor": [
       0.30000001192092896,
@@ -54,16 +54,20 @@
     {
       "id": "arena-01",
       "source": "Scenes/arena-01/arena-01.scene.json"
+    },
+    {
+      "id": "arena-02",
+      "source": "Scenes/arena-02/arena-02.scene.json"
     }
   ],
   "type": "haki.scene-manifest",
   "version": 1,
   "window": {
     "fullscreen": false,
-    "height": 1024,
+    "height": 561,
     "maximized": true,
     "title": "Sandbox",
-    "vsync": true,
-    "width": 1920
+    "vsync": false,
+    "width": 950
   }
 }
