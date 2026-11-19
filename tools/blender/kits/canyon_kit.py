@@ -752,6 +752,137 @@ def grass_tuft():
     return p.build()
 
 
+# ---------------------------------------------------------------- foliage
+GRASS_HEIGHT = 0.95  # top of the concealment canopy; the 1 m sensor box per cell stays fixed
+
+
+def _blade(base, heading, lean, length, width, thickness=0.02, curl=0.12, normals_up=1.0):
+    """One tapered, gently curved blade: a lens cross-section lofted along an arc that leans
+    toward `heading`. Normals lean mostly upward so a patch shades as one coherent canopy."""
+    out = Vector((math.cos(heading), math.sin(heading), 0.0))
+    side = Vector((-out.y, out.x, 0.0))
+    rings = []
+    for t, w in ((0.0, 0.8), (0.42, 1.0), (0.8, 0.62), (1.0, 0.04)):
+        a = lean * (0.55 + 0.45 * t) + curl * t * t
+        centre = Vector(base) + out * (math.sin(a) * length * t) + Vector((0, 0, math.cos(a) * length * t))
+        half_w, half_t = width * w / 2, thickness * max(w, 0.2) / 2
+        rings.append([tuple(v) for v in (centre + side * half_w, centre + out * half_t, centre - side * half_w, centre - out * half_t)])
+    bm = loft(rings)
+    normals = bm.verts.layers.float_vector.new("_leaf_normal")
+    for v in bm.verts:
+        v[normals] = (Vector((0, 0, normals_up)) + out * 0.45).normalized()
+    return bm
+
+
+def _canopy_body(open_sides, height):
+    """Soft rounded clump mass under the blades (no soil gaps), flush on open sides like walls."""
+    cells = [(0, 0)] + [DIRECTIONS[d] for d in open_sides]
+    outline = cell_outline(cells)
+    profile = [(0.0, 0.1), (0.25 * height, 0.08), (0.6 * height, 0.1), (0.85 * height, 0.16), (height, 0.27)]
+    rings = [_wall_ring(outline, inset, 0.12, z, 0.5) for z, inset in profile]
+    bm = loft(rings)
+    bmesh.ops.dissolve_degenerate(bm, edges=bm.edges, dist=1e-6)
+    doomed = []
+    bm.normal_update()
+    for face in bm.faces:
+        c = face.calc_center_median()
+        for d in open_sides:
+            dx, dy = DIRECTIONS[d]
+            if abs(c.x * dx + c.y * dy - 0.5) < 1e-4 and (face.normal.x * dx + face.normal.y * dy) > 0.9:
+                doomed.append(face)
+                break
+    bmesh.ops.delete(bm, geom=doomed, context="FACES")
+    normals = bm.verts.layers.float_vector.new("_leaf_normal")
+    for v in bm.verts:
+        v[normals] = (Vector((0, 0, 1.0)) + Vector((v.co.x, v.co.y, 0)) * 0.6).normalized()
+    return bm
+
+
+def grass_module(name, open_sides="", seed=1):
+    """Gameplay concealment grass for one cell: a rounded canopy mass with clumps of overlapping,
+    slightly narrow tapered blades rising out of it, so the patch is full from above but keeps a
+    broken leaf silhouette. A lower skirt is added only on closed (exposed) sides, so strips,
+    corners, L-shapes and blocks read as one patch with no interior borders. Assemble with
+    wall_piece_for() exactly like the wall modules; the concealment zone is always the cell."""
+    rng = random.Random(seed * 7919 + sum(ord(c) for c in open_sides))
+    p = Piece(name)
+    p.sharp_angle = math.radians(89)
+    p.gradient_range = (0.0, GRASS_HEIGHT)
+    closed = [d for d in DIRECTIONS if d not in open_sides]
+    p.add(_canopy_body(open_sides, 0.62), "leaf_grad", cull_bottom=True)
+    # Canopy: clumps on a jittered grid, larger upper blades with varied height, lean and width.
+    for cx, cy in ((-0.25, -0.25), (0.25, -0.25), (-0.25, 0.25), (0.25, 0.25), (0.0, 0.0)):
+        cx += rng.uniform(-0.05, 0.05)
+        cy += rng.uniform(-0.05, 0.05)
+        clump_height = rng.uniform(0.8, 0.96)
+        for k in range(rng.randint(5, 7)):
+            heading = rng.uniform(0, math.tau)
+            base = (cx + rng.uniform(-0.05, 0.05), cy + rng.uniform(-0.05, 0.05), 0.25)
+            lean = math.radians(rng.uniform(8, 32))
+            length = (clump_height - 0.25) * rng.uniform(0.9, 1.08) / math.cos(lean * 0.8)
+            p.add(_blade(base, heading, lean, length, rng.uniform(0.13, 0.17)), "leaf_grad", cull_below=0.0)
+    # Skirt on exposed sides: shorter blades leaning outward over the body's base.
+    for d in closed:
+        dx, dy = DIRECTIONS[d]
+        edge = Vector((dx, dy, 0))
+        along = Vector((-dy, dx, 0))
+        for k in range(rng.randint(4, 5)):
+            t = -0.38 + k * 0.19 + rng.uniform(-0.07, 0.07)
+            base = along * t + edge * rng.uniform(0.22, 0.3)
+            heading = math.atan2(dy, dx) + rng.uniform(-0.75, 0.75)
+            p.add(_blade(tuple(base), heading, math.radians(rng.uniform(20, 38)), rng.uniform(0.4, 0.58),
+                         rng.uniform(0.13, 0.18), normals_up=0.8), "leaf_grad", cull_below=0.0)
+    return p.build()
+
+
+def _grass_builder(kind):
+    def build():
+        return grass_module(f"grass_{kind}", WALL_MODULES[kind], seed=3)
+
+    build.__name__ = f"grass_{kind}"
+    return build
+
+
+def outskirts_shrub(name="shrub_a", seed=1, size=1.0):
+    """Decorative outskirts plant: broader oval leaves in a few large and small clusters, related
+    to the concealment grass in palette and shading but clearly not a hiding zone."""
+    rng = random.Random(seed)
+    p = Piece(name)
+    p.sharp_angle = math.radians(80)
+    p.gradient_range = (0.0, 0.85 * size)
+    clusters = [(0.0, 0.0, 1.0)] + [
+        (math.cos(a) * rng.uniform(0.28, 0.42) * size, math.sin(a) * rng.uniform(0.28, 0.42) * size, rng.uniform(0.5, 0.75))
+        for a in (rng.uniform(0, math.tau) + i * math.tau / 3 for i in range(rng.randint(2, 3)))
+    ]
+    for cx, cy, scale in clusters:
+        for k in range(int(5 + 3 * scale)):
+            heading = rng.uniform(0, math.tau)
+            radius = rng.uniform(0.09, 0.14) * size * (0.7 + 0.3 * scale)
+            height = rng.uniform(0.45, 0.8) * size * scale
+            lean = math.radians(rng.uniform(12, 38))
+            leaf = capsule((0, 0, -radius), radius, height + radius, segments=7, rings=5, bulge=rng.uniform(0.15, 0.3))
+            depth = rng.uniform(0.45, 0.6)  # broad, flattened leaves
+            bmesh.ops.transform(leaf, matrix=Matrix.Diagonal((1.0, depth, 1.0, 1.0)), verts=leaf.verts)
+            rotated(leaf, angle_y=lean, angle_z=heading)
+            layer = leaf.verts.layers.float_vector.get("_leaf_normal")
+            out = Vector((math.cos(heading), math.sin(heading), 0))
+            for v in leaf.verts:
+                v[layer] = (Vector((0, 0, 1)) + out * 0.5 + Vector(v[layer]) * 0.3).normalized()
+            bmesh.ops.translate(leaf, vec=Vector((cx, cy, 0)), verts=leaf.verts)
+            p.add(leaf, "shrub_grad", cull_below=0.0)
+    return p.build()
+
+
+GRASS_PIECES = [_grass_builder(kind) for kind in WALL_MODULES]
+SHRUB_PIECES = []
+for _i, (_seed, _size) in enumerate(((11, 1.0), (23, 1.25), (37, 0.8))):
+    def _shrub(seed=_seed, size=_size, name="shrub_" + "abc"[_i]):
+        return outskirts_shrub(name, seed, size)
+
+    _shrub.__name__ = "shrub_" + "abc"[_i]
+    SHRUB_PIECES.append(_shrub)
+
+
 CRATE = 0.9  # dynamic props are a little under a cell so they don't snag on neighbours
 
 
@@ -863,6 +994,8 @@ PIECES = [
     fence_post,
     fence_rail,
     *WALL_PIECES,
+    *GRASS_PIECES,
+    *SHRUB_PIECES,
 ]
 
 
@@ -1045,8 +1178,10 @@ def build_sample(origin=(0.0, -15.0)):
             elif (x, y) in low:
                 kind, turns = wall_piece_for(low, (x, y))
                 put("wall_" + kind + "_low", x, y, turns)
-    for x, y in [(5, 4), (6, 4), (6, 5), (6, 3)]:  # L-shaped hedge
-        put("bush_1x1", x, y)
+    grass = {(5, 4), (6, 4), (6, 5), (6, 3)}  # joined concealment patch
+    for cell in grass:
+        kind, turns = wall_piece_for(grass, cell)
+        put("grass_" + kind, *cell, turns)
     for x in range(1, 5):  # fence: posts on each cell, rails linking neighbours, turning a corner
         put("fence_post", x, 0)
     put("fence_post", 1, 1)
