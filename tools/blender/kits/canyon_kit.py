@@ -23,34 +23,116 @@ KIT_DIR = "/home/nginze/Documents/engine-sandbox/Assets/Game/Shared/Kits/canyon"
 COLLECTION = "CanyonKit"
 MATERIAL = "canyon_palette"
 
-# ---------------------------------------------------------------- palette (4x4 swatches, 16 px)
-PALETTE = {
-    "clay_top": "E56640",
-    "clay_mid": "C44F2F",
-    "clay_dark": "9D3D25",
-    "sand": "FFA85D",
-    "sand_side": "DD793B",
-    "bank": "F8D59D",
-    "water": "53BDE9",
-    "water_side": "399DCB",
-    "wood_cap": "E5A15B",
-    "leaf_grad": "15925F",  # gradient swatch, see GRADIENTS
-    "wood": "D88B47",
-    "wood_dark": "9E5F2D",
-    "rope": "D7AA6B",
-    "rock": "E37A4F",
-    "rock_dark": "AD4B2E",
-    "wood_panel": "B7773D",
+# ---------------------------------------------------------------- palette (from docs/palette.json)
+# Every colour comes from a role in docs/palette.json (the canonical art-direction palette).
+# Swatch names are what the geometry code asks for; ROLE_MAP says which palette role(s) feed
+# each one. A string is a flat swatch; a list is a vertical gradient (bottom -> top) whose V
+# coordinate comes from vertex height (see Piece.gradient_range), used for soft baked darkening.
+import json
+
+ROOT = os.path.abspath(os.path.join(KIT_DIR, "../../../../.."))
+PALETTE_JSON = os.path.join(ROOT, "docs", "palette.json")
+
+
+def _load_palette():
+    with open(PALETTE_JSON, encoding="utf-8") as f:
+        data = json.load(f)
+    roles = {}
+    for group in ("environment", "teams", "powers", "ui"):
+        for role, value in data.get(group, {}).items():
+            if isinstance(value, dict):
+                for variant, hexcolor in value.items():
+                    roles[f"{role}.{variant}"] = hexcolor.lstrip("#").upper()
+            else:
+                roles[role] = value.lstrip("#").upper()
+    return roles, data["rules"]
+
+
+ROLES, RULES = _load_palette()
+SHADOW = RULES["shadowColor"].lstrip("#")
+MIN_BAKED = RULES["minBakedBrightness"]
+
+
+def _rgb(hexcolor):
+    return [int(hexcolor[k : k + 2], 16) / 255 for k in (0, 2, 4)]
+
+
+def _hex(rgb):
+    return "".join(f"{round(min(max(c, 0.0), 1.0) * 255):02X}" for c in rgb)
+
+
+def _luma(rgb):
+    lin = [c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4 for c in rgb]
+    return 0.2126 * lin[0] + 0.7152 * lin[1] + 0.0722 * lin[2]
+
+
+def mix(a, b, t):
+    """Blend two palette roles (or hex values) in sRGB."""
+    a, b = _rgb(ROLES.get(a, a)), _rgb(ROLES.get(b, b))
+    return _hex([x + (y - x) * t for x, y in zip(a, b)])
+
+
+def baked(role, amount):
+    """Soft contact darkening: lean `role` toward the cool shadow colour by `amount`, but never
+    below minBakedBrightness of its unoccluded brightness (art direction section 5)."""
+    base = ROLES.get(role, role)
+    for step in range(101):
+        t = amount * (1 - step / 100)
+        candidate = mix(base, SHADOW, t)
+        if _luma(_rgb(candidate)) >= MIN_BAKED * _luma(_rgb(base)):
+            return candidate
+    return base
+
+
+ROLE_MAP = {
+    # floor
+    "sand": "floor_sand.base",
+    "sand_side": "floor_sand.edge",
+    # cover walls, boundary masses and rocks share one family: light tops, darker sides
+    "wall_top": "wall_top.base",
+    "wall_side": [baked("wall_side.base", 0.45), "wall_side.base", mix("wall_side.base", "wall_top.base", 0.18)],
+    "rock": mix("wall_top.base", "wall_side.base", 0.25),
+    "rock_dark": ["wall_side.base", mix("wall_side.base", "wall_top.base", 0.15)],
+    # water stays cyan/teal, well away from the reserved ally blue
+    "water": mix("water.shallow", "water.deep", 0.45),
+    "water_side": "water.deep",
+    "bank": "shoreline.base",
+    "bank_side": "shoreline.shade",
+    # wood: lighter lids/caps, darker recessed panels and bands
+    "wood": ["crate_wood.base", mix("crate_wood.base", "crate_wood.highlight", 0.4)],
+    "wood_top": "crate_wood.highlight",
+    "wood_cap": mix("crate_wood.highlight", "rope.highlight", 0.3),
+    "wood_panel": mix("crate_wood.base", "crate_wood.band", 0.3),
+    "wood_dark": "crate_wood.band",
+    "rope": "rope.base",
+    # foliage: coherent clump shading from shade (roots) through base to highlight (tips)
+    "leaf_grad": [baked("bush.shade", 0.2), "bush.shade", "bush.base", "bush.highlight"],
+    "shrub_grad": [baked("bush.shade", 0.25), "bush.shade", mix("bush.base", "floor_grass.base", 0.35), mix("bush.highlight", "floor_grass.base", 0.4)],
+    # cactus / flower (also exported as small solid materials by canyon_arena_assets.py)
+    "cactus": ["cactus.shade", "cactus.base", "cactus.highlight"],
+    "cactus_thorn": "cactus.thorn",
+    "flower": "flower.petal",
+    "flower_center": "flower.center",
+    # spare floor families for future maps
+    "grass_floor": "floor_grass.base",
+    "stone_floor": "floor_stone.base",
 }
+
+
+def _resolve(value):
+    return ROLES.get(value, value)
+
+
+PALETTE = {}
+GRADIENTS = {}
+for _name, _value in ROLE_MAP.items():
+    if isinstance(_value, list):
+        GRADIENTS[_name] = [_resolve(v) for v in _value]
+        PALETTE[_name] = GRADIENTS[_name][len(_value) // 2]
+    else:
+        PALETTE[_name] = _resolve(_value)
 SWATCHES = list(PALETTE)
-# Swatches drawn as a vertical 16-step gradient instead of a flat colour: name -> (bottom, top).
-# Faces using them get their V coordinate from vertex height (see Piece.gradient_range).
-GRADIENTS = {
-    "leaf_grad": ("11734C", "28CD89"),
-    "clay_mid": ("B16A45", "D4774E"),
-    "wood": ("CD8543", "E4A05A"),
-}
-GRID = 4
+GRID = math.ceil(math.sqrt(len(SWATCHES)))
 SWATCH_PX = 16
 
 
@@ -58,6 +140,13 @@ def swatch_uv(name):
     i = SWATCHES.index(name)
     col, row = i % GRID, i // GRID
     return ((col + 0.5) / GRID, 1.0 - (row + 0.5) / GRID)
+
+
+def _gradient(stops, t):
+    t = min(max(t, 0.0), 1.0) * (len(stops) - 1)
+    i = min(int(t), len(stops) - 2)
+    a, b = _rgb(stops[i]), _rgb(stops[i + 1])
+    return [x + (y - x) * (t - i) for x, y in zip(a, b)]
 
 
 def palette_image():
@@ -71,19 +160,16 @@ def palette_image():
     for y in range(size):
         row = (size - 1 - y) // SWATCH_PX  # pixel rows are bottom-up, swatch rows top-down
         for x in range(size):
-            swatch = SWATCHES[row * GRID + x // SWATCH_PX]
-            if swatch in GRADIENTS:
-                t = (y % SWATCH_PX) / (SWATCH_PX - 1)
-                lo, hi = GRADIENTS[swatch]
-                rgb = [
-                    ((1 - t) * int(lo[k : k + 2], 16) + t * int(hi[k : k + 2], 16)) / 255
-                    for k in (0, 2, 4)
-                ]
+            index = row * GRID + x // SWATCH_PX
+            swatch = SWATCHES[index] if index < len(SWATCHES) else None
+            if swatch is None:
+                rgb = _rgb(ROLES["floor_sand.base"])
+            elif swatch in GRADIENTS:
+                rgb = _gradient(GRADIENTS[swatch], (y % SWATCH_PX) / (SWATCH_PX - 1))
             else:
-                hexcolor = PALETTE[swatch]
                 # This is a byte-buffer sRGB image. Store encoded swatches; the image
                 # texture performs the sRGB-to-linear conversion when it is sampled.
-                rgb = [int(hexcolor[k : k + 2], 16) / 255 for k in (0, 2, 4)]
+                rgb = _rgb(PALETTE[swatch])
             o = (y * size + x) * 4
             pixels[o : o + 4] = [*rgb, 1.0]
     image.pixels[:] = pixels
@@ -357,9 +443,9 @@ def cliff_block(name="cliff_block", height=1.0):
                   (half, half - cut), (half - cut, half), (-half + cut, half),
                   (-half, half - cut), (-half, -half + cut)]
         rings.append([(x, y, z) for x, y in points])
-    p.add(loft(rings), by_normal("clay_top", "clay_mid"), cull_bottom=True)
+    p.add(loft(rings), by_normal("wall_top", "wall_side"), cull_bottom=True)
     # small square stud on top, as on the reference blocks
-    p.add(box((-0.13, -0.05, height), (0.11, 0.17, height + 0.045), bevel=0.02, segments=1), by_normal("clay_top", "clay_mid"), cull_bottom=True)
+    p.add(box((-0.13, -0.05, height), (0.11, 0.17, height + 0.045), bevel=0.02, segments=1), by_normal("wall_top", "wall_side"), cull_bottom=True)
     return p.build()
 
 
@@ -436,7 +522,7 @@ BANK_WIDTH = 0.2
 
 
 def _bank(p, points):
-    p.add(prism(points, -TILE_DEPTH, BANK_TOP, bevel=0.035, segments=1), by_normal("bank", "sand_side"), cull_bottom=True)
+    p.add(prism(points, -TILE_DEPTH, BANK_TOP, bevel=0.035, segments=1), by_normal("bank", "bank_side"), cull_bottom=True)
 
 
 def _arc(cx, cy, r, a0, a1, steps):
@@ -564,7 +650,7 @@ def crate():
     panels = set(big)  # inset keeps the original faces as the recessed centres
     for f in bm.faces:
         f.tag = f in panels
-    p.add(bm, lambda f: "wood_panel" if f.tag else "wood")
+    p.add(bm, lambda f: "wood_panel" if f.tag else ("wood_top" if f.normal.z > 0.6 else "wood"))
     # Plank seams: thin dark strips on the four side panels.
     inner = h - frame
     for i in range(4):
@@ -697,7 +783,9 @@ def render_preview(path=None):
         scene.collection.objects.link(cam)
     cam_data.type = "ORTHO"
     cam_data.clip_end = 500
-    direction = Vector((0.3, -1, 1.3)).normalized()
+    # The benchmark gameplay pitch (docs/artdirection.md section 1), not a studio angle.
+    pitch = math.radians(57)
+    direction = Vector((0.0, -math.cos(pitch), math.sin(pitch)))
     cam.location = centre + direction * (radius * 4 + 5)
     cam.rotation_euler = (-direction).to_track_quat("-Z", "Y").to_euler()
     camera_axes = cam.rotation_euler.to_matrix().transposed()

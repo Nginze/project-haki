@@ -27,17 +27,19 @@ def boundary(name='canyon_boundary', height=2.8, corner=False):
         xy = [(-x+cut,-y),(x-cut,-y),(x,-y+cut),(x,y-cut),
               (x-cut,y),(-x+cut,y),(-x,y-cut),(-x,-y+cut)]
         rings.append([(a,b,t*height) for a,b in xy])
-    p.add(loft(rings),kit['by_normal']('clay_top','clay_mid'),cull_bottom=True)
+    p.add(loft(rings),kit['by_normal']('wall_top','wall_side'),cull_bottom=True)
     # Broad, shallow cap forms read as a natural mesa rather than stacked cover cubes.
     for x,y,sx,sy,dz in [(-.65,.12,.62,.48,.09),(.55,.28,.45,.56,.13)]:
         p.add(box((x-sx/2,y-sy/2,height-.015),(x+sx/2,y+sy/2,height+dz),
-                  bevel=.055,segments=1),kit['by_normal']('clay_top','clay_mid'),cull_bottom=True)
+                  bevel=.055,segments=1),kit['by_normal']('wall_top','wall_side'),cull_bottom=True)
     return p.build()
 
 
 def cactus_materials():
-    colors = [('body','82B54F'),('rib','579749'),('tip','A4C869'),
-              ('petal','ED709A'),('pollen','FFD779'),('spine','F8DDAA')]
+    # Colours come from the cactus/flower roles in docs/palette.json.
+    roles = kit['ROLES']
+    colors = [('body', roles['cactus.base']), ('rib', roles['cactus.shade']), ('tip', roles['cactus.highlight']),
+              ('petal', roles['flower.petal']), ('pollen', roles['flower.center']), ('spine', roles['cactus.thorn'])]
     result = []
     for name, value in colors:
         mat=bpy.data.materials.get('cactus_'+name) or bpy.data.materials.new('cactus_'+name)
