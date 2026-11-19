@@ -15,6 +15,7 @@ This file is the single source of truth for the game's visual direction. [palett
 ## 1. Camera, scale, and readability
 
 - Use one canonical gameplay camera profile: roughly **55–60 degrees downward**, with a near-orthographic look. Avoid a flat overhead view, a shallow angle, or a visible horizon.
+- **Benchmark profile (decided 19 November 2026):** perspective projection, **57° pitch**, **25° vertical FOV**, eye **25.4 m** from the ground focus point (21.3 m high, 13.8 m behind it), which shows about **20 m of ground width at the focus at 16:9**. The narrow FOV keeps the near-orthographic look; wider aspects show more width at the same height. Do not change one of these values without re-checking scale and world coverage.
 - Author that profile in Blender and preserve it through export and runtime. Runtime camera code must follow the same profile. Keep projection, pitch, view size/FOV, and height stable while judging art. A debug camera override is not the approval view.
 - Keep the agreed follow behavior: preserve startup framing; begin smooth panning when a moving player approaches the screen threshold. Do not use an unsolicited startup recenter or zoom change to hide a framing problem.
 - Use metres and a **1 m placement grid**. Use the current **1.8 m character controller** as the scale reference. Check visual character proportions against it; a downloaded model's original scale is not the standard.
