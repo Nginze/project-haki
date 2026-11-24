@@ -6,15 +6,15 @@
   "entry": "arena-02",
   "rendering": {
     "ambientGroundColor": [
-      0.25,
-      0.2199999988079071,
-      0.33000001311302185
+      0.5,
+      0.36,
+      0.3
     ],
-    "ambientIntensity": 0.3799999952316284,
+    "ambientIntensity": 0.3,
     "ambientSkyColor": [
-      0.46000000834465027,
-      0.47999998927116394,
-      0.7799999713897705
+      0.66,
+      0.62,
+      0.66
     ],
     "bloomDiffusion": 7.0,
     "bloomEnabled": true,
@@ -23,7 +23,7 @@
     "bloomThreshold": 2.0,
     "cascadeSplitLambda": 0.6000000238418579,
     "depthPrepassEnabled": true,
-    "exposure": 0.7200000286102295,
+    "exposure": 1.0,
     "frustumCullingEnabled": true,
     "fxaaContrastThreshold": 0.031199999153614044,
     "fxaaEnabled": true,
@@ -34,20 +34,21 @@
     "indirectSpecularEnabled": true,
     "renderHeight": 0,
     "renderScale": 1.0,
-    "shadowDistance": 50.0,
+    "shadowDistance": 38.0,
     "shadowFilter": "pcf",
-    "shadowMapResolution": 2048,
-    "shadowsEnabled": false,
+    "shadowMapResolution": 1024,
+    "shadowsEnabled": true,
     "showBounds": false,
     "showCascadeZones": false,
     "skyboxEnabled": true,
     "ssaoBias": 0.02500000037252903,
     "ssaoBlurEnabled": true,
-    "ssaoEnabled": true,
+    "ssaoEnabled": false,
     "ssaoHalfResolution": true,
     "ssaoPower": 1.2000000476837158,
     "ssaoRadius": 0.6000000238418579,
-    "ssaoSampleCount": 16,
+    "ssaoSampleCount": 12,
+    "tonemapper": "neutral",
     "wireframe": false
   },
   "scenes": [
