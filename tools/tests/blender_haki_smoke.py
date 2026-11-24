@@ -33,6 +33,7 @@ with tempfile.TemporaryDirectory(prefix='haki-blender-test-') as temporary:
     (root/'Assets/Game/Project.json').write_text(json.dumps({'type':'haki.scene-manifest','version':1,
         'assetCatalog':'../Engine/Catalog.json','entry':'','scenes':[]}))
     p = bpy.context.scene.haki_project
+    assert p.default_skybox, 'Engine skybox and IBL should start enabled'
     p.root = str(root)
     p.output = str(root/'exports/arena.glb')
     p.pack = p.scene_id = 'smoke'
@@ -135,6 +136,7 @@ with tempfile.TemporaryDirectory(prefix='haki-blender-test-') as temporary:
     assert editor.validate_scene(bpy.context) == [], editor.validate_scene(bpy.context)
     assert bpy.ops.haki.export() == {'FINISHED'}
     scene = json.loads((root/'Assets/Game/Scenes/smoke/smoke.scene.json').read_text())
+    assert scene['environment']['texture'] == 'engine.texture.environment.qwantani-dusk'
     entities = {e['id']:e for e in scene['entities']}
     assert scene['script'] == 'scene.lua',scene
     script = entities[player_id]['components']['script']
@@ -170,8 +172,10 @@ with tempfile.TemporaryDirectory(prefix='haki-blender-test-') as temporary:
     cap = entities[capsule_id]['components']['collider']
     assert cap['shape'] == 'capsule' and abs(cap['halfHeight']-0.8)<1e-5,cap
     assert 'haki' not in wall
+    p.default_skybox = False
     assert bpy.ops.haki.export() == {'FINISHED'}
     scene2 = json.loads((root/'Assets/Game/Scenes/smoke/smoke.scene.json').read_text())
+    assert 'environment' in scene2 and scene2['environment'] is None
     assert [e['id'] for e in scene2['entities']] == [e['id'] for e in scene['entities']]
     # Export-only mode must not invoke any host/project command.
     from unittest.mock import patch

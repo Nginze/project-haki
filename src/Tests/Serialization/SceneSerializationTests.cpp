@@ -109,6 +109,19 @@ int RunSceneTests()
                     environmentDefaults.Value->GetEnvironment().Intensity == 1.0f &&
                     environmentDefaults.Value->GetEnvironment().RotationDegrees == 0.0f,
                 "environment intensity and rotation use defaults when omitted");
+    auto engineDefault = serializer.Deserialize(std::string(FixtureRoot) + "/DefaultEnvironment.scene.json");
+    tests.Check(engineDefault && engineDefault.Value->GetEnvironment().Texture.IsValid() &&
+                    engineDefault.Value->GetEnvironment().Intensity == 1.0f &&
+                    engineDefault.Value->GetEnvironment().RotationDegrees == 0.0f,
+                "omitted environment uses engine HDR for skybox and IBL");
+    auto disabledEnvironment = serializer.Deserialize(std::string(FixtureRoot) + "/DisabledEnvironment.scene.json");
+    tests.Check(disabledEnvironment && !disabledEnvironment.Value->GetEnvironment().Texture.IsValid(),
+                "explicit null opts out even when the engine environment is available");
+    auto customEnvironment = serializer.Deserialize(std::string(FixtureRoot) + "/Environment.scene.json");
+    tests.Check(customEnvironment && engineDefault && customEnvironment.Value->GetEnvironment().Texture.IsValid() &&
+                    customEnvironment.Value->GetEnvironment().Texture != engineDefault.Value->GetEnvironment().Texture &&
+                    customEnvironment.Value->GetEnvironment().Intensity == 2.5f,
+                "custom environment overrides the available engine default");
     Haki::AssetManager::Shutdown();
     return tests.Result();
 }

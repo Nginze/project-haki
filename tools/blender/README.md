@@ -1,8 +1,8 @@
-# Haki Blender editor 0.2.0
+# Haki Blender editor 0.2.1
 
 ## Install and open
 
-Build with `python3 tools/blender/build_extension.py`, then install `dist/haki_editor-0.2.0.zip` through
+Build with `python3 tools/blender/build_extension.py`, then install `dist/haki_editor-0.2.1.zip` through
 Blender Preferences > Get Extensions > Install from Disk. Replace the previous extension and restart Blender.
 Open `Assets/Game/Scenes/arena-01/arena-01.blend`. The old source is retained in Archive and should not be edited.
 The 3D viewport's N sidebar has the Haki tab.
@@ -50,8 +50,11 @@ Scene Script selects one scene behaviour. It has Lua-authored defaults; scene pr
 supported by the current runtime. Local modules use `require("lib.name")`; shared modules use
 `require("shared.lib.name")`. LuaLS configuration at the repository root includes both locations.
 
-Use Engine Default Skybox enables the engine HDR environment. Scene Skybox Asset takes precedence and must
-be a texture ID in the scene/engine/shared catalogs. Leave both unset for no environment. The camera and lights
+Use Engine Default Skybox is enabled by default and supplies the engine HDR skybox and diffuse/specular IBL.
+Scene Skybox Asset takes precedence and must be a texture ID in the scene/engine/shared catalogs.
+Disable the checkbox and leave the custom asset blank to opt out. Previously saved checkbox choices are retained.
+Export records this opt-out as `"environment": null`; omitting the field inherits the engine environment.
+The camera and lights
 are exported; raw light strengths preserve Haki's intensity convention. Sun strength 1, exposure 0 imports as 1.
 Blender viewport lighting is not an exact match for Haki's rendering and tone mapping.
 

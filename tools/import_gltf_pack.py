@@ -1638,12 +1638,12 @@ class PackImporter:
                 raise ImportFailure(f"Script does not exist inside Assets/Scripts: {script_path}")
         existing_scene_path = self.final_root / f"{slug(self.scene_id)}.scene.json" if self.modern else self.final_root / "Scenes" / f"{slug(self.scene_id)}.scene.json"
         if existing_scene_path.exists():
-            existing_environment = load_json(existing_scene_path).get("environment")
-            if isinstance(existing_environment, dict):
-                scene["environment"] = existing_environment
+            existing_scene = load_json(existing_scene_path)
+            if "environment" in existing_scene:
+                scene["environment"] = existing_scene["environment"]
         if has_environment:
-            scene.pop("environment",None)
-            if scene_environment is not None: scene["environment"] = scene_environment
+            # Missing inherits the engine default; null explicitly disables skybox/IBL.
+            scene["environment"] = scene_environment
         return scene
 
     def merge_catalog_preview(self) -> tuple[dict[str, Any], dict[str, Any]]:

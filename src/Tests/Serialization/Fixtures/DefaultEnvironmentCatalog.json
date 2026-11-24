@@ -1,0 +1,14 @@
+{
+  "type": "haki.asset-catalog",
+  "version": 1,
+  "imports": ["AssetCatalog.json"],
+  "assets": [
+    {
+      "id": "engine.texture.environment.qwantani-dusk",
+      "type": "texture",
+      "source": "environment.fake",
+      "srgb": false,
+      "flipY": true
+    }
+  ]
+}

@@ -7,857 +7,496 @@
   ],
   "assets": [
     {
-      "id": "arena-01.animation-clip.arena.animation-0.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-0.skin-0.node-24",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Death",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_01_Death",
+      "skeleton": "arena-01.skeleton.arena.skin-0.node-24"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-1.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-1.skin-0.node-24",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Death.001",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_01_Defeat",
+      "skeleton": "arena-01.skeleton.arena.skin-0.node-24"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-10.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-10.skin-0.node-24",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Defeat.003",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_01_SitDown",
+      "skeleton": "arena-01.skeleton.arena.skin-0.node-24"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-100.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-11.skin-0.node-24",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Victory.002",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_01_StandUp",
+      "skeleton": "arena-01.skeleton.arena.skin-0.node-24"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-101.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-12.skin-0.node-24",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Victory.003",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_01_SwordSlash",
+      "skeleton": "arena-01.skeleton.arena.skin-0.node-24"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-102.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-13.skin-0.node-24",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Victory.004",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_01_Victory",
+      "skeleton": "arena-01.skeleton.arena.skin-0.node-24"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-103.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-14.skin-0.node-24",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Victory.005",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_01_Walk",
+      "skeleton": "arena-01.skeleton.arena.skin-0.node-24"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-104.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-15.skin-0.node-24",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Victory.006",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_01_Walk_Carry",
+      "skeleton": "arena-01.skeleton.arena.skin-0.node-24"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-105.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-16.skin-1.node-50",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Walk",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_01_Punch",
+      "skeleton": "arena-01.skeleton.arena.skin-1.node-50"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-106.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-17.skin-1.node-50",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Walk.001",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_02_Death",
+      "skeleton": "arena-01.skeleton.arena.skin-1.node-50"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-107.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-18.skin-1.node-50",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Walk.002",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_02_Defeat",
+      "skeleton": "arena-01.skeleton.arena.skin-1.node-50"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-108.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-19.skin-1.node-50",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Walk.003",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_02_Idle",
+      "skeleton": "arena-01.skeleton.arena.skin-1.node-50"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-109.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-2.skin-0.node-24",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Walk.004",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_01_Idle",
+      "skeleton": "arena-01.skeleton.arena.skin-0.node-24"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-11.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-20.skin-1.node-50",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Defeat.004",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_02_Jump",
+      "skeleton": "arena-01.skeleton.arena.skin-1.node-50"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-110.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-21.skin-1.node-50",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Walk.005",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_02_PickUp",
+      "skeleton": "arena-01.skeleton.arena.skin-1.node-50"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-111.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-22.skin-1.node-50",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Walk.006",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_02_RecieveHit",
+      "skeleton": "arena-01.skeleton.arena.skin-1.node-50"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-112.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-23.skin-1.node-50",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Walk_Carry",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_02_Roll",
+      "skeleton": "arena-01.skeleton.arena.skin-1.node-50"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-113.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-24.skin-1.node-50",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Walk_Carry.001",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_02_Run",
+      "skeleton": "arena-01.skeleton.arena.skin-1.node-50"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-114.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-25.skin-1.node-50",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Walk_Carry.002",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_02_Run_Carry",
+      "skeleton": "arena-01.skeleton.arena.skin-1.node-50"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-115.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-26.skin-1.node-50",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Walk_Carry.003",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_02_Shoot_OneHanded",
+      "skeleton": "arena-01.skeleton.arena.skin-1.node-50"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-116.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-27.skin-1.node-50",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Walk_Carry.004",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_02_SitDown",
+      "skeleton": "arena-01.skeleton.arena.skin-1.node-50"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-117.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-28.skin-1.node-50",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Walk_Carry.005",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_02_StandUp",
+      "skeleton": "arena-01.skeleton.arena.skin-1.node-50"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-118.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-29.skin-1.node-50",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Walk_Carry.006",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_02_SwordSlash",
+      "skeleton": "arena-01.skeleton.arena.skin-1.node-50"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-12.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-3.skin-0.node-24",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Defeat.005",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_01_Jump",
+      "skeleton": "arena-01.skeleton.arena.skin-0.node-24"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-13.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-30.skin-1.node-50",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Defeat.006",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_02_Victory",
+      "skeleton": "arena-01.skeleton.arena.skin-1.node-50"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-14.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-31.skin-1.node-50",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Idle",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_02_Walk",
+      "skeleton": "arena-01.skeleton.arena.skin-1.node-50"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-15.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-32.skin-1.node-50",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Idle.001",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_02_Walk_Carry",
+      "skeleton": "arena-01.skeleton.arena.skin-1.node-50"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-16.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-33.skin-2.node-76",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Idle.002",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_03_Death",
+      "skeleton": "arena-01.skeleton.arena.skin-2.node-76"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-17.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-34.skin-2.node-76",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Idle.003",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_03_Defeat",
+      "skeleton": "arena-01.skeleton.arena.skin-2.node-76"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-18.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-35.skin-2.node-76",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Idle.004",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_03_Idle",
+      "skeleton": "arena-01.skeleton.arena.skin-2.node-76"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-19.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-36.skin-2.node-76",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Idle.005",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_03_Jump",
+      "skeleton": "arena-01.skeleton.arena.skin-2.node-76"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-2.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-37.skin-2.node-76",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Death.002",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_03_PickUp",
+      "skeleton": "arena-01.skeleton.arena.skin-2.node-76"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-20.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-38.skin-2.node-76",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Idle.006",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_03_RecieveHit",
+      "skeleton": "arena-01.skeleton.arena.skin-2.node-76"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-21.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-39.skin-2.node-76",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Jump",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_03_Roll",
+      "skeleton": "arena-01.skeleton.arena.skin-2.node-76"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-22.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-4.skin-0.node-24",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Jump.001",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_01_PickUp",
+      "skeleton": "arena-01.skeleton.arena.skin-0.node-24"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-23.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-40.skin-2.node-76",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Jump.002",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_03_Run",
+      "skeleton": "arena-01.skeleton.arena.skin-2.node-76"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-24.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-41.skin-2.node-76",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Jump.003",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_03_Run_Carry",
+      "skeleton": "arena-01.skeleton.arena.skin-2.node-76"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-25.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-42.skin-2.node-76",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Jump.004",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_03_Shoot_OneHanded",
+      "skeleton": "arena-01.skeleton.arena.skin-2.node-76"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-26.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-43.skin-2.node-76",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Jump.005",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_03_SitDown",
+      "skeleton": "arena-01.skeleton.arena.skin-2.node-76"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-27.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-44.skin-2.node-76",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Jump.006",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_03_StandUp",
+      "skeleton": "arena-01.skeleton.arena.skin-2.node-76"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-28.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-45.skin-2.node-76",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "PickUp",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_03_SwordSlash",
+      "skeleton": "arena-01.skeleton.arena.skin-2.node-76"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-29.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-46.skin-2.node-76",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "PickUp.001",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_03_Victory",
+      "skeleton": "arena-01.skeleton.arena.skin-2.node-76"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-3.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-47.skin-2.node-76",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Death.003",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_03_Walk",
+      "skeleton": "arena-01.skeleton.arena.skin-2.node-76"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-30.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-48.skin-2.node-76",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "PickUp.002",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_03_Walk_Carry",
+      "skeleton": "arena-01.skeleton.arena.skin-2.node-76"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-31.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-49.skin-3.node-113",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "PickUp.003",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "Player_Death",
+      "skeleton": "arena-01.skeleton.arena.skin-3.node-113"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-32.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-5.skin-0.node-24",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "PickUp.004",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_01_RecieveHit",
+      "skeleton": "arena-01.skeleton.arena.skin-0.node-24"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-33.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-50.skin-3.node-113",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "PickUp.005",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "Player_Defeat",
+      "skeleton": "arena-01.skeleton.arena.skin-3.node-113"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-34.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-51.skin-3.node-113",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "PickUp.006",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "Player_Idle",
+      "skeleton": "arena-01.skeleton.arena.skin-3.node-113"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-35.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-52.skin-3.node-113",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Punch",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "Player_Jump",
+      "skeleton": "arena-01.skeleton.arena.skin-3.node-113"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-36.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-53.skin-3.node-113",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Punch.001",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "Player_PickUp",
+      "skeleton": "arena-01.skeleton.arena.skin-3.node-113"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-37.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-54.skin-3.node-113",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Punch.002",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "Player_Punch",
+      "skeleton": "arena-01.skeleton.arena.skin-3.node-113"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-38.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-55.skin-3.node-113",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Punch.003",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "Player_RecieveHit",
+      "skeleton": "arena-01.skeleton.arena.skin-3.node-113"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-39.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-56.skin-3.node-113",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Punch.004",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "Player_Roll",
+      "skeleton": "arena-01.skeleton.arena.skin-3.node-113"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-4.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-57.skin-3.node-113",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Death.004",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "Player_Run",
+      "skeleton": "arena-01.skeleton.arena.skin-3.node-113"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-40.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-58.skin-3.node-113",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Punch.005",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "Player_Run_Carry",
+      "skeleton": "arena-01.skeleton.arena.skin-3.node-113"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-41.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-59.skin-3.node-113",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Punch.006",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "Player_Shoot_OneHanded",
+      "skeleton": "arena-01.skeleton.arena.skin-3.node-113"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-42.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-6.skin-0.node-24",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "RecieveHit",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_01_Roll",
+      "skeleton": "arena-01.skeleton.arena.skin-0.node-24"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-43.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-60.skin-3.node-113",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "RecieveHit.001",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "Player_SitDown",
+      "skeleton": "arena-01.skeleton.arena.skin-3.node-113"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-44.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-61.skin-3.node-113",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "RecieveHit.002",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "Player_StandUp",
+      "skeleton": "arena-01.skeleton.arena.skin-3.node-113"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-45.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-62.skin-3.node-113",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "RecieveHit.003",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "Player_SwordSlash",
+      "skeleton": "arena-01.skeleton.arena.skin-3.node-113"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-46.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-63.skin-3.node-113",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "RecieveHit.004",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "Player_Victory",
+      "skeleton": "arena-01.skeleton.arena.skin-3.node-113"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-47.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-64.skin-3.node-113",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "RecieveHit.005",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "Player_Walk",
+      "skeleton": "arena-01.skeleton.arena.skin-3.node-113"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-48.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-65.skin-3.node-113",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "RecieveHit.006",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "Player_Walk_Carry",
+      "skeleton": "arena-01.skeleton.arena.skin-3.node-113"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-49.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-7.skin-0.node-24",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Roll",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_01_Run",
+      "skeleton": "arena-01.skeleton.arena.skin-0.node-24"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-5.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-8.skin-0.node-24",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Death.005",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_01_Run_Carry",
+      "skeleton": "arena-01.skeleton.arena.skin-0.node-24"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-50.skin-0.node-30",
+      "id": "arena-01.animation-clip.arena.animation-9.skin-0.node-24",
       "type": "animationClip",
       "source": "Models/arena.glb",
-      "animation": "Roll.001",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
+      "animation": "AI_01_Shoot_OneHanded",
+      "skeleton": "arena-01.skeleton.arena.skin-0.node-24"
     },
     {
-      "id": "arena-01.animation-clip.arena.animation-51.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Roll.002",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-52.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Roll.003",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-53.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Roll.004",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-54.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Roll.005",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-55.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Roll.006",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-56.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Run",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-57.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Run.001",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-58.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Run.002",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-59.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Run.003",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-6.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Death.006",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-60.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Run.004",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-61.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Run.005",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-62.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Run.006",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-63.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Run_Carry",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-64.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Run_Carry.001",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-65.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Run_Carry.002",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-66.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Run_Carry.003",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-67.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Run_Carry.004",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-68.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Run_Carry.005",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-69.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Run_Carry.006",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-7.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Defeat",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-70.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Shoot_OneHanded",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-71.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Shoot_OneHanded.001",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-72.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Shoot_OneHanded.002",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-73.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Shoot_OneHanded.003",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-74.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Shoot_OneHanded.004",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-75.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Shoot_OneHanded.005",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-76.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Shoot_OneHanded.006",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-77.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "SitDown",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-78.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "SitDown.001",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-79.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "SitDown.002",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-8.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Defeat.001",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-80.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "SitDown.003",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-81.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "SitDown.004",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-82.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "SitDown.005",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-83.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "SitDown.006",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-84.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "StandUp",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-85.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "StandUp.001",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-86.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "StandUp.002",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-87.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "StandUp.003",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-88.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "StandUp.004",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-89.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "StandUp.005",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-9.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Defeat.002",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-90.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "StandUp.006",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-91.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "SwordSlash",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-92.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "SwordSlash.001",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-93.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "SwordSlash.002",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-94.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "SwordSlash.003",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-95.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "SwordSlash.004",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-96.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "SwordSlash.005",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-97.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "SwordSlash.006",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-98.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Victory",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.animation-clip.arena.animation-99.skin-0.node-30",
-      "type": "animationClip",
-      "source": "Models/arena.glb",
-      "animation": "Victory.001",
-      "skeleton": "arena-01.skeleton.arena.skin-0.node-30"
-    },
-    {
-      "id": "arena-01.material.arena.beige-006-43554b460d",
+      "id": "arena-01.material.arena.beige-007-43554b460d",
       "type": "material",
-      "source": "Materials/arena-beige-006-43554b460d.material.json"
+      "source": "Materials/arena-beige-007-43554b460d.material.json"
     },
     {
-      "id": "arena-01.material.arena.black-006-2e1638522f",
+      "id": "arena-01.material.arena.belt-ac83ea76ed",
       "type": "material",
-      "source": "Materials/arena-black-006-2e1638522f.material.json"
+      "source": "Materials/arena-belt-ac83ea76ed.material.json"
     },
     {
-      "id": "arena-01.material.arena.brown-006-16f57e57c2",
+      "id": "arena-01.material.arena.black-007-b1df95747b",
       "type": "material",
-      "source": "Materials/arena-brown-006-16f57e57c2.material.json"
+      "source": "Materials/arena-black-007-b1df95747b.material.json"
     },
     {
-      "id": "arena-01.material.arena.clothes-006-5d4e475a59",
+      "id": "arena-01.material.arena.black-008-2e1638522f",
       "type": "material",
-      "source": "Materials/arena-clothes-006-5d4e475a59.material.json"
+      "source": "Materials/arena-black-008-2e1638522f.material.json"
+    },
+    {
+      "id": "arena-01.material.arena.brown-007-16f57e57c2",
+      "type": "material",
+      "source": "Materials/arena-brown-007-16f57e57c2.material.json"
+    },
+    {
+      "id": "arena-01.material.arena.clothes-007-5d4e475a59",
+      "type": "material",
+      "source": "Materials/arena-clothes-007-5d4e475a59.material.json"
     },
     {
       "id": "arena-01.material.arena.colormap-016-cd8351c830",
@@ -865,24 +504,39 @@
       "source": "Materials/arena-colormap-016-cd8351c830.material.json"
     },
     {
-      "id": "arena-01.material.arena.face-006-5fbbde5f76",
+      "id": "arena-01.material.arena.details-33183d0e1b",
       "type": "material",
-      "source": "Materials/arena-face-006-5fbbde5f76.material.json"
+      "source": "Materials/arena-details-33183d0e1b.material.json"
     },
     {
-      "id": "arena-01.material.arena.gold-006-4ab0833367",
+      "id": "arena-01.material.arena.face-007-5fbbde5f76",
       "type": "material",
-      "source": "Materials/arena-gold-006-4ab0833367.material.json"
+      "source": "Materials/arena-face-007-5fbbde5f76.material.json"
     },
     {
-      "id": "arena-01.material.arena.red-006-83850f0d21",
+      "id": "arena-01.material.arena.gold-007-4ab0833367",
       "type": "material",
-      "source": "Materials/arena-red-006-83850f0d21.material.json"
+      "source": "Materials/arena-gold-007-4ab0833367.material.json"
     },
     {
-      "id": "arena-01.material.arena.skin-006-41167b5b34",
+      "id": "arena-01.material.arena.hair-8f741a8e20",
       "type": "material",
-      "source": "Materials/arena-skin-006-41167b5b34.material.json"
+      "source": "Materials/arena-hair-8f741a8e20.material.json"
+    },
+    {
+      "id": "arena-01.material.arena.red-007-83850f0d21",
+      "type": "material",
+      "source": "Materials/arena-red-007-83850f0d21.material.json"
+    },
+    {
+      "id": "arena-01.material.arena.shirt-67f39434b3",
+      "type": "material",
+      "source": "Materials/arena-shirt-67f39434b3.material.json"
+    },
+    {
+      "id": "arena-01.material.arena.skin-007-41167b5b34",
+      "type": "material",
+      "source": "Materials/arena-skin-007-41167b5b34.material.json"
     },
     {
       "id": "arena-01.mesh.arena.arena-floor-mesh",
@@ -897,17 +551,62 @@
       "mesh": "Cube.007"
     },
     {
-      "id": "arena-01.mesh.arena.cube-007.node-30",
+      "id": "arena-01.mesh.arena.cube-007.node-113",
       "type": "mesh",
       "source": "Models/arena.glb",
       "mesh": "Cube.007",
-      "node": "#30"
+      "node": "#113"
+    },
+    {
+      "id": "arena-01.mesh.arena.cube-008",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "Cube.008"
+    },
+    {
+      "id": "arena-01.mesh.arena.cube-008.node-24",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "Cube.008",
+      "node": "#24"
+    },
+    {
+      "id": "arena-01.mesh.arena.cube-009",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "Cube.009"
+    },
+    {
+      "id": "arena-01.mesh.arena.cube-009.node-50",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "Cube.009",
+      "node": "#50"
+    },
+    {
+      "id": "arena-01.mesh.arena.cube-010",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "Cube.010"
+    },
+    {
+      "id": "arena-01.mesh.arena.cube-010.node-76",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "Cube.010",
+      "node": "#76"
     },
     {
       "id": "arena-01.mesh.arena.mesh-barrel",
       "type": "mesh",
       "source": "Models/arena.glb",
       "mesh": "mesh_barrel"
+    },
+    {
+      "id": "arena-01.mesh.arena.mesh-bottle",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "mesh_bottle"
     },
     {
       "id": "arena-01.mesh.arena.mesh-crate",
@@ -940,11 +639,32 @@
       "mesh": "mesh_wall"
     },
     {
-      "id": "arena-01.skeleton.arena.skin-0.node-30",
+      "id": "arena-01.skeleton.arena.skin-0.node-24",
+      "type": "skeleton",
+      "source": "Models/arena.glb",
+      "skin": "AI_01_Armature",
+      "node": "#24"
+    },
+    {
+      "id": "arena-01.skeleton.arena.skin-1.node-50",
+      "type": "skeleton",
+      "source": "Models/arena.glb",
+      "skin": "AI_02_Armature",
+      "node": "#50"
+    },
+    {
+      "id": "arena-01.skeleton.arena.skin-2.node-76",
+      "type": "skeleton",
+      "source": "Models/arena.glb",
+      "skin": "AI_03_Armature",
+      "node": "#76"
+    },
+    {
+      "id": "arena-01.skeleton.arena.skin-3.node-113",
       "type": "skeleton",
       "source": "Models/arena.glb",
       "skin": "CharacterArmature",
-      "node": "#30"
+      "node": "#113"
     },
     {
       "id": "arena-01.texture.arena.colormap-srgb-f3bd32d6d0",

@@ -37,7 +37,7 @@
     "shadowDistance": 50.0,
     "shadowFilter": "pcf",
     "shadowMapResolution": 2048,
-    "shadowsEnabled": true,
+    "shadowsEnabled": false,
     "showBounds": false,
     "showCascadeZones": false,
     "skyboxEnabled": true,
@@ -65,7 +65,7 @@
   "window": {
     "fullscreen": false,
     "height": 561,
-    "maximized": true,
+    "maximized": false,
     "title": "Sandbox",
     "vsync": false,
     "width": 950

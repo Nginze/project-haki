@@ -88,7 +88,8 @@ class HakiObject(bpy.types.PropertyGroup):
 class HakiProject(bpy.types.PropertyGroup):
     root: StringProperty(name='Haki Project', subtype='DIR_PATH')
     scene_directory: StringProperty(name='Scene Directory',subtype='DIR_PATH',description='Defaults to Assets/Game/Scenes/<Scene ID>')
-    default_skybox: BoolProperty(name='Use Engine Default Skybox',default=False)
+    default_skybox: BoolProperty(name='Use Engine Default Skybox',default=True,
+        description='Use the engine HDR skybox and image-based lighting; disable with no custom asset to opt out')
     skybox_asset: StringProperty(name='Scene Skybox Asset',description='Optional texture asset ID; takes precedence over engine default')
     scene_script: StringProperty(name='Scene Script',subtype='FILE_PATH',description='Relative to Assets/Scripts; blank means no scene script')
     python: StringProperty(name='Project Python', subtype='FILE_PATH', description='Use the project .venv/bin/python, not Blender Python')

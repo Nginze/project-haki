@@ -22,9 +22,11 @@ Each scene's script paths start at its `Scripts/`. Reusable scripts start at `Ga
 are referenced as `shared/name.lua`; modules use `require("shared.lib.name")`. Local modules still use
 `require("lib.name")`. Lua files are never loaded from the archive.
 
-The Blender add-on's **Use Engine Default Skybox** explicitly enables the engine environment.
-**Scene Skybox Asset** takes precedence and selects a texture ID from the composed catalog. Neither enabled
-means no environment. Lighting, camera, physics, animation and scripting formats are otherwise unchanged.
+Scenes inherit the engine HDR skybox and diffuse/specular IBL when `environment` is omitted and the engine
+catalog is included. The Blender add-on's **Use Engine Default Skybox** starts enabled.
+**Scene Skybox Asset** takes precedence and selects a texture ID from the composed catalog. To opt out,
+disable the checkbox and leave the custom asset blank; exports store `"environment": null` and reimports
+preserve that choice. Project rendering settings can separately hide the skybox while keeping IBL enabled.
 
 ## Import and run
 

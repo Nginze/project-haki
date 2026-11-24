@@ -2,12 +2,381 @@
   "type": "haki.scene",
   "version": 1,
   "id": "arena-01",
-  "environment": {
-    "texture": "engine.texture.environment.qwantani-dusk",
-    "intensity": 1.0,
-    "rotationDegrees": 0.0
-  },
   "entities": [
+    {
+      "id": "bcdbb24f-1129-456d-af47-d6e36e2c0770",
+      "name": "AI_01",
+      "components": {
+        "transform": {
+          "translation": [
+            -9.5,
+            0.0,
+            -6.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "characterController": {
+          "radius": 0.3499999940395355,
+          "halfHeight": 0.5499999821186066,
+          "maxSlopeDegrees": 45.0,
+          "stepHeight": 0.30000001192092896,
+          "mass": 70.0,
+          "maxStrength": 200.0,
+          "gravityFactor": 1.0
+        },
+        "script": {
+          "path": "npc.lua",
+          "properties": {}
+        }
+      }
+    },
+    {
+      "id": "91b2c853-c888-4243-a9f4-b97842fbc3af",
+      "name": "AI_01_Body",
+      "components": {
+        "transform": {
+          "translation": [
+            -9.5,
+            0.0,
+            -6.5
+          ],
+          "rotation": [
+            0.0,
+            0.9999999999999991,
+            0.0,
+            -4.37113882867378e-08
+          ],
+          "scale": [
+            0.4799999892711658,
+            0.47999998927116394,
+            0.4799999892711658
+          ]
+        },
+        "parent": {
+          "entity": "bcdbb24f-1129-456d-af47-d6e36e2c0770",
+          "local": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              -1.0,
+              -0.0,
+              4.371138828673793e-08
+            ],
+            "scale": [
+              0.47999998927116394,
+              0.47999998927116394,
+              0.47999998927116394
+            ]
+          }
+        },
+        "locomotion": {
+          "idleClip": "AI_01_Idle",
+          "moveClip": "AI_01_Run",
+          "speedThreshold": 0.10000000149011612
+        },
+        "skinnedMeshRenderer": {
+          "mesh": "arena-01.mesh.arena.cube-008",
+          "skeleton": "arena-01.skeleton.arena.skin-0.node-24",
+          "materials": [
+            "arena-01.material.arena.skin-007-41167b5b34",
+            "arena-01.material.arena.black-007-b1df95747b",
+            "arena-01.material.arena.belt-ac83ea76ed",
+            "arena-01.material.arena.shirt-67f39434b3",
+            "arena-01.material.arena.details-33183d0e1b",
+            "arena-01.material.arena.face-007-5fbbde5f76",
+            "arena-01.material.arena.hair-8f741a8e20"
+          ]
+        },
+        "animator": {
+          "clips": {
+            "AI_01_Death": "arena-01.animation-clip.arena.animation-0.skin-0.node-24",
+            "AI_01_Defeat": "arena-01.animation-clip.arena.animation-1.skin-0.node-24",
+            "AI_01_Idle": "arena-01.animation-clip.arena.animation-2.skin-0.node-24",
+            "AI_01_Jump": "arena-01.animation-clip.arena.animation-3.skin-0.node-24",
+            "AI_01_PickUp": "arena-01.animation-clip.arena.animation-4.skin-0.node-24",
+            "AI_01_RecieveHit": "arena-01.animation-clip.arena.animation-5.skin-0.node-24",
+            "AI_01_Roll": "arena-01.animation-clip.arena.animation-6.skin-0.node-24",
+            "AI_01_Run": "arena-01.animation-clip.arena.animation-7.skin-0.node-24",
+            "AI_01_Run_Carry": "arena-01.animation-clip.arena.animation-8.skin-0.node-24",
+            "AI_01_Shoot_OneHanded": "arena-01.animation-clip.arena.animation-9.skin-0.node-24",
+            "AI_01_SitDown": "arena-01.animation-clip.arena.animation-10.skin-0.node-24",
+            "AI_01_StandUp": "arena-01.animation-clip.arena.animation-11.skin-0.node-24",
+            "AI_01_SwordSlash": "arena-01.animation-clip.arena.animation-12.skin-0.node-24",
+            "AI_01_Victory": "arena-01.animation-clip.arena.animation-13.skin-0.node-24",
+            "AI_01_Walk": "arena-01.animation-clip.arena.animation-14.skin-0.node-24",
+            "AI_01_Walk_Carry": "arena-01.animation-clip.arena.animation-15.skin-0.node-24"
+          },
+          "currentClip": "AI_01_Death",
+          "playbackSpeed": 1.0,
+          "playing": true,
+          "loop": true
+        }
+      }
+    },
+    {
+      "id": "e8a03a61-b705-4235-8455-8c90a657a756",
+      "name": "AI_02",
+      "components": {
+        "transform": {
+          "translation": [
+            9.5,
+            0.0,
+            -6.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "characterController": {
+          "radius": 0.3499999940395355,
+          "halfHeight": 0.5499999821186066,
+          "maxSlopeDegrees": 45.0,
+          "stepHeight": 0.30000001192092896,
+          "mass": 70.0,
+          "maxStrength": 200.0,
+          "gravityFactor": 1.0
+        },
+        "script": {
+          "path": "npc.lua",
+          "properties": {}
+        }
+      }
+    },
+    {
+      "id": "394ac17d-958c-42fd-9d91-5a39015fdbc3",
+      "name": "AI_02_Body",
+      "components": {
+        "transform": {
+          "translation": [
+            9.5,
+            0.0,
+            -6.5
+          ],
+          "rotation": [
+            0.0,
+            0.9999999999999991,
+            0.0,
+            -4.37113882867378e-08
+          ],
+          "scale": [
+            0.4799999892711658,
+            0.47999998927116394,
+            0.4799999892711658
+          ]
+        },
+        "parent": {
+          "entity": "e8a03a61-b705-4235-8455-8c90a657a756",
+          "local": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              -1.0,
+              -0.0,
+              4.371138828673793e-08
+            ],
+            "scale": [
+              0.47999998927116394,
+              0.47999998927116394,
+              0.47999998927116394
+            ]
+          }
+        },
+        "locomotion": {
+          "idleClip": "AI_02_Idle",
+          "moveClip": "AI_02_Run",
+          "speedThreshold": 0.10000000149011612
+        },
+        "skinnedMeshRenderer": {
+          "mesh": "arena-01.mesh.arena.cube-009",
+          "skeleton": "arena-01.skeleton.arena.skin-1.node-50",
+          "materials": [
+            "arena-01.material.arena.skin-007-41167b5b34",
+            "arena-01.material.arena.beige-007-43554b460d",
+            "arena-01.material.arena.clothes-007-5d4e475a59",
+            "arena-01.material.arena.gold-007-4ab0833367",
+            "arena-01.material.arena.brown-007-16f57e57c2",
+            "arena-01.material.arena.face-007-5fbbde5f76",
+            "arena-01.material.arena.black-008-2e1638522f",
+            "arena-01.material.arena.red-007-83850f0d21"
+          ]
+        },
+        "animator": {
+          "clips": {
+            "AI_01_Punch": "arena-01.animation-clip.arena.animation-16.skin-1.node-50",
+            "AI_02_Death": "arena-01.animation-clip.arena.animation-17.skin-1.node-50",
+            "AI_02_Defeat": "arena-01.animation-clip.arena.animation-18.skin-1.node-50",
+            "AI_02_Idle": "arena-01.animation-clip.arena.animation-19.skin-1.node-50",
+            "AI_02_Jump": "arena-01.animation-clip.arena.animation-20.skin-1.node-50",
+            "AI_02_PickUp": "arena-01.animation-clip.arena.animation-21.skin-1.node-50",
+            "AI_02_RecieveHit": "arena-01.animation-clip.arena.animation-22.skin-1.node-50",
+            "AI_02_Roll": "arena-01.animation-clip.arena.animation-23.skin-1.node-50",
+            "AI_02_Run": "arena-01.animation-clip.arena.animation-24.skin-1.node-50",
+            "AI_02_Run_Carry": "arena-01.animation-clip.arena.animation-25.skin-1.node-50",
+            "AI_02_Shoot_OneHanded": "arena-01.animation-clip.arena.animation-26.skin-1.node-50",
+            "AI_02_SitDown": "arena-01.animation-clip.arena.animation-27.skin-1.node-50",
+            "AI_02_StandUp": "arena-01.animation-clip.arena.animation-28.skin-1.node-50",
+            "AI_02_SwordSlash": "arena-01.animation-clip.arena.animation-29.skin-1.node-50",
+            "AI_02_Victory": "arena-01.animation-clip.arena.animation-30.skin-1.node-50",
+            "AI_02_Walk": "arena-01.animation-clip.arena.animation-31.skin-1.node-50",
+            "AI_02_Walk_Carry": "arena-01.animation-clip.arena.animation-32.skin-1.node-50"
+          },
+          "currentClip": "AI_01_Punch",
+          "playbackSpeed": 1.0,
+          "playing": true,
+          "loop": true
+        }
+      }
+    },
+    {
+      "id": "d6de4cca-61bb-4e1d-aeae-e8cbdfbe903f",
+      "name": "AI_03",
+      "components": {
+        "transform": {
+          "translation": [
+            9.5,
+            0.0,
+            6.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "characterController": {
+          "radius": 0.3499999940395355,
+          "halfHeight": 0.5499999821186066,
+          "maxSlopeDegrees": 45.0,
+          "stepHeight": 0.30000001192092896,
+          "mass": 70.0,
+          "maxStrength": 200.0,
+          "gravityFactor": 1.0
+        },
+        "script": {
+          "path": "npc.lua",
+          "properties": {}
+        }
+      }
+    },
+    {
+      "id": "41361f42-c011-4005-a168-cb4e247d3812",
+      "name": "AI_03_Body",
+      "components": {
+        "transform": {
+          "translation": [
+            9.5,
+            0.0,
+            6.5
+          ],
+          "rotation": [
+            0.0,
+            0.9999999999999991,
+            0.0,
+            -4.37113882867378e-08
+          ],
+          "scale": [
+            0.4799999892711658,
+            0.47999998927116394,
+            0.4799999892711658
+          ]
+        },
+        "parent": {
+          "entity": "d6de4cca-61bb-4e1d-aeae-e8cbdfbe903f",
+          "local": {
+            "translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              -1.0,
+              -0.0,
+              4.371138828673793e-08
+            ],
+            "scale": [
+              0.47999998927116394,
+              0.47999998927116394,
+              0.47999998927116394
+            ]
+          }
+        },
+        "locomotion": {
+          "idleClip": "AI_03_Idle",
+          "moveClip": "AI_03_Run",
+          "speedThreshold": 0.10000000149011612
+        },
+        "skinnedMeshRenderer": {
+          "mesh": "arena-01.mesh.arena.cube-010",
+          "skeleton": "arena-01.skeleton.arena.skin-2.node-76",
+          "materials": [
+            "arena-01.material.arena.skin-007-41167b5b34",
+            "arena-01.material.arena.black-007-b1df95747b",
+            "arena-01.material.arena.belt-ac83ea76ed",
+            "arena-01.material.arena.shirt-67f39434b3",
+            "arena-01.material.arena.details-33183d0e1b",
+            "arena-01.material.arena.face-007-5fbbde5f76",
+            "arena-01.material.arena.hair-8f741a8e20"
+          ]
+        },
+        "animator": {
+          "clips": {
+            "AI_03_Death": "arena-01.animation-clip.arena.animation-33.skin-2.node-76",
+            "AI_03_Defeat": "arena-01.animation-clip.arena.animation-34.skin-2.node-76",
+            "AI_03_Idle": "arena-01.animation-clip.arena.animation-35.skin-2.node-76",
+            "AI_03_Jump": "arena-01.animation-clip.arena.animation-36.skin-2.node-76",
+            "AI_03_PickUp": "arena-01.animation-clip.arena.animation-37.skin-2.node-76",
+            "AI_03_RecieveHit": "arena-01.animation-clip.arena.animation-38.skin-2.node-76",
+            "AI_03_Roll": "arena-01.animation-clip.arena.animation-39.skin-2.node-76",
+            "AI_03_Run": "arena-01.animation-clip.arena.animation-40.skin-2.node-76",
+            "AI_03_Run_Carry": "arena-01.animation-clip.arena.animation-41.skin-2.node-76",
+            "AI_03_Shoot_OneHanded": "arena-01.animation-clip.arena.animation-42.skin-2.node-76",
+            "AI_03_SitDown": "arena-01.animation-clip.arena.animation-43.skin-2.node-76",
+            "AI_03_StandUp": "arena-01.animation-clip.arena.animation-44.skin-2.node-76",
+            "AI_03_SwordSlash": "arena-01.animation-clip.arena.animation-45.skin-2.node-76",
+            "AI_03_Victory": "arena-01.animation-clip.arena.animation-46.skin-2.node-76",
+            "AI_03_Walk": "arena-01.animation-clip.arena.animation-47.skin-2.node-76",
+            "AI_03_Walk_Carry": "arena-01.animation-clip.arena.animation-48.skin-2.node-76"
+          },
+          "currentClip": "AI_03_Death",
+          "playbackSpeed": 1.0,
+          "playing": true,
+          "loop": true
+        }
+      }
+    },
     {
       "id": "fba13699-24b1-4bf6-ae74-7c3fa51eac4c",
       "name": "Arena_Floor",
@@ -279,6 +648,296 @@
       }
     },
     {
+      "id": "cd74ca91-2b0c-4bcf-9ad7-65384de73759",
+      "name": "Bottle",
+      "components": {
+        "transform": {
+          "translation": [
+            -9.199999809265137,
+            0.0,
+            5.800000190734863
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": 1.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.14000000059604645,
+            -0.0
+          ],
+          "halfExtents": [
+            0.05727987736463547,
+            0.14000000059604645,
+            0.05727987736463547
+          ]
+        },
+        "script": {
+          "path": "pickup.lua",
+          "properties": {}
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-bottle",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "e9f63f27-2bfd-4c4b-9cae-1c515c896675",
+      "name": "Bottle_Crate_Center",
+      "components": {
+        "transform": {
+          "translation": [
+            -1.5,
+            0.5879999995231628,
+            -2.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": 1.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.14000000059604645,
+            -0.0
+          ],
+          "halfExtents": [
+            0.05727987736463547,
+            0.14000000059604645,
+            0.05727987736463547
+          ]
+        },
+        "script": {
+          "path": "pickup.lua",
+          "properties": {}
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-bottle",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "d4818394-5e11-4666-a275-99a21808b3c3",
+      "name": "Bottle_Table_NW",
+      "components": {
+        "transform": {
+          "translation": [
+            -4.300000190734863,
+            0.8799999952316284,
+            -3.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": 1.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.14000000059604645,
+            -0.0
+          ],
+          "halfExtents": [
+            0.05727987736463547,
+            0.14000000059604645,
+            0.05727987736463547
+          ]
+        },
+        "script": {
+          "path": "pickup.lua",
+          "properties": {}
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-bottle",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "380ea25f-1bc9-4f1f-b5e5-3e866d825baf",
+      "name": "Bottle_Table_SE",
+      "components": {
+        "transform": {
+          "translation": [
+            3.700000047683716,
+            0.8799999952316284,
+            3.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": 1.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.14000000059604645,
+            -0.0
+          ],
+          "halfExtents": [
+            0.05727987736463547,
+            0.14000000059604645,
+            0.05727987736463547
+          ]
+        },
+        "script": {
+          "path": "pickup.lua",
+          "properties": {}
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-bottle",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
+      "id": "f4039080-eb49-4908-b924-729903a26380",
+      "name": "Bottle_Table_SW",
+      "components": {
+        "transform": {
+          "translation": [
+            -4.300000190734863,
+            0.8799999952316284,
+            3.5
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "rigidBody": {
+          "motion": "dynamic",
+          "mass": 1.0,
+          "friction": 0.5,
+          "restitution": 0.0,
+          "linearDamping": 0.05000000074505806,
+          "angularDamping": 0.05000000074505806,
+          "gravityFactor": 1.0,
+          "lockRotation": false,
+          "sensor": false
+        },
+        "collider": {
+          "shape": "box",
+          "offset": [
+            0.0,
+            0.14000000059604645,
+            -0.0
+          ],
+          "halfExtents": [
+            0.05727987736463547,
+            0.14000000059604645,
+            0.05727987736463547
+          ]
+        },
+        "script": {
+          "path": "pickup.lua",
+          "properties": {}
+        },
+        "meshRenderer": {
+          "mesh": "arena-01.mesh.arena.mesh-bottle",
+          "materials": [
+            "arena-01.material.arena.colormap-016-cd8351c830"
+          ]
+        }
+      }
+    },
+    {
       "id": "arena.brawlstars-gameplaycam",
       "name": "BrawlStars_GameplayCam",
       "components": {
@@ -384,147 +1043,45 @@
           }
         },
         "locomotion": {
-          "idleClip": "Idle",
-          "moveClip": "Run",
+          "idleClip": "Player_Idle",
+          "moveClip": "Player_Run",
           "speedThreshold": 0.10000000149011612
         },
         "skinnedMeshRenderer": {
           "mesh": "arena-01.mesh.arena.cube-007",
-          "skeleton": "arena-01.skeleton.arena.skin-0.node-30",
+          "skeleton": "arena-01.skeleton.arena.skin-3.node-113",
           "materials": [
-            "arena-01.material.arena.skin-006-41167b5b34",
-            "arena-01.material.arena.beige-006-43554b460d",
-            "arena-01.material.arena.clothes-006-5d4e475a59",
-            "arena-01.material.arena.gold-006-4ab0833367",
-            "arena-01.material.arena.brown-006-16f57e57c2",
-            "arena-01.material.arena.face-006-5fbbde5f76",
-            "arena-01.material.arena.black-006-2e1638522f",
-            "arena-01.material.arena.red-006-83850f0d21"
+            "arena-01.material.arena.skin-007-41167b5b34",
+            "arena-01.material.arena.beige-007-43554b460d",
+            "arena-01.material.arena.clothes-007-5d4e475a59",
+            "arena-01.material.arena.gold-007-4ab0833367",
+            "arena-01.material.arena.brown-007-16f57e57c2",
+            "arena-01.material.arena.face-007-5fbbde5f76",
+            "arena-01.material.arena.black-008-2e1638522f",
+            "arena-01.material.arena.red-007-83850f0d21"
           ]
         },
         "animator": {
           "clips": {
-            "Death": "arena-01.animation-clip.arena.animation-0.skin-0.node-30",
-            "Death.001": "arena-01.animation-clip.arena.animation-1.skin-0.node-30",
-            "Death.002": "arena-01.animation-clip.arena.animation-2.skin-0.node-30",
-            "Death.003": "arena-01.animation-clip.arena.animation-3.skin-0.node-30",
-            "Death.004": "arena-01.animation-clip.arena.animation-4.skin-0.node-30",
-            "Death.005": "arena-01.animation-clip.arena.animation-5.skin-0.node-30",
-            "Death.006": "arena-01.animation-clip.arena.animation-6.skin-0.node-30",
-            "Defeat": "arena-01.animation-clip.arena.animation-7.skin-0.node-30",
-            "Defeat.001": "arena-01.animation-clip.arena.animation-8.skin-0.node-30",
-            "Defeat.002": "arena-01.animation-clip.arena.animation-9.skin-0.node-30",
-            "Defeat.003": "arena-01.animation-clip.arena.animation-10.skin-0.node-30",
-            "Defeat.004": "arena-01.animation-clip.arena.animation-11.skin-0.node-30",
-            "Defeat.005": "arena-01.animation-clip.arena.animation-12.skin-0.node-30",
-            "Defeat.006": "arena-01.animation-clip.arena.animation-13.skin-0.node-30",
-            "Idle": "arena-01.animation-clip.arena.animation-14.skin-0.node-30",
-            "Idle.001": "arena-01.animation-clip.arena.animation-15.skin-0.node-30",
-            "Idle.002": "arena-01.animation-clip.arena.animation-16.skin-0.node-30",
-            "Idle.003": "arena-01.animation-clip.arena.animation-17.skin-0.node-30",
-            "Idle.004": "arena-01.animation-clip.arena.animation-18.skin-0.node-30",
-            "Idle.005": "arena-01.animation-clip.arena.animation-19.skin-0.node-30",
-            "Idle.006": "arena-01.animation-clip.arena.animation-20.skin-0.node-30",
-            "Jump": "arena-01.animation-clip.arena.animation-21.skin-0.node-30",
-            "Jump.001": "arena-01.animation-clip.arena.animation-22.skin-0.node-30",
-            "Jump.002": "arena-01.animation-clip.arena.animation-23.skin-0.node-30",
-            "Jump.003": "arena-01.animation-clip.arena.animation-24.skin-0.node-30",
-            "Jump.004": "arena-01.animation-clip.arena.animation-25.skin-0.node-30",
-            "Jump.005": "arena-01.animation-clip.arena.animation-26.skin-0.node-30",
-            "Jump.006": "arena-01.animation-clip.arena.animation-27.skin-0.node-30",
-            "PickUp": "arena-01.animation-clip.arena.animation-28.skin-0.node-30",
-            "PickUp.001": "arena-01.animation-clip.arena.animation-29.skin-0.node-30",
-            "PickUp.002": "arena-01.animation-clip.arena.animation-30.skin-0.node-30",
-            "PickUp.003": "arena-01.animation-clip.arena.animation-31.skin-0.node-30",
-            "PickUp.004": "arena-01.animation-clip.arena.animation-32.skin-0.node-30",
-            "PickUp.005": "arena-01.animation-clip.arena.animation-33.skin-0.node-30",
-            "PickUp.006": "arena-01.animation-clip.arena.animation-34.skin-0.node-30",
-            "Punch": "arena-01.animation-clip.arena.animation-35.skin-0.node-30",
-            "Punch.001": "arena-01.animation-clip.arena.animation-36.skin-0.node-30",
-            "Punch.002": "arena-01.animation-clip.arena.animation-37.skin-0.node-30",
-            "Punch.003": "arena-01.animation-clip.arena.animation-38.skin-0.node-30",
-            "Punch.004": "arena-01.animation-clip.arena.animation-39.skin-0.node-30",
-            "Punch.005": "arena-01.animation-clip.arena.animation-40.skin-0.node-30",
-            "Punch.006": "arena-01.animation-clip.arena.animation-41.skin-0.node-30",
-            "RecieveHit": "arena-01.animation-clip.arena.animation-42.skin-0.node-30",
-            "RecieveHit.001": "arena-01.animation-clip.arena.animation-43.skin-0.node-30",
-            "RecieveHit.002": "arena-01.animation-clip.arena.animation-44.skin-0.node-30",
-            "RecieveHit.003": "arena-01.animation-clip.arena.animation-45.skin-0.node-30",
-            "RecieveHit.004": "arena-01.animation-clip.arena.animation-46.skin-0.node-30",
-            "RecieveHit.005": "arena-01.animation-clip.arena.animation-47.skin-0.node-30",
-            "RecieveHit.006": "arena-01.animation-clip.arena.animation-48.skin-0.node-30",
-            "Roll": "arena-01.animation-clip.arena.animation-49.skin-0.node-30",
-            "Roll.001": "arena-01.animation-clip.arena.animation-50.skin-0.node-30",
-            "Roll.002": "arena-01.animation-clip.arena.animation-51.skin-0.node-30",
-            "Roll.003": "arena-01.animation-clip.arena.animation-52.skin-0.node-30",
-            "Roll.004": "arena-01.animation-clip.arena.animation-53.skin-0.node-30",
-            "Roll.005": "arena-01.animation-clip.arena.animation-54.skin-0.node-30",
-            "Roll.006": "arena-01.animation-clip.arena.animation-55.skin-0.node-30",
-            "Run": "arena-01.animation-clip.arena.animation-56.skin-0.node-30",
-            "Run.001": "arena-01.animation-clip.arena.animation-57.skin-0.node-30",
-            "Run.002": "arena-01.animation-clip.arena.animation-58.skin-0.node-30",
-            "Run.003": "arena-01.animation-clip.arena.animation-59.skin-0.node-30",
-            "Run.004": "arena-01.animation-clip.arena.animation-60.skin-0.node-30",
-            "Run.005": "arena-01.animation-clip.arena.animation-61.skin-0.node-30",
-            "Run.006": "arena-01.animation-clip.arena.animation-62.skin-0.node-30",
-            "Run_Carry": "arena-01.animation-clip.arena.animation-63.skin-0.node-30",
-            "Run_Carry.001": "arena-01.animation-clip.arena.animation-64.skin-0.node-30",
-            "Run_Carry.002": "arena-01.animation-clip.arena.animation-65.skin-0.node-30",
-            "Run_Carry.003": "arena-01.animation-clip.arena.animation-66.skin-0.node-30",
-            "Run_Carry.004": "arena-01.animation-clip.arena.animation-67.skin-0.node-30",
-            "Run_Carry.005": "arena-01.animation-clip.arena.animation-68.skin-0.node-30",
-            "Run_Carry.006": "arena-01.animation-clip.arena.animation-69.skin-0.node-30",
-            "Shoot_OneHanded": "arena-01.animation-clip.arena.animation-70.skin-0.node-30",
-            "Shoot_OneHanded.001": "arena-01.animation-clip.arena.animation-71.skin-0.node-30",
-            "Shoot_OneHanded.002": "arena-01.animation-clip.arena.animation-72.skin-0.node-30",
-            "Shoot_OneHanded.003": "arena-01.animation-clip.arena.animation-73.skin-0.node-30",
-            "Shoot_OneHanded.004": "arena-01.animation-clip.arena.animation-74.skin-0.node-30",
-            "Shoot_OneHanded.005": "arena-01.animation-clip.arena.animation-75.skin-0.node-30",
-            "Shoot_OneHanded.006": "arena-01.animation-clip.arena.animation-76.skin-0.node-30",
-            "SitDown": "arena-01.animation-clip.arena.animation-77.skin-0.node-30",
-            "SitDown.001": "arena-01.animation-clip.arena.animation-78.skin-0.node-30",
-            "SitDown.002": "arena-01.animation-clip.arena.animation-79.skin-0.node-30",
-            "SitDown.003": "arena-01.animation-clip.arena.animation-80.skin-0.node-30",
-            "SitDown.004": "arena-01.animation-clip.arena.animation-81.skin-0.node-30",
-            "SitDown.005": "arena-01.animation-clip.arena.animation-82.skin-0.node-30",
-            "SitDown.006": "arena-01.animation-clip.arena.animation-83.skin-0.node-30",
-            "StandUp": "arena-01.animation-clip.arena.animation-84.skin-0.node-30",
-            "StandUp.001": "arena-01.animation-clip.arena.animation-85.skin-0.node-30",
-            "StandUp.002": "arena-01.animation-clip.arena.animation-86.skin-0.node-30",
-            "StandUp.003": "arena-01.animation-clip.arena.animation-87.skin-0.node-30",
-            "StandUp.004": "arena-01.animation-clip.arena.animation-88.skin-0.node-30",
-            "StandUp.005": "arena-01.animation-clip.arena.animation-89.skin-0.node-30",
-            "StandUp.006": "arena-01.animation-clip.arena.animation-90.skin-0.node-30",
-            "SwordSlash": "arena-01.animation-clip.arena.animation-91.skin-0.node-30",
-            "SwordSlash.001": "arena-01.animation-clip.arena.animation-92.skin-0.node-30",
-            "SwordSlash.002": "arena-01.animation-clip.arena.animation-93.skin-0.node-30",
-            "SwordSlash.003": "arena-01.animation-clip.arena.animation-94.skin-0.node-30",
-            "SwordSlash.004": "arena-01.animation-clip.arena.animation-95.skin-0.node-30",
-            "SwordSlash.005": "arena-01.animation-clip.arena.animation-96.skin-0.node-30",
-            "SwordSlash.006": "arena-01.animation-clip.arena.animation-97.skin-0.node-30",
-            "Victory": "arena-01.animation-clip.arena.animation-98.skin-0.node-30",
-            "Victory.001": "arena-01.animation-clip.arena.animation-99.skin-0.node-30",
-            "Victory.002": "arena-01.animation-clip.arena.animation-100.skin-0.node-30",
-            "Victory.003": "arena-01.animation-clip.arena.animation-101.skin-0.node-30",
-            "Victory.004": "arena-01.animation-clip.arena.animation-102.skin-0.node-30",
-            "Victory.005": "arena-01.animation-clip.arena.animation-103.skin-0.node-30",
-            "Victory.006": "arena-01.animation-clip.arena.animation-104.skin-0.node-30",
-            "Walk": "arena-01.animation-clip.arena.animation-105.skin-0.node-30",
-            "Walk.001": "arena-01.animation-clip.arena.animation-106.skin-0.node-30",
-            "Walk.002": "arena-01.animation-clip.arena.animation-107.skin-0.node-30",
-            "Walk.003": "arena-01.animation-clip.arena.animation-108.skin-0.node-30",
-            "Walk.004": "arena-01.animation-clip.arena.animation-109.skin-0.node-30",
-            "Walk.005": "arena-01.animation-clip.arena.animation-110.skin-0.node-30",
-            "Walk.006": "arena-01.animation-clip.arena.animation-111.skin-0.node-30",
-            "Walk_Carry": "arena-01.animation-clip.arena.animation-112.skin-0.node-30",
-            "Walk_Carry.001": "arena-01.animation-clip.arena.animation-113.skin-0.node-30",
-            "Walk_Carry.002": "arena-01.animation-clip.arena.animation-114.skin-0.node-30",
-            "Walk_Carry.003": "arena-01.animation-clip.arena.animation-115.skin-0.node-30",
-            "Walk_Carry.004": "arena-01.animation-clip.arena.animation-116.skin-0.node-30",
-            "Walk_Carry.005": "arena-01.animation-clip.arena.animation-117.skin-0.node-30",
-            "Walk_Carry.006": "arena-01.animation-clip.arena.animation-118.skin-0.node-30"
+            "Player_Death": "arena-01.animation-clip.arena.animation-49.skin-3.node-113",
+            "Player_Defeat": "arena-01.animation-clip.arena.animation-50.skin-3.node-113",
+            "Player_Idle": "arena-01.animation-clip.arena.animation-51.skin-3.node-113",
+            "Player_Jump": "arena-01.animation-clip.arena.animation-52.skin-3.node-113",
+            "Player_PickUp": "arena-01.animation-clip.arena.animation-53.skin-3.node-113",
+            "Player_Punch": "arena-01.animation-clip.arena.animation-54.skin-3.node-113",
+            "Player_RecieveHit": "arena-01.animation-clip.arena.animation-55.skin-3.node-113",
+            "Player_Roll": "arena-01.animation-clip.arena.animation-56.skin-3.node-113",
+            "Player_Run": "arena-01.animation-clip.arena.animation-57.skin-3.node-113",
+            "Player_Run_Carry": "arena-01.animation-clip.arena.animation-58.skin-3.node-113",
+            "Player_Shoot_OneHanded": "arena-01.animation-clip.arena.animation-59.skin-3.node-113",
+            "Player_SitDown": "arena-01.animation-clip.arena.animation-60.skin-3.node-113",
+            "Player_StandUp": "arena-01.animation-clip.arena.animation-61.skin-3.node-113",
+            "Player_SwordSlash": "arena-01.animation-clip.arena.animation-62.skin-3.node-113",
+            "Player_Victory": "arena-01.animation-clip.arena.animation-63.skin-3.node-113",
+            "Player_Walk": "arena-01.animation-clip.arena.animation-64.skin-3.node-113",
+            "Player_Walk_Carry": "arena-01.animation-clip.arena.animation-65.skin-3.node-113"
           },
-          "currentClip": "Idle",
+          "currentClip": "Player_Death",
           "playbackSpeed": 1.0,
           "playing": true,
           "loop": true
@@ -7462,5 +8019,10 @@
   ],
   "prefabs": [],
   "assetCatalog": "Catalog.json",
-  "script": "sandbox_rules.lua"
+  "script": "sandbox_rules.lua",
+  "environment": {
+    "texture": "engine.texture.environment.qwantani-dusk",
+    "intensity": 1.0,
+    "rotationDegrees": 0.0
+  }
 }

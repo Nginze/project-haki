@@ -14,6 +14,44 @@ import import_gltf_pack as importer
 
 
 class ImporterTests(unittest.TestCase):
+    def test_environment_inheritance_opt_out_and_reimport(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            project = root / "Assets/Game/Project.json"
+            project.parent.mkdir(parents=True)
+            project.write_text(json.dumps({"type": "haki.scene-manifest", "version": 1,
+                                           "entry": "", "scenes": []}))
+            fixture = TOOLS.parent / "src/Tests/Serialization/Fixtures/Triangle.gltf"
+            source = root / "arena.gltf"
+            document = json.loads(fixture.read_text())
+            document.update(nodes=[{"mesh": 0}], scenes=[{"nodes": [0]}], scene=0)
+            source.write_text(json.dumps(document))
+            pack = importer.PackImporter(importer.parse_args([
+                str(source), "--pack", "arena", "--scene", "arena", "--project-root", str(root)]))
+            plan = pack.plan_model(source, Path("arena.gltf"))
+            # No authored setting inherits the runtime's engine environment.
+            self.assertNotIn("environment", pack.build_scene([plan]))
+            authored = plan.gltf.scenes[plan.gltf.scene or 0]
+            authored.extras = {"haki": {"version": 1, "environment": None}}
+            disabled = pack.build_scene([plan])
+            self.assertIn("environment", disabled)
+            self.assertIsNone(disabled["environment"])
+            existing = pack.final_root / "arena.scene.json"
+            existing.parent.mkdir(parents=True)
+            existing.write_text(json.dumps(disabled))
+            authored.extras = {}
+            # A generic model reimport cannot erase the scene's opt-out.
+            self.assertIsNone(pack.build_scene([plan])["environment"])
+            custom = {"texture": "texture.custom", "intensity": 1.5, "rotationDegrees": 20}
+            authored.extras = {"haki": {"version": 1, "environment": custom}}
+            self.assertEqual(pack.build_scene([plan])["environment"], custom)
+            existing.write_text(json.dumps({**disabled, "environment": custom}))
+            authored.extras = {}
+            self.assertEqual(pack.build_scene([plan])["environment"], custom)
+            # Blender's explicit opt-out overrides a previously enabled environment.
+            authored.extras = {"haki": {"version": 1, "environment": None}}
+            self.assertIsNone(pack.build_scene([plan])["environment"])
+
     def test_orthographic_camera_scene_entity(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

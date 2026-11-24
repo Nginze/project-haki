@@ -36,7 +36,7 @@ struct AnimatorDescription
 
 struct EnvironmentDescription
 {
-    std::string Texture;
+    std::string Texture = "engine.texture.environment.qwantani-dusk";
     float Intensity = 1.0f;
     float RotationDegrees = 0.0f;
 };

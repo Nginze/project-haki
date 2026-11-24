@@ -1,0 +1,2172 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>Haki Developer Handbook</title><style>
+:root{color-scheme:light dark;--bg:#f9f8f4;--fg:#252c32;--muted:#5d6871;--line:#d8dedc;--panel:#eef1ed;--link:#17665c}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:4rem}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.75 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:820px;margin:auto;padding:24px 22px 90px}header{position:sticky;top:0;z-index:2;padding:10px 20px;background:var(--bg);border-bottom:1px solid var(--line);font-size:14px;display:flex;justify-content:space-between;gap:20px}
+header a{font-weight:650}a{color:var(--link);text-underline-offset:3px}
+article{padding-top:18px;margin-bottom:64px}article+article{border-top:2px solid var(--line)}
+h1,h2,h3{line-height:1.25;letter-spacing:-.02em;break-after:avoid}h1{font-size:2rem;margin:25px 0}h2{font-size:1.45rem;margin-top:2.4rem}h3{font-size:1.12rem;margin-top:1.9rem}
+p{margin:1rem 0}li{margin:6px 0}ul,ol{padding-left:1.5rem}strong{font-weight:700}
+pre,code{font-family:"DejaVu Sans Mono",monospace}code{font-size:.83em;background:var(--panel);border-radius:4px;padding:2px 4px;overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px;line-height:1.5;font-size:12px}pre code{background:none;padding:0;font-size:inherit}
+table{width:100%;border-collapse:collapse;font-size:.9em;line-height:1.5;margin:22px 0;table-layout:fixed}th,td{border:1px solid var(--line);padding:10px;vertical-align:top;overflow-wrap:anywhere}th{text-align:left;background:var(--panel)}tr{break-inside:avoid}
+.source small{display:block;font-size:.72em;color:var(--muted);overflow-wrap:anywhere;line-height:1.5;margin:3px 0 8px}.source{color:var(--fg)}
+.flow{margin:24px auto;max-width:500px}.flow ol{list-style:none;padding:0}.flow li{border:1px solid var(--line);border-radius:8px;padding:10px 14px;text-align:center;background:var(--panel);position:relative;margin:0 0 26px;font-size:.9em;break-inside:avoid}.flow li:not(:last-child)::after{content:"↓";position:absolute;bottom:-27px;left:calc(50% - 8px);color:var(--link)}figcaption{font-size:.8em;color:var(--muted)}
+.edition{color:var(--muted);font-size:.9em;margin-bottom:15px}
+@media(prefers-color-scheme:dark){:root{--bg:#171d20;--fg:#e0e6e5;--muted:#a4b1b7;--line:#354349;--panel:#222c31;--link:#86d1bf}}
+@page{size:A5;margin:14mm 12mm}
+@media print{:root{color-scheme:light;--bg:white;--fg:#222;--muted:#555;--line:#cbd1ce;--panel:#f0f3ef;--link:#174c42}body{font-size:10.5pt;line-height:1.55;background:white}main{padding:0;max-width:none}header{display:none}article{break-before:page;padding:0;margin:0;border:0!important}article:first-child{break-before:auto}h1{font-size:23pt}h2{font-size:15pt;margin-top:22pt}h3{font-size:12pt}pre{font-size:7.5pt;padding:8px;line-height:1.5}th,td{padding:6px}a{color:var(--link)}.flow li{padding:6px 10px;margin-bottom:22px}.flow li:not(:last-child)::after{bottom:-24px}}
+</style></head><body><header><strong>Haki Developer Handbook</strong><a href="#contents">Contents</a></header><main><p class="edition">Offline reading edition · 17 November 2026 · 11 chapters + glossary</p><article id="contents"><h1 id="contents--haki-developer-handbook">Haki developer handbook</h1>
+<p>This is an onboarding guide to <strong>the engine in this repository</strong>. It explains what the code does, why the main parts exist, and where to look when you want to change something.</p>
+<p>You do not need to understand the whole renderer before making a game. Read the first three chapters, then follow the chapters that match your work. New terms are explained where they first matter. The <a href="#glossary">glossary</a> is there when you need a reminder.</p>
+<p>These pages describe the code reviewed on <strong>17 November 2026</strong>. Source links are the reference when later changes make a detail outdated. Examples marked as teaching examples are separate from the playable scenes.</p>
+<h2 id="contents--reading-order">Reading order</h2>
+<table>
+<thead>
+<tr>
+<th>Chapter</th>
+<th>What you will understand</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#01-big-picture">1. The big picture</a></td>
+<td>What belongs to the engine, the game, Blender, and the import tools</td>
+</tr>
+<tr>
+<td><a href="#02-startup-and-frame-loop">2. Startup and the frame loop</a></td>
+<td>How the program starts, runs, and shuts down; why simulation and drawing use different clocks</td>
+</tr>
+<tr>
+<td><a href="#03-entities-transforms-cameras">3. Entities, transforms, and cameras</a></td>
+<td>How objects are represented, how parenting works, and how a camera sees the world</td>
+</tr>
+<tr>
+<td><a href="#04-files-and-serialization">4. Files and serialization</a></td>
+<td>How JSON becomes a running scene, how validation works, and what gets saved</td>
+</tr>
+<tr>
+<td><a href="#05-assets-and-blender">5. Assets and Blender</a></td>
+<td>How models, materials, catalogs, handles, and Blender exports fit together</td>
+</tr>
+<tr>
+<td><a href="#06-renderer">6. The renderer</a></td>
+<td>How triangles become pixels, and what each rendering pass adds</td>
+</tr>
+<tr>
+<td><a href="#07-physics">7. Physics</a></td>
+<td>How Jolt bodies, colliders, controllers, queries, and contacts work</td>
+</tr>
+<tr>
+<td><a href="#08-animation">8. Animation</a></td>
+<td>How clips move a mesh, how locomotion blends, and how to play an action</td>
+</tr>
+<tr>
+<td><a href="#09-lua-gameplay">9. Lua gameplay</a></td>
+<td>Script ownership, callbacks, bindings, properties, modules, and reloads</td>
+</tr>
+<tr>
+<td><a href="#10-input-ui-and-tools">10. Input, UI, and development tools</a></td>
+<td>Keyboard and controller input, canvas drawing, editor panels, and telemetry</td>
+</tr>
+<tr>
+<td><a href="#11-working-on-the-engine">11. Working on the engine</a></td>
+<td>Build commands, debugging routes, tests, and how to add a feature across the pipeline</td>
+</tr>
+<tr>
+<td><a href="#glossary">Glossary</a></td>
+<td>Short definitions of terms used in the guide</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contents--choose-a-shorter-route">Choose a shorter route</h2>
+<p><strong>I want to build the game:</strong> 1 → 3 → 5 → 7 → 9 → 8 → 10. Keep chapter 11 nearby.</p>
+<p><strong>I want to learn the engine internals:</strong> read in order. Follow one or two source links per chapter; you do not need to read every linked file at once.</p>
+<p><strong>I want to learn graphics:</strong> 3 → 6 → 8. Chapter 6 builds from meshes and coordinate spaces up to lighting, shadows, and post-processing.</p>
+<p><strong>I want to understand saving and loading:</strong> 4 → 5 → 2. These separate data on disk, loaded resources, and live scene state.</p>
+<h2 id="contents--find-an-answer-quickly">Find an answer quickly</h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Start here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What happens after I press Run?</td>
+<td><a href="#02-startup-and-frame-loop">Startup</a></td>
+</tr>
+<tr>
+<td>Why are there several JSON files?</td>
+<td><a href="#04-files-and-serialization--the-files-have-different-jobs">File responsibilities</a></td>
+</tr>
+<tr>
+<td>Why does changing Blender not change the engine yet?</td>
+<td><a href="#05-assets-and-blender--from-blender-to-a-running-scene">Export and import</a></td>
+</tr>
+<tr>
+<td>Why does the player need both a controller and a visual child?</td>
+<td><a href="#03-entities-transforms-cameras--a-player-is-usually-more-than-one-entity">Player structure</a></td>
+</tr>
+<tr>
+<td>Who decides where a moving object is?</td>
+<td><a href="#07-physics--who-controls-the-transform">Physics ownership</a></td>
+</tr>
+<tr>
+<td>How do I play an attack animation?</td>
+<td><a href="#08-animation--playing-an-action-from-lua">Animation actions</a></td>
+</tr>
+<tr>
+<td>What does a renderer setting mean?</td>
+<td><a href="#06-renderer--the-rendering-passes-in-order">Rendering passes</a></td>
+</tr>
+<tr>
+<td>Why is something wrong only in the engine?</td>
+<td><a href="#11-working-on-the-engine--debug-by-following-the-data">Debugging routes</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="contents--how-to-use-the-source-links">How to use the source links</h2>
+<p>Each chapter ends with a short source reading route. Start at the public header to see the system's job, then read the named function in the <code>.cpp</code> file. Source links use file paths rather than line numbers so normal code edits do not immediately break them.</p>
+<p>This offline edition includes readable flow diagrams and keeps navigation inside this file. Source references name files in the project; the source code itself is not bundled here.</p>
+<h2 id="contents--what-this-guide-does-and-does-not-claim">What this guide does and does not claim</h2>
+<p>The engine already supports imported scenes, rendering, Jolt physics, character movement, skeletal animation, Lua scripts, and development tools. The intended game is a PC arena showdown game with Blender as its level editor.</p>
+<p>The current source does <strong>not</strong> contain a complete multiplayer stack, world streaming system, audio system, or RmlUI integration. Ten-player online matches, full Haki combat, and a finished game UI remain game and engine work ahead. An architecture explanation should not make those sound finished.</p>
+<p>When updating a system, update its chapter and any examples that cross into another system. For a new component, use the <a href="#11-working-on-the-engine--adding-a-feature-across-the-whole-pipeline">feature checklist</a>.</p></article><article id="01-big-picture"><h1 id="01-big-picture--1-the-big-picture">1. The big picture</h1>
+<p>Haki takes a scene you author in Blender, converts it into files the engine understands, and runs it with C++, Lua, OpenGL, and Jolt.</p>
+<p>Think of a scene as the contents of one playable place: its floor, walls, player, camera, lights, and rules. The engine provides the systems that make those things work. Your game supplies the particular objects, artwork, and rules.</p>
+<h2 id="01-big-picture--the-full-journey">The full journey</h2>
+<figure class="flow"><ol><li>Blender scene and Haki add-on</li><li>GLB model with Haki metadata</li><li>Python import tool</li><li>Scene JSON, catalog, models, materials, textures</li><li>SceneManager and SceneSerializer</li><li>Running scene: entities and components</li><li>Scripts, physics, transforms, animation</li><li>Renderer</li><li>OpenGL window</li></ol><figcaption>Project.json selects the scene and settings. Lua files supply gameplay behavior.</figcaption></figure>
+
+<p>In words: Blender authors the scene; Python prepares its runtime files; C++ loads those files into a live scene; simulation changes that scene; the renderer draws its current state.</p>
+<p>There are two different kinds of import here. <strong>The Python importer prepares files on disk. The runtime loaders read those prepared assets into memory.</strong> Neither step runs Blender inside the engine.</p>
+<h2 id="01-big-picture--the-main-boundaries">The main boundaries</h2>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Its responsibility</th>
+<th>Where it lives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Engine</td>
+<td>General systems such as rendering, physics, assets, and scripting</td>
+<td><code>src/Haki/</code></td>
+</tr>
+<tr>
+<td>Game</td>
+<td>Arenas, characters, materials, and game rules</td>
+<td><code>Assets/Game/</code></td>
+</tr>
+<tr>
+<td>Engine defaults</td>
+<td>Reusable shaders, primitive geometry, fonts, default environment</td>
+<td><code>Assets/Engine/</code></td>
+</tr>
+<tr>
+<td>Authoring</td>
+<td>Object placement, colliders, script assignment, and export settings</td>
+<td>Blender and <code>tools/blender/haki_editor/</code></td>
+</tr>
+<tr>
+<td>Import tools</td>
+<td>Validate exports and create scene packages</td>
+<td><code>tools/import_gltf_pack.py</code></td>
+</tr>
+<tr>
+<td>Tests</td>
+<td>Check individual systems and pipeline behavior</td>
+<td><code>src/Tests/</code> and <code>tools/tests/</code></td>
+</tr>
+</tbody>
+</table>
+<p>For example, deciding that a punch deals 20 damage belongs in game logic. Providing a sphere query that finds nearby physics objects belongs in the engine. This keeps the engine reusable for your next game.</p>
+<h2 id="01-big-picture--the-runtime-has-a-small-chain-of-ownership">The runtime has a small chain of ownership</h2>
+<p><code>Game</code> owns the window, renderer, and scene manager. <code>SceneManager</code> owns one active scene. That scene owns its entity storage, physics world, and Lua script system. Loaded assets live in a shared asset manager, outside a particular scene.</p>
+<p><strong>Ownership</strong> means responsibility for creating, keeping, and destroying a thing. If a scene owns its physics world, leaving that scene should remove that world and its bodies. A model resource can remain loaded because the asset manager owns it separately.</p>
+<p>The engine mostly uses C++ objects to manage these lifetimes. A <code>std::unique_ptr&lt;Scene&gt;</code> means there is one owner of that scene. A <code>std::shared_ptr&lt;AssetCatalog&gt;</code> means several systems refer to the same catalog and keep it alive together. These are memory ownership tools, not asset file formats.</p>
+<h2 id="01-big-picture--how-an-object-gets-behavior">How an object gets behavior</h2>
+<p>An object in the scene is an <strong>entity</strong>. An entity is an identifier with attached pieces of data called <strong>components</strong>.</p>
+<p>A floor can have a transform, a mesh renderer, a rigid body, and a collider. A camera can have only a transform and camera component. A player controller can have a transform, character controller, and script, while its animated visual is a separate child entity.</p>
+<p>A <strong>system</strong> reads matching components and performs work. Physics looks for physics components. Animation looks for skinned meshes and animators. Rendering looks for visible geometry and materials.</p>
+<p>This pattern is called an entity-component system, or ECS. Here it is built using EnTT. The name is less important than the idea: objects are made by combining data, rather than putting every possible behavior into one huge <code>GameObject</code> class.</p>
+<h2 id="01-big-picture--what-the-libraries-contribute">What the libraries contribute</h2>
+<table>
+<thead>
+<tr>
+<th>Library</th>
+<th>Plain explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GLFW</td>
+<td>Creates the desktop window and connects to desktop input and displays</td>
+</tr>
+<tr>
+<td>OpenGL + GLAD</td>
+<td>OpenGL draws using the GPU; GLAD loads the functions the program calls</td>
+</tr>
+<tr>
+<td>GLM</td>
+<td>Vectors, matrices, and rotation math</td>
+</tr>
+<tr>
+<td>EnTT</td>
+<td>Stores entities and their components; lets systems find matching entities</td>
+</tr>
+<tr>
+<td>Jolt</td>
+<td>Collision detection, rigid body simulation, and character collision support</td>
+</tr>
+<tr>
+<td>Lua + sol2</td>
+<td>Lua runs gameplay scripts; sol2 connects Lua calls to C++</td>
+</tr>
+<tr>
+<td>cgltf</td>
+<td>Reads glTF model data at runtime</td>
+</tr>
+<tr>
+<td>nlohmann/json</td>
+<td>Reads and writes JSON in C++</td>
+</tr>
+<tr>
+<td>gainput</td>
+<td>Represents input devices, states, and action mappings</td>
+</tr>
+<tr>
+<td>Dear ImGui</td>
+<td>Development menus, inspectors, and debugging panels</td>
+</tr>
+<tr>
+<td>stb</td>
+<td>Image/font support used by the engine</td>
+</tr>
+</tbody>
+</table>
+<p>Haki still decides how these libraries cooperate. Jolt does not know what a Haki scene file is. OpenGL does not know which Blender object is the player. Those connections are engine code.</p>
+<h2 id="01-big-picture--current-strengths-and-current-limits">Current strengths and current limits</h2>
+<p>The present structure is well suited to building and testing a small arena: authored maps, a controlled player, animation, Lua behaviors, physics queries, and adjustable graphics.</p>
+<p>Scene changes currently load synchronously: the main thread does the loading work. Registering many scenes does not mean they are all loaded. There is no background world streaming service in this code.</p>
+<p>Jolt uses worker threads for parts of physics. This does not make EnTT, Lua, the asset manager, or OpenGL safe to access from arbitrary worker threads. A general engine job system and network simulation architecture would require additional design.</p>
+<h2 id="01-big-picture--try-this">Try this</h2>
+<p>Open the current <span class="source">project manifest <small>Assets/Game/Project.json</small></span>. Find its <code>entry</code> value, then follow the matching scene's <code>source</code> path. Open that scene JSON and find one camera and one character controller. You have just followed the engine's first important chain: <strong>project → scene → components</strong>.</p>
+<h2 id="01-big-picture--source-reading-route">Source reading route</h2>
+<ol>
+<li><span class="source">main.cpp <small>src/main.cpp</small></span>: the program entry point.</li>
+<li><span class="source">Game.h <small>src/Haki/Core/Game.h</small></span>: the top-level owned systems.</li>
+<li><span class="source">Scene.h <small>src/Haki/Scene/Scene.h</small></span>: what belongs to one scene.</li>
+<li><span class="source">Components.h <small>src/Haki/Scene/Components.h</small></span>: the data systems operate on.</li>
+</ol></article><article id="02-startup-and-frame-loop"><h1 id="02-startup-and-frame-loop--2-startup-and-the-frame-loop">2. Startup and the frame loop</h1>
+<p>A game program repeats two jobs: update the world and draw a picture of it. Haki updates the world at a fixed rate and draws as often as the outer loop allows.</p>
+<h2 id="02-startup-and-frame-loop--what-happens-at-startup">What happens at startup</h2>
+<p><code>main()</code> installs a console logger, constructs <code>Game</code>, and calls <code>Run()</code>. The default project path is <code>Assets/Game/Project.json</code>.</p>
+<p>Project settings load before the window is created. That lets saved dimensions, title, and window mode take effect from the start.</p>
+<p><code>Game::InitializeSystems()</code> then prepares the engine in this order:</p>
+<ol>
+<li>Confirm that the window and OpenGL context are usable.</li>
+<li>Start the asset manager and register its loaders.</li>
+<li>Start the shared Jolt support through <code>PhysicsCore</code>.</li>
+<li>Connect input to the window.</li>
+<li>Create renderer resources.</li>
+<li>Load fonts and prepare telemetry.</li>
+<li>Start the optional ImGui development interface.</li>
+<li>Read the project scene manifest, register scene factories, and request the entry scene.</li>
+</ol>
+<p>A <strong>context</strong> here is the connection between this thread and the OpenGL state for the window. GPU objects such as textures cannot be created before this is ready.</p>
+<p>Registering a scene stores a way to create it later. The entry scene becomes active when the scene manager processes its request during an update.</p>
+<h2 id="02-startup-and-frame-loop--a-frame-and-a-tick-are-different">A frame and a tick are different</h2>
+<p>A <strong>rendered frame</strong> is one picture presented to the window. A <strong>simulation tick</strong> is one step of gameplay and physics.</p>
+<p>Haki's fixed tick is <code>1 / 60</code> second, about 16.67 milliseconds. The drawing rate can be higher or lower.</p>
+<p>At 120 rendered frames per second, some frames have no simulation step. At 30 rendered frames per second, a frame will commonly perform two simulation steps. Those are examples of normal timing, not promises about exact scheduling.</p>
+<p>This helps physics because it sees a regular time step. It also makes gameplay easier to reason about: movement speed is measured in units per second instead of units per picture.</p>
+<pre><code class="language-text">distance = speed × seconds
+5 metres/second × 1/60 second = about 0.083 metres per tick
+</code></pre>
+<h2 id="02-startup-and-frame-loop--the-accumulator">The accumulator</h2>
+<p>The main loop keeps an amount of unprocessed simulation time called an <strong>accumulator</strong>.</p>
+<pre><code class="language-text">measure time since the last frame
+add a capped amount of that time to the accumulator
+
+while at least one fixed step remains, up to 8 steps:
+    update the scene by 1/60 second
+    subtract 1/60 second
+
+draw once
+</code></pre>
+<p>The code caps a single frame's added simulation time at 0.25 seconds. It also limits catch-up work to 8 ticks per frame, then discards excess whole steps. Otherwise one slow frame could cause so much catch-up work that the engine never recovers.</p>
+<p>That means a very large stall can make simulation time fall behind real time. This is a deliberate limit on work, not a network rollback system. The loop currently does not interpolate between two physics snapshots when drawing.</p>
+<h2 id="02-startup-and-frame-loop--what-happens-in-one-outer-frame">What happens in one outer frame</h2>
+<p>The simplified order in <code>Game::Run()</code> is:</p>
+<ol>
+<li>Measure elapsed time and poll window events.</li>
+<li>Update input once.</li>
+<li>Build the editor UI, handle its requests, and check project setting saves.</li>
+<li>Decide whether gameplay or the debug camera owns input.</li>
+<li>Run zero or more fixed simulation ticks.</li>
+<li>Update the optional free-look camera for this rendered frame.</li>
+<li>Poll shader and script files for changes.</li>
+<li>Queue telemetry, render the scene, and draw ImGui on top.</li>
+<li>Swap the window buffers to present the picture.</li>
+</ol>
+<p><strong>Buffer swapping</strong> makes the completed image visible while the next image is drawn elsewhere. It avoids showing a half-drawn frame.</p>
+<h2 id="02-startup-and-frame-loop--the-order-inside-one-simulation-tick">The order inside one simulation tick</h2>
+<p>The main loop first runs <code>PlayerControllerSystem::Update()</code>. This can fill desired movement from built-in player input. <code>SceneManager::Update()</code> then advances scene transitions and calls the scene's <code>OnUpdate()</code> and <code>UpdateRuntime()</code>.</p>
+<p>Within <code>Scene::UpdateRuntime()</code> the order is:</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>What it does</th>
+<th>Why the order matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prepare scene systems</td>
+<td>Lazily create physics and Lua support when needed</td>
+<td>Components need runtime systems before they can act</td>
+</tr>
+<tr>
+<td>Lua update</td>
+<td>Start new scripts and run gameplay callbacks</td>
+<td>Scripts can request movement before physics</td>
+</tr>
+<tr>
+<td>Physics</td>
+<td>Create pending bodies, move controllers, step Jolt, copy results back</td>
+<td>Collision decides the movement that really happened</td>
+</tr>
+<tr>
+<td>Contact callbacks</td>
+<td>Deliver collision and trigger events to scripts</td>
+<td>Events now describe the completed physics step</td>
+</tr>
+<tr>
+<td>Transform hierarchy</td>
+<td>Move attached children with their parents</td>
+<td>A visual follows the controller's corrected position</td>
+</tr>
+<tr>
+<td>Animation</td>
+<td>Evaluate clips and locomotion</td>
+<td>Locomotion can use actual speed after collision</td>
+</tr>
+</tbody>
+</table>
+<p>A camera moved from Lua's <code>on_update</code> sees the player's state before that tick's physics step. If you investigate subtle camera lag, this order is one place to look. A future dedicated post-physics gameplay phase would be a new feature.</p>
+<p>The base C++ <code>Scene::OnUpdate()</code> is empty. Engine systems run through <code>UpdateRuntime()</code>, so a scene subclass does not have to call those systems itself.</p>
+<h2 id="02-startup-and-frame-loop--pausing">Pausing</h2>
+<p>When simulation is paused, the runtime step uses a delta time of zero unless a single step was requested. Scripts do not advance, contacts are not dispatched again, and physics does not simulate.</p>
+<p>Physics can still create newly added bodies. Transform and animation evaluation still run with zero time so the scene can remain visible and editable. Drawing also continues. Lua <code>on_draw</code> receives zero time while paused.</p>
+<h2 id="02-startup-and-frame-loop--input-timing-matters">Input timing matters</h2>
+<p>Input is sampled once per outer frame. Several catch-up ticks can therefore see the same sampled state. A call such as <code>input.key_pressed()</code> is a frame edge, not a separately consumed event for each simulation tick.</p>
+<p>For held movement this is normally fine. For actions such as firing once per press, use an explicit action/cooldown policy and be aware of catch-up ticks. Do not assume the engine already has a queued input command for every simulation tick.</p>
+<h2 id="02-startup-and-frame-loop--shutdown-and-lifetime">Shutdown and lifetime</h2>
+<p>The active scene shuts down before shared physics support is destroyed. Renderer and asset GPU resources are released while the window's OpenGL context still exists. Input disconnects before the window disappears.</p>
+<p>This is why member order and shutdown order matter. Calling <code>glDeleteTextures</code> after destroying the OpenGL context would be a lifetime error even if the texture's C++ destructor itself looked correct.</p>
+<h2 id="02-startup-and-frame-loop--try-this">Try this</h2>
+<p>Trace <code>Game::Run()</code> → <code>SceneManager::Update()</code> → <code>Scene::UpdateRuntime()</code>. Find the line that calls Lua and the line that calls physics. Ask: if Lua requests a velocity, which later stage decides whether a wall stops it?</p>
+<h2 id="02-startup-and-frame-loop--source-reading-route">Source reading route</h2>
+<ol>
+<li><span class="source">Game.cpp <small>src/Haki/Core/Game.cpp</small></span>: <code>InitializeSystems</code>, <code>Run</code>, and <code>ShutdownSystems</code>.</li>
+<li><span class="source">Scene.cpp <small>src/Haki/Scene/Scene.cpp</small></span>: <code>UpdateRuntime</code> and <code>OnRender</code>.</li>
+<li><span class="source">SceneManager.cpp <small>src/Haki/Scene/SceneManager.cpp</small></span>: <code>Update</code>.</li>
+<li><span class="source">PhysicsCore.cpp <small>src/Haki/Physics/PhysicsCore.cpp</small></span>: shared Jolt startup and worker threads.</li>
+</ol></article><article id="03-entities-transforms-cameras"><h1 id="03-entities-transforms-cameras--3-entities-transforms-and-cameras">3. Entities, transforms, and cameras</h1>
+<p>The scene's EnTT registry stores its live objects. Systems ask that registry for entities with the components they need.</p>
+<h2 id="03-entities-transforms-cameras--entity-component-and-system">Entity, component, and system</h2>
+<p>An entity is a runtime identifier. A component is data attached to it. A system is code that uses some combination of components.</p>
+<p>This small C++ example shows the pattern. It is a teaching example, not a replacement for scene loading:</p>
+<pre><code class="language-cpp">auto entity = registry.create();
+registry.emplace&lt;Haki::TransformComponent&gt;(entity);
+registry.emplace&lt;Haki::NameComponent&gt;(entity, &quot;Test object&quot;);
+
+auto view = registry.view&lt;Haki::TransformComponent&gt;();
+for (auto e : view)
+{
+    auto &amp;transform = view.get&lt;Haki::TransformComponent&gt;(e);
+    transform.Translation.x += 1.0f;
+}
+</code></pre>
+<p>A <strong>view</strong> means “give me the entities with these components.” A view of transform plus mesh renderer leaves out cameras and invisible triggers automatically.</p>
+<h2 id="03-entities-transforms-cameras--three-kinds-of-identity">Three kinds of identity</h2>
+<table>
+<thead>
+<tr>
+<th>Identity</th>
+<th>Example</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Authored entity ID</td>
+<td>A UUID stored by the add-on, or <code>player</code> in a small test</td>
+<td>Stable references across exported scene files</td>
+</tr>
+<tr>
+<td>Runtime entity handle</td>
+<td><code>entt::entity</code></td>
+<td>Access to one live entity in one registry</td>
+</tr>
+<tr>
+<td>Name</td>
+<td><code>Player</code>, <code>Fence</code>, <code>Camera</code></td>
+<td>Human-readable display and convenient lookups</td>
+</tr>
+</tbody>
+</table>
+<p><code>EntityIdComponent</code> stores the authored ID. <code>NameComponent</code> stores the display name. Names can repeat, so use stable IDs when a relationship must be unambiguous.</p>
+<p>Do not write a runtime entity handle into a scene file and expect it to identify the same object next run. Reloading a scene creates a new registry and new runtime objects.</p>
+<h2 id="03-entities-transforms-cameras--components-you-will-meet-often">Components you will meet often</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Data it carries</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Transform</td>
+<td>Position, rotation, scale, and computed world matrix</td>
+</tr>
+<tr>
+<td>ParentTransform</td>
+<td>Stable parent ID and transform relative to that parent</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td>Projection settings and whether it is the primary camera</td>
+</tr>
+<tr>
+<td>MeshRenderer</td>
+<td>Mesh handle and material handles</td>
+</tr>
+<tr>
+<td>SkinnedMeshRenderer</td>
+<td>Animated mesh, skeleton, materials, and final bone matrices</td>
+</tr>
+<tr>
+<td>Animator</td>
+<td>Named clips, playback state, and blending state</td>
+</tr>
+<tr>
+<td>LocomotionAnimation</td>
+<td>Movement-speed samples and smoothing settings</td>
+</tr>
+<tr>
+<td>RigidBody + Collider</td>
+<td>Simulation behavior and collision shape</td>
+</tr>
+<tr>
+<td>CharacterController</td>
+<td>Movement request, capsule settings, and grounded/movement results</td>
+</tr>
+<tr>
+<td>PlayerInput</td>
+<td>Built-in movement speed</td>
+</tr>
+<tr>
+<td>Script</td>
+<td>Lua path and authored property values</td>
+</tr>
+<tr>
+<td>Directional/Point/SpotLight</td>
+<td>Light color, strength, and type-specific settings</td>
+</tr>
+</tbody>
+</table>
+<p>Not every entity needs every component. An invisible collider is useful precisely because it has physics without a rendered mesh.</p>
+<h2 id="03-entities-transforms-cameras--position-rotation-and-scale">Position, rotation, and scale</h2>
+<p>A <strong>transform</strong> describes where something is, how it is turned, and how large it is.</p>
+<p>The engine uses Y as up. The ground is normally the XZ plane. A camera's forward direction is local negative Z. The player-facing math also treats negative Z as forward.</p>
+<p>The Blender export converts Blender's Z-up coordinates to the engine/glTF Y-up convention. In the usual conversion, <code>(x, y, z)</code> becomes <code>(x, z, -y)</code>. Do not manually apply that conversion again to an already exported scene.</p>
+<p>Use metres consistently for scene dimensions. Jolt's gravity is <code>(0, -9.81, 0)</code>, and the default controller is about 1.8 units tall. A metre-based scale makes movement and camera framing easier to tune together.</p>
+<h3 id="03-entities-transforms-cameras--what-a-matrix-does">What a matrix does</h3>
+<p>A matrix is a compact way to combine several transform operations. The engine builds an object's world matrix as:</p>
+<pre><code class="language-text">World = Translation × Rotation × Scale
+</code></pre>
+<p>With the math convention used here, a vertex gets scaled first, then rotated, then translated. The result puts the mesh's own coordinates into world coordinates.</p>
+<h3 id="03-entities-transforms-cameras--what-a-quaternion-does">What a quaternion does</h3>
+<p>A quaternion stores a rotation without relying on three independently edited Euler angles. You can understand it as a rotation value; you do not need to memorize its four-number math to use it.</p>
+<p>Scene JSON stores it as <code>[x, y, z, w]</code>. GLM's quaternion constructor takes <code>(w, x, y, z)</code>. The parser deliberately changes the order. The identity rotation is <code>[0, 0, 0, 1]</code> in JSON.</p>
+<p>Lua rotation helpers use radians. A half-turn is <code>math.pi</code>; a quarter-turn is <code>math.pi / 2</code>. Camera FOV settings and physics slope settings are named in degrees instead.</p>
+<h2 id="03-entities-transforms-cameras--a-player-is-usually-more-than-one-entity">A player is usually more than one entity</h2>
+<pre><code class="language-text">Player controller entity
+  Transform: feet position and gameplay facing
+  CharacterController: capsule and movement
+  Script: player behavior
+
+  Character visual entity
+    ParentTransform: attached to Player
+    Local transform: model fit and forward correction
+    SkinnedMeshRenderer + Animator + LocomotionAnimation
+</code></pre>
+<p>The controller should remain upright and have predictable dimensions. The visual may need a local rotation or scale adjustment because of the downloaded model's original authoring conventions.</p>
+<p>Keeping that correction on the visual avoids rotating movement axes or lying about capsule size. An armature is the animation skeleton; it does not automatically become the gameplay controller.</p>
+<p>The add-on offers attachment controls for this relationship. The runtime uses explicit parent metadata, rather than preserving every organizational Blender parent as a gameplay relationship.</p>
+<h2 id="03-entities-transforms-cameras--how-runtime-parenting-works">How runtime parenting works</h2>
+<p>For an attached child:</p>
+<pre><code class="language-text">child world matrix = parent world matrix × child local matrix
+</code></pre>
+<p><code>TransformHierarchySystem</code> finds parents using stable IDs and evaluates parents before children. It updates each child's world matrix and world transform values. Its <code>ParentTransformComponent.Local</code> remains the relative transform used to rebuild that result.</p>
+<p>This means changing a child's world position alone is not a lasting local edit: the next hierarchy update derives it again from the parent and local transform.</p>
+<p>Physics bodies and character controllers are required to be world roots in the authored runtime hierarchy. Attach visuals to the controller; do not make the controller a child of an animated mesh. This avoids two systems competing to decide its world position.</p>
+<p>The imported scene can be mostly flat while a skeleton still keeps its own bone hierarchy. These are separate hierarchies with different jobs.</p>
+<h2 id="03-entities-transforms-cameras--what-the-camera-actually-does">What the camera actually does</h2>
+<p>The renderer uses three spaces:</p>
+<pre><code class="language-text">mesh coordinates → world coordinates → camera coordinates → projected screen position
+</code></pre>
+<p>The <strong>view matrix</strong> is the inverse of the camera's world transform. It describes the world as seen from that camera. The <strong>projection matrix</strong> decides how that view becomes a 2D image.</p>
+<table>
+<thead>
+<tr>
+<th>Projection</th>
+<th>Result</th>
+<th>Main size control</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Perspective</td>
+<td>Farther objects appear smaller</td>
+<td>Vertical FOV and camera position</td>
+</tr>
+<tr>
+<td>Orthographic</td>
+<td>Distance does not change apparent object size</td>
+<td><code>OrthographicSize</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>OrthographicSize</code> is <strong>half the visible height</strong>, not the whole width or height. If it is 6, the camera view spans 12 units vertically in camera space. At 16:9, the width is about 21.33 units. A steep camera pitch changes how this rectangle meets the ground.</p>
+<p>For a Brawl Stars-like composition, pitch, projection, view size, object dimensions, and player size all contribute. Moving an orthographic camera farther away does not zoom out the way a perspective camera does.</p>
+<p>Exactly one camera must be marked primary in a serialized scene. The primary camera is the gameplay view. The development free-look camera and projection override are separate views and can make the runtime appear different without changing the authored camera component.</p>
+<h2 id="03-entities-transforms-cameras--try-this">Try this</h2>
+<p>In an exported scene, compare the player's transform with its visual's <code>parent.local</code>. Identify which rotation is gameplay facing and which rotation corrects the model. Then inspect the primary camera's projection before changing camera distance to solve a scale problem.</p>
+<h2 id="03-entities-transforms-cameras--source-reading-route">Source reading route</h2>
+<ol>
+<li><span class="source">Components.h <small>src/Haki/Scene/Components.h</small></span>: component definitions and defaults.</li>
+<li><span class="source">TransformHierarchySystem.cpp <small>src/Haki/Systems/TransformHierarchySystem.cpp</small></span>: parent resolution.</li>
+<li><span class="source">SceneCamera.h <small>src/Haki/Scene/SceneCamera.h</small></span>: view and projection construction.</li>
+<li><span class="source">PlayerControllerSystem.cpp <small>src/Haki/Systems/PlayerControllerSystem.cpp</small></span>: ground movement axes and facing.</li>
+<li><span class="source">CameraSystem.cpp <small>src/Haki/Systems/CameraSystem.cpp</small></span>: development free-look camera.</li>
+</ol></article><article id="04-files-and-serialization"><h1 id="04-files-and-serialization--4-files-serialization-and-scene-management">4. Files, serialization, and scene management</h1>
+<p><strong>Serialization</strong> means turning structured program data into a form that can be stored or sent. <strong>Deserialization</strong> means reading that form and rebuilding useful program data from it.</p>
+<p>For Haki, JSON describes a scene. Loading creates C++ components, resolves assets, and builds a live <code>Scene</code>. It does not copy a block of raw C++ memory from disk.</p>
+<h2 id="04-files-and-serialization--why-the-file-cannot-just-contain-a-c-object">Why the file cannot just contain a C++ object</h2>
+<p>A live component may contain an asset handle or a reference to a Jolt body. Those values are meaningful only in the running program that created them. A memory address from yesterday's run is useless today.</p>
+<p>The stored version uses stable information instead: entity IDs, asset IDs, numbers, and script paths. Loading turns those stable descriptions into new runtime objects.</p>
+<p>For example:</p>
+<pre><code class="language-text">On disk: mesh = &quot;engine.mesh.unit-cube&quot;
+Load: find catalog entry → load resource if needed
+In memory: MeshHandle { Index, Generation }
+</code></pre>
+<h2 id="04-files-and-serialization--the-files-have-different-jobs">The files have different jobs</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Question it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Game/Project.json</code></td>
+<td>Which scenes exist, which starts first, and what are the project window/render settings?</td>
+</tr>
+<tr>
+<td>Scene <code>.scene.json</code></td>
+<td>Which entities and components make up this scene?</td>
+</tr>
+<tr>
+<td><code>Catalog.json</code></td>
+<td>Where is each named asset, and what type is it?</td>
+</tr>
+<tr>
+<td><code>.material.json</code></td>
+<td>Which shader, parameters, textures, and draw state does a material use?</td>
+</tr>
+<tr>
+<td><code>.prefab.json</code></td>
+<td>Which reusable entity description should be expanded into a scene?</td>
+</tr>
+<tr>
+<td><code>ImportReceipt.json</code></td>
+<td>Which output files belong to this import operation?</td>
+</tr>
+<tr>
+<td><code>.blend</code></td>
+<td>Editable Blender source</td>
+</tr>
+<tr>
+<td><code>.glb</code> / <code>.gltf</code></td>
+<td>Exported meshes, materials, skeletons, clips, and related model data</td>
+</tr>
+<tr>
+<td><code>.lua</code></td>
+<td>Gameplay behavior</td>
+</tr>
+</tbody>
+</table>
+<p>A <strong>schema</strong> is the set of fields and rules a file format accepts. Haki checks headers such as <code>"type": "haki.scene"</code> and <code>"version": 1</code>. The type prevents reading one kind of JSON as another. The version gives future changes a way to distinguish formats; it does not automatically migrate every old format.</p>
+<h2 id="04-files-and-serialization--follow-a-scene-load">Follow a scene load</h2>
+<p><code>SceneManager::Initialize()</code> calls <code>SceneSerializer::LoadManifest()</code>. Each manifest entry becomes a registered scene factory: a function that can load that scene on request.</p>
+<p>When a factory calls <code>Deserialize()</code>, the main steps are:</p>
+<ol>
+<li>Read the scene JSON.</li>
+<li>Load its explicitly named catalog, if present, including imported catalogs.</li>
+<li>Check the type, version, field names, and values.</li>
+<li>Parse entity descriptions and expand prefab instances.</li>
+<li>Check relationships: duplicate IDs, missing parents, parent cycles, component rules, and exactly one primary camera.</li>
+<li>Check that script files exist under the allowed script roots.</li>
+<li>Create a new <code>Scene</code>, resolve referenced assets, and attach runtime components.</li>
+<li>Evaluate the new scene once with zero elapsed time, then return it or a set of errors.</li>
+</ol>
+<p>The temporary description structs in <code>SceneDescription.h</code> are useful here. They hold asset names while validation is underway. The final components hold handles after assets have been resolved.</p>
+<p>The zero-time update prepares physics objects and initial transforms/poses without advancing the simulation. Lua startup callbacks wait until the first positive tick.</p>
+<p>The serializer restores the previous shared catalog if the load fails. The partially built scene is not installed as the active scene. Asset loading is separately cached, however: a failed scene load is not a promise to undo every resource that was loaded during the attempt.</p>
+<h2 id="04-files-and-serialization--a-small-scene-you-can-read">A small scene you can read</h2>
+<p>This is a complete <strong>teaching scene document</strong>, assuming it sits beside a valid scene <code>Catalog.json</code>. It has an invisible floor, an invisible controller, and a camera. It does not add a character mesh or script.</p>
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;haki.scene&quot;,
+  &quot;version&quot;: 1,
+  &quot;id&quot;: &quot;learning-scene&quot;,
+  &quot;assetCatalog&quot;: &quot;Catalog.json&quot;,
+  &quot;environment&quot;: null,
+  &quot;entities&quot;: [
+    {
+      &quot;id&quot;: &quot;camera&quot;,
+      &quot;components&quot;: {
+        &quot;transform&quot;: {
+          &quot;translation&quot;: [0, 10, 7],
+          &quot;rotation&quot;: [-0.46175, 0, 0, 0.88701]
+        },
+        &quot;camera&quot;: {
+          &quot;primary&quot;: true,
+          &quot;projection&quot;: &quot;orthographic&quot;,
+          &quot;orthoSize&quot;: 6
+        }
+      }
+    },
+    {
+      &quot;id&quot;: &quot;floor&quot;,
+      &quot;components&quot;: {
+        &quot;transform&quot;: { &quot;translation&quot;: [0, -0.5, 0] },
+        &quot;rigidBody&quot;: { &quot;motion&quot;: &quot;static&quot; },
+        &quot;collider&quot;: { &quot;shape&quot;: &quot;box&quot;, &quot;halfExtents&quot;: [10, 0.5, 10] }
+      }
+    },
+    {
+      &quot;id&quot;: &quot;player&quot;,
+      &quot;components&quot;: {
+        &quot;transform&quot;: { &quot;translation&quot;: [0, 0.1, 0] },
+        &quot;characterController&quot;: { &quot;radius&quot;: 0.35, &quot;halfHeight&quot;: 0.55 },
+        &quot;playerInput&quot;: { &quot;moveSpeed&quot;: 5 }
+      }
+    }
+  ]
+}
+</code></pre>
+<p>The camera is pitched down by about 55 degrees. The floor and player have no mesh renderers, so use collider debug drawing to see them. The loader supplies defaults for omitted optional fields. A missing required field still produces an error.</p>
+<h2 id="04-files-and-serialization--errors-are-addresses-into-the-data">Errors are addresses into the data</h2>
+<p>A serialization error contains a source file, a JSON location, and a message. For example:</p>
+<pre><code class="language-text">arena-02.scene.json/entities/player/components/script/path:
+Script '.../Scripts/player.lua' does not exist
+</code></pre>
+<p>The slash-separated location tells you where the bad value lives. Some errors use an entity ID in that location; others use an array index. Read it as a route to the problem, rather than assuming every message is a directly executable JSON query.</p>
+<p>Strict field checks also catch misspellings such as <code>halfExtent</code> instead of <code>halfExtents</code>. If you add a new component in C++ but forget its parser, the file should fail validation instead of silently pretending the feature loaded.</p>
+<h2 id="04-files-and-serialization--prefabs-reusable-descriptions">Prefabs: reusable descriptions</h2>
+<p>A prefab is a file containing entity descriptions that can be reused. A scene instance names a source file, an instance name, an optional transform, and optional overrides.</p>
+<p>This is the shape of an instance inside a scene's <code>prefabs</code> array:</p>
+<pre><code class="language-json">{
+  &quot;source&quot;: &quot;PhysicsBody.prefab.json&quot;,
+  &quot;instance&quot;: &quot;ball&quot;,
+  &quot;transform&quot;: { &quot;translation&quot;: [0, 4, 0] },
+  &quot;overrides&quot;: {
+    &quot;root&quot;: { &quot;rigidBody&quot;: { &quot;restitution&quot;: 0.5 } }
+  }
+}
+</code></pre>
+<p>The loader expands it into normal scene entities. Names are given an instance prefix so repeated prefabs do not all use the same entity IDs. Nested prefab loads are checked for cycles.</p>
+<p>This is <strong>load-time reuse</strong>. It is not a full live prefab editing system, and placing a Blender collection instance does not automatically create a Haki JSON prefab instance. See the existing <span class="source">physics scene fixture <small>src/Tests/Serialization/Fixtures/Physics.scene.json</small></span> and <span class="source">prefab fixture <small>src/Tests/Serialization/Fixtures/PhysicsBody.prefab.json</small></span> for a working pair.</p>
+<h2 id="04-files-and-serialization--the-scene-managers-job">The scene manager's job</h2>
+<p>The serializer knows how to build a scene. The manager decides <strong>which scene is active and when its lifetime starts or ends</strong>.</p>
+<p>It keeps registered factories, one active scene, one pending request, and transition state. A new pending request can replace the earlier pending request; this is not an unlimited queue.</p>
+<p>From C++ code that already has access to the manager, a request looks like this:</p>
+<pre><code class="language-cpp">auto result = manager.RequestScene(&quot;arena-02&quot;);
+if (result == Haki::SceneRequestResult::UnknownScene)
+{
+    // Check the registered IDs in Project.json.
+}
+</code></pre>
+<p>An accepted request means the manager scheduled it. It does not mean disk loading has already succeeded. <code>GetLastActivationStatus()</code> and <code>GetLastSerializationErrors()</code> describe the later activation result. Requesting the already active scene normally returns <code>AlreadyActive</code>; deliberate reloads use the <code>reloadIfActive</code> option.</p>
+<p>The normal scene lifetime is:</p>
+<pre><code class="language-text">factory creates Scene
+    → OnLoad
+    → OnEnter(payload)
+    → repeated OnUpdate / UpdateRuntime / OnRender
+    → OnExit
+    → OnUnload
+    → destruction
+</code></pre>
+<p>For a scene switch, the manager creates the next scene and calls its <code>OnLoad()</code> before removing the old scene. If the factory returns no scene, including when deserialization fails, the old scene remains active. <code>OnLoad()</code> itself has no success/failure return value. Exceptions from custom callbacks are not caught here, so the protected factory-failure path is not a general exception-recovery system.</p>
+<p>The optional payload uses <code>std::any</code>, a C++ container for a value whose type is checked later. It could carry scene-entry information. It is not automatically serialized to JSON or available as a Lua scene-switch API.</p>
+<h3 id="04-files-and-serialization--transitions">Transitions</h3>
+<p>The manager supports instant transitions and timed covering/revealing phases. A fade specification stores durations and a color. Currently <code>SceneManager::Render()</code> only calls the active scene's render function: <strong>the transition state alone does not draw a fade overlay</strong>. A visible transition needs rendering code to use that state.</p>
+<p>Loading is synchronous. A fade duration does not turn scene loading into background work, and switching scenes does not provide spatial world streaming.</p>
+<h2 id="04-files-and-serialization--what-saving-means-today">What saving means today</h2>
+<p>The import tool writes scene JSON from Blender exports. The runtime scene serializer is primarily a loader; it does not currently provide a full “save every live entity back to the Blender scene” path.</p>
+<p>Project settings have their own save path. <code>ProjectSettings::Save()</code> rereads the latest project JSON, updates settings fields, and uses a temporary file before replacement. This preserves scene registrations and unrelated values that an exporter may have changed meanwhile.</p>
+<p>Editor autosave waits for about one second without further settings changes. It saves on clean shutdown when enabled, too. This saves window/render/editor settings, not an entire running gameplay session. Inspector changes to an entity do not become authored Blender changes automatically.</p>
+<h2 id="04-files-and-serialization--environment-defaults">Environment defaults</h2>
+<p>Omitting <code>environment</code> uses the engine's default environment when that texture exists in the composed catalog. <code>"environment": null</code> explicitly opts out. An environment object selects a texture, intensity, and rotation.</p>
+<p>Project rendering settings can hide the visible skybox while leaving environment lighting enabled. Background visibility and lighting are separate choices.</p>
+<h2 id="04-files-and-serialization--source-reading-route">Source reading route</h2>
+<ol>
+<li><span class="source">SceneDescription.h <small>src/Haki/Scene/SceneDescription.h</small></span>: the load-time descriptions.</li>
+<li><span class="source">SceneSerializer.cpp <small>src/Haki/Serialization/SceneSerializer.cpp</small></span>: <code>LoadManifest</code>, <code>Deserialize</code>, and component parsers.</li>
+<li><span class="source">JsonUtils.h <small>src/Haki/Serialization/JsonUtils.h</small></span>: common validation and errors.</li>
+<li><span class="source">SceneManager.cpp <small>src/Haki/Scene/SceneManager.cpp</small></span>: requests, activation, and lifetime callbacks.</li>
+<li><span class="source">ProjectSettings.cpp <small>src/Haki/Core/ProjectSettings.cpp</small></span>: settings validation and saving.</li>
+</ol></article><article id="05-assets-and-blender"><h1 id="05-assets-and-blender--5-assets-and-the-blender-pipeline">5. Assets and the Blender pipeline</h1>
+<p>An <strong>asset</strong> is a reusable resource: a mesh, texture, material, shader, skeleton, or animation clip. An entity is one use of those resources in a scene.</p>
+<p>Twenty crates can share one mesh and one material while keeping twenty different positions and physics bodies. Sharing resources saves memory. It does not automatically mean those crates are drawn in one GPU call.</p>
+<h2 id="05-assets-and-blender--folder-ownership">Folder ownership</h2>
+<pre><code class="language-text">Assets/
+  Engine/
+    Catalog.json
+    Geometry/  Materials/  Shaders/  Fonts/  Skyboxes/
+  Game/
+    Project.json
+    Shared/
+      Catalog.json
+      Scripts/
+      Kits/
+    Scenes/
+      arena-02/
+        arena-02.blend
+        arena-02.scene.json
+        Catalog.json
+        ImportReceipt.json
+        Models/  Materials/  Textures/  Scripts/
+</code></pre>
+<p>The engine folder holds general defaults. Shared holds game resources deliberately reused across scenes. A scene folder holds that scene's sources and runtime package. Empty folders are unnecessary.</p>
+<p>The <span class="source">asset ownership document <small>Assets/README.md</small></span> gives the shorter operating rules. Old experiments in <code>Archive/</code> are outside runtime discovery and packaging.</p>
+<h2 id="05-assets-and-blender--from-blender-to-a-running-scene">From Blender to a running scene</h2>
+<ol>
+<li><strong>Author in Blender.</strong> Place kit meshes, lights, camera, and controller. Use the Haki add-on for physics and script properties.</li>
+<li><strong>Validate.</strong> Catch duplicate IDs, unsupported physics transforms, bad paths, and incompatible components.</li>
+<li><strong>Export a GLB.</strong> Blender writes models and Haki metadata into the export.</li>
+<li><strong>Run the Python importer.</strong> It creates or updates the scene JSON, local catalog, imported resources, and receipt.</li>
+<li><strong>Run the engine against those files.</strong> The serializer creates entities; loaders prepare assets in memory; scene systems create physics and scripting state.</li>
+</ol>
+<p>A <code>.blend</code> change alone does not update a running scene. A raw GLB export alone does not necessarily update its scene JSON either. The complete export/import step connects those changes.</p>
+<h3 id="05-assets-and-blender--why-glb">Why GLB?</h3>
+<p>glTF describes models and their related data. A <code>.gltf</code> file commonly refers to separate buffers or images. <code>.glb</code> is the binary container version and can pack that data together. It is a transport format between Blender and the importer/runtime, not the whole Haki project format.</p>
+<p>For external formats such as FBX or OBJ, <span class="source">convert_model.py <small>tools/convert_model.py</small></span> is a separate preparation tool that uses Assimp-supported input to produce a canonical GLB. Runtime loaders still consume the resulting supported data; this is not native runtime loading of every source format. For scenes authored with Haki metadata, use the Blender add-on's export route.</p>
+<h3 id="05-assets-and-blender--how-haki-metadata-travels">How Haki metadata travels</h3>
+<p>Blender knows about meshes and cameras, but it does not know what a Haki <code>CharacterControllerComponent</code> is. The add-on stores Haki-specific descriptions in exported custom data, under <code>extras.haki</code>.</p>
+<p>This includes stable entity IDs and authored components such as colliders, scripts, and runtime parent relationships. Scene metadata carries scene script and environment choices.</p>
+<p>The exporter temporarily writes this metadata, exports visible objects with cameras and lights, and restores previous custom properties afterward. Collider previews are development drawings, rather than extra visible collision meshes that should appear in the game.</p>
+<p>The exporter enables Y-up conversion and uses raw lighting conversion so an authored sun strength such as 1 does not become an unexpectedly large imported value.</p>
+<h2 id="05-assets-and-blender--why-flatten-the-blender-object-tree">Why flatten the Blender object tree?</h2>
+<p>Blender parenting can serve organization, modeling, animation, and gameplay attachment. Preserving all of it blindly would make engine behavior depend on many relationships that have no gameplay meaning.</p>
+<p>The importer resolves ordinary object placement into world transforms. Explicit runtime attachments remain as parent components. Skeletons retain the pose hierarchy required by animation.</p>
+<p>So a flat list of scene entities does not mean that bones were flattened or that attached visuals cannot follow a player. It means those relationships are represented deliberately.</p>
+<h2 id="05-assets-and-blender--catalogs-are-a-resource-address-book">Catalogs are a resource address book</h2>
+<p>An entry connects a readable ID to a source and type. This is an actual engine asset entry:</p>
+<pre><code class="language-json">{
+  &quot;id&quot;: &quot;engine.mesh.unit-cube&quot;,
+  &quot;type&quot;: &quot;mesh&quot;,
+  &quot;source&quot;: &quot;Geometry/UnitCube.gltf&quot;,
+  &quot;mesh&quot;: &quot;UnitCube&quot;
+}
+</code></pre>
+<p>The <code>mesh</code> selector identifies which mesh inside the file to use. One model file can contain multiple meshes, skins, and animations, so a source path alone is not always enough.</p>
+<p>A catalog can import other catalogs. Scene catalogs import engine and shared resources explicitly. Source paths are relative to the <strong>catalog that declares the entry</strong>, even when another catalog imports it.</p>
+<p>The catalog rejects duplicate IDs, hash collisions, and import cycles. It does not scan every folder and guess what belongs to the scene.</p>
+<h2 id="05-assets-and-blender--three-stages-of-an-asset-reference">Three stages of an asset reference</h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Representation</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Authored files</td>
+<td>String such as <code>engine.mesh.unit-cube</code></td>
+<td>Stable logical name</td>
+</tr>
+<tr>
+<td>Catalog/runtime lookup</td>
+<td>32-bit <code>AssetID</code> derived from the string</td>
+<td>Compact lookup key</td>
+</tr>
+<tr>
+<td>Loaded component</td>
+<td>Typed handle with slot index and generation</td>
+<td>Access to a loaded resource</td>
+</tr>
+</tbody>
+</table>
+<p>The string is hashed using the catalog's <code>MakeRuntimeId()</code> function. Hashing converts text into a number. Since different strings could theoretically produce the same number, the catalog explicitly checks for collisions.</p>
+<h3 id="05-assets-and-blender--why-a-handle-has-a-generation">Why a handle has a generation</h3>
+<p>Imagine mesh A occupied slot 4. It was unloaded, and mesh B later reused slot 4. An old reference containing only “4” could accidentally access B.</p>
+<p>A generation number changes when a slot receives a new resource. The resource manager checks both the slot and generation. An old handle then returns no resource rather than pointing at the replacement.</p>
+<p><code>handle.IsValid()</code> only checks that the handle has a non-invalid index. <code>AssetManager::GetMesh(handle)</code> and the resource manager perform the stronger live-resource check. Do not treat <code>IsValid()</code> alone as proof the resource is still loaded.</p>
+<h2 id="05-assets-and-blender--what-the-loaders-do">What the loaders do</h2>
+<p><code>AssetManager</code> maintains managers and loader registries for each asset type. A load request supplies an ID and source. The manager returns an existing resource when that ID is already loaded consistently, or finds a compatible loader and stores its result.</p>
+<table>
+<thead>
+<tr>
+<th>Loader</th>
+<th>Main work</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>glTF mesh</td>
+<td>Read vertex/index data and prepare a GPU mesh</td>
+</tr>
+<tr>
+<td>glTF skeleton</td>
+<td>Build pose nodes, joint order, and bind information</td>
+</tr>
+<tr>
+<td>glTF animation</td>
+<td>Read timed translation/rotation/scale tracks</td>
+</tr>
+<tr>
+<td>Material file</td>
+<td>Resolve shader and texture references; create material parameters</td>
+</tr>
+<tr>
+<td>Shader file</td>
+<td>Read and compile vertex/fragment shader sources</td>
+</tr>
+<tr>
+<td>Texture file</td>
+<td>Decode an image and create its GPU texture</td>
+</tr>
+</tbody>
+</table>
+<p>The glTF loaders share a <code>GltfDocumentCache</code>, so reading a mesh, skeleton, and clip from the same model does not require parsing the file independently for every request.</p>
+<p>Loading here is synchronous. Several loaders create GPU objects and therefore need the right OpenGL context. An atomic generation counter in the resource manager does not make the whole asset manager thread-safe.</p>
+<h2 id="05-assets-and-blender--resource-lifetime-is-separate-from-scene-lifetime">Resource lifetime is separate from scene lifetime</h2>
+<p>Scenes store handles. The asset manager owns the actual resources globally. Unloading a scene destroys its entities and scene systems, but does not automatically evict every asset those entities referenced.</p>
+<p>This supports reuse across scene changes. It also means there is no complete automatic memory-budgeted streaming/unloading policy yet. Adding one would require deciding when resources are no longer needed and how dependencies are kept alive.</p>
+<h2 id="05-assets-and-blender--authored-and-generated-files">Authored and generated files</h2>
+<p>Treat <code>.blend</code> and Lua files as authored sources. Imported scene JSON, imported materials/textures, and catalog entries are generated by the pipeline.</p>
+<p>The importer stages changes and records generated files in <code>ImportReceipt.json</code>. On reimport, it uses that ownership record to replace its own output and preserve unrelated authored files. It refuses unsafe output collisions.</p>
+<p>If you hand-edit a generated material, expect a later import to replace it. For a lasting appearance change, change the authored material or establish a separately owned material with its own ID and pipeline reference.</p>
+<p>The importer also preserves <code>window</code>, <code>rendering</code>, and <code>editor</code> values in <code>Project.json</code>. Exporting an arena should not reset your project graphics preferences.</p>
+<h2 id="05-assets-and-blender--running-the-importer-manually">Running the importer manually</h2>
+<p>From the repository root, with the project's Python environment installed:</p>
+<pre><code class="language-sh">.venv/bin/python tools/import_gltf_pack.py \
+  Assets/Game/Scenes/arena-02/Models/arena.glb \
+  --pack arena-02 --scene arena-02 --dry-run
+</code></pre>
+<p><code>--dry-run</code> validates and reports without writing the import result. Remove it to import. Add <code>--set-entry</code> only when you want that scene to become the startup scene. The Blender <strong>Export Arena</strong> action performs the pipeline when <strong>Import into Haki</strong> is enabled.</p>
+<p>Blender's Python and the project's Python are different installations. <code>pygltflib</code> belongs in the project interpreter used by the importer. In a Flatpak Blender setup, the add-on's process helper also handles launching host tools. Read an import error before reinstalling the add-on: the missing dependency may be in the other interpreter.</p>
+<h2 id="05-assets-and-blender--source-assets-versus-packaged-assets">Source assets versus packaged assets</h2>
+<p>The build's <code>HakiAssets</code> target packages runtime assets into <code>build/Assets</code>. It excludes Blender sources, backups, import receipts, archives, and other authoring-only files. Registered scenes, Shared, and Engine determine what is packaged.</p>
+<p>Paths such as <code>Assets/Game/Project.json</code> are relative to the process's working directory:</p>
+<pre><code class="language-sh">./build/Engine
+</code></pre>
+<p>Run from the repository root, this uses source <code>Assets</code>. Running <code>./Engine</code> from inside <code>build</code> uses <code>build/Assets</code>. A stale packaged copy can explain why one launch shows old content while another does not. Blender's export-and-play action deliberately launches from the project root.</p>
+<h2 id="05-assets-and-blender--try-this">Try this</h2>
+<p>Pick one mesh renderer in your scene JSON. Follow its mesh ID to the scene catalog, then follow that entry's source and selector. You have traced an entity all the way to the model data it draws.</p>
+<h2 id="05-assets-and-blender--source-reading-route">Source reading route</h2>
+<ol>
+<li><span class="source">Blender editor.py <small>tools/blender/haki_editor/editor.py</small></span>: metadata, validation, export, and play actions.</li>
+<li><span class="source">Blender metadata.py <small>tools/blender/haki_editor/metadata.py</small></span>: exported component rules.</li>
+<li><span class="source">import_gltf_pack.py <small>tools/import_gltf_pack.py</small></span>: scene package generation.</li>
+<li><span class="source">AssetCatalog.cpp <small>src/Haki/AssetManager/AssetCatalog.cpp</small></span>: IDs, imports, and paths.</li>
+<li><span class="source">AssetManager.cpp <small>src/Haki/AssetManager/AssetManager.cpp</small></span> and <span class="source">ResourceManager.h <small>src/Haki/AssetManager/ResourceManager.h</small></span>: load requests, sharing, and handles.</li>
+<li><span class="source">package_assets.py <small>tools/package_assets.py</small></span>: runtime packaging rules.</li>
+</ol></article><article id="06-renderer"><h1 id="06-renderer--6-the-renderer">6. The renderer</h1>
+<p>The renderer turns the current scene into an image. It does not decide how the player moves or which attacks deal damage. It receives a camera, lights, environment, and objects to draw.</p>
+<p>Haki currently uses <strong>OpenGL 3.3</strong> and a <strong>forward renderer</strong>. Forward means each visible surface is shaded using the lights and material while that surface is drawn. The extra shadow, depth, and post-processing passes do not make this a deferred renderer.</p>
+<h2 id="06-renderer--begin-with-one-triangle">Begin with one triangle</h2>
+<p>A mesh contains vertices and usually indices. A <strong>vertex</strong> is a point with data such as position, normal, UV coordinates, and color. An <strong>index</strong> says which vertex to reuse when forming a triangle.</p>
+<p>A <strong>normal</strong> describes which way a surface faces. A <strong>UV</strong> is a 2D coordinate used to look up a color or value in a texture. A tangent supplies another surface direction, useful for normal maps.</p>
+<p>The CPU prepares buffers and asks the GPU to draw. Two small GPU programs do most of the visible work:</p>
+<ul>
+<li>The <strong>vertex shader</strong> positions each vertex. For animated geometry it also applies bone deformation.</li>
+<li>The <strong>fragment shader</strong> calculates a candidate pixel's color using the material, textures, lights, and other inputs.</li>
+</ul>
+<p>Between them, the GPU fills the triangle's screen area. This is called <strong>rasterization</strong>. Values such as UVs and normals are smoothly carried across the triangle for the fragment shader to use.</p>
+<pre><code class="language-text">vertex data
+  → vertex shader
+  → triangles cover screen samples
+  → fragment shader
+  → depth/blending checks and output
+</code></pre>
+<p>A <strong>depth buffer</strong> stores how close the visible surface is at each pixel. It prevents a wall behind the player from painting over the player merely because it was submitted later.</p>
+<h2 id="06-renderer--coordinates-along-the-way">Coordinates along the way</h2>
+<p>For an ordinary vertex, the main transformation is:</p>
+<pre><code class="language-text">clip position = Projection × View × Model × local position
+</code></pre>
+<p><code>Model</code> is the object's world matrix. <code>View</code> describes the camera. <code>Projection</code> supplies perspective or orthographic projection. The GPU then divides by the clip coordinate's W value and maps the result into the viewport.</p>
+<p>This is why a correct mesh can disappear because of a bad camera, an incorrect world transform, or near/far clipping. The mesh file is only one part of its final position.</p>
+<h2 id="06-renderer--what-a-material-is">What a material is</h2>
+<p>A material combines a shader, parameter values, textures, and drawing rules. A shader is the program; a material supplies that program's inputs for one appearance.</p>
+<p>For example, two wooden props can share the same shader but use different base colors or roughness values. <code>MaterialState</code> also controls backface culling, depth testing/writing, blending, and whether the material uses the transmission pass.</p>
+<p>The current imported shader is <code>GltfPBR</code>. <strong>PBR</strong> means physically based rendering: it models roughness, metalness, and light reflection in a reasonably consistent way. A stylized palette texture can still use this renderer. The desired hand-painted/toon art direction does not mean a complete toon-outline and rim-light pipeline is already implemented.</p>
+<p>Useful material ideas:</p>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>What it changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Base color</td>
+<td>The main surface color</td>
+</tr>
+<tr>
+<td>Roughness</td>
+<td>Whether reflections look sharp or broad</td>
+</tr>
+<tr>
+<td>Metalness</td>
+<td>Whether the surface behaves like a metal</td>
+</tr>
+<tr>
+<td>Normal map</td>
+<td>Small lighting detail without changing the mesh outline</td>
+</tr>
+<tr>
+<td>Emissive</td>
+<td>Surface brightness that does not depend on incoming light</td>
+</tr>
+<tr>
+<td>Alpha</td>
+<td>Whether a surface is solid, cut out, or blended</td>
+</tr>
+<tr>
+<td>Transmission</td>
+<td>Light/background visibility through a surface</td>
+</tr>
+</tbody>
+</table>
+<p>An emissive surface does not automatically become a light that illuminates nearby objects. It can contribute to bloom, which is an image effect.</p>
+<h2 id="06-renderer--how-the-scene-submits-work">How the scene submits work</h2>
+<p><code>Scene::OnRender()</code> gathers the selected camera, environment, and light components. It calls <code>BeginFrame()</code>, then submits one <code>RenderItem</code> per drawn submesh.</p>
+<p>A submesh is a range of a mesh that can be drawn separately, often because it uses a different material. One entity can therefore produce multiple draw calls.</p>
+<p>A render item contains mesh and material handles, a world matrix, a submesh index, and optional bone matrices. It does not contain a full entity or Lua script. This keeps the renderer focused on drawing.</p>
+<p>The scene then queues Lua canvas drawing, calls <code>Render()</code>, and calls <code>EndFrame()</code>. The renderer borrows a skinned item's joint matrices until those submissions have been processed; the owner must keep them alive during that work.</p>
+<h2 id="06-renderer--preparing-the-drawing-list">Preparing the drawing list</h2>
+<p>The renderer resolves handles, skips unusable submissions, computes bounds, and separates opaque, transmission, and transparent objects.</p>
+<p><strong>Frustum culling</strong> means skipping geometry outside the camera's view volume. Bounds make this test cheaper than checking every triangle. Off-screen opaque objects can still enter the shadow pass because they may cast a visible shadow.</p>
+<p>Skinned meshes currently keep bind-pose bounds, which may be too small once a character moves its limbs. The renderer avoids ordinary frustum culling for these animated submissions rather than incorrectly hiding them.</p>
+<p>Opaque items are sorted by shader, material, and mesh to reduce changes in GPU state. Transparent items are sorted mainly from far to near because blending depends on what was drawn behind them.</p>
+<p>Sorting is an optimization, not automatic instancing. Reusing a mesh and reducing draw calls are related but separate ideas.</p>
+<h2 id="06-renderer--the-rendering-passes-in-order">The rendering passes in order</h2>
+<p>A <strong>pass</strong> is one stage of drawing, often writing into a particular image rather than directly to the window.</p>
+<figure class="flow"><ol><li>Prepare and sort objects</li><li>Directional shadow maps</li><li>Depth and normal prepass</li><li>SSAO and optional blur</li><li>Opaque lighting</li><li>Skybox</li><li>Transmission then transparent objects</li><li>Bloom</li><li>Exposure, tone mapping, display conversion, optional FXAA</li><li>Debug shapes and canvas</li><li>ImGui, then window presentation</li></ol></figure>
+
+<p>Some stages are disabled by settings or skipped when unnecessary. In words: first prepare visibility and lighting information, draw the scene into a bright-color image, adjust that image for display, then put overlays on top.</p>
+<h3 id="06-renderer--1-directional-shadow-maps">1. Directional shadow maps</h3>
+<p>A shadow map records scene depth from a light's point of view. A surface asks: “Am I farther from the light than the nearest recorded surface?” If yes, something blocks the light.</p>
+<p>The renderer uses the first directional light for its shadow direction and splits camera depth into <strong>four cascades</strong>. Near regions get a more useful share of texture detail than if one map covered the entire world uniformly.</p>
+<p><code>ShadowDistance</code> limits the covered distance. <code>ShadowMapResolution</code> controls map detail. PCF smooths shadow comparisons by sampling nearby texels; PCSS adds a more expensive estimate of softness based on blockers. Neither replaces correct mesh normals or correct light direction.</p>
+<p>Drawing into four shadow maps costs extra geometry work. A crate visible once can be drawn again for shadows. The shadow counters help explain why total work exceeds the visible object's single draw.</p>
+<h3 id="06-renderer--2-depth-and-normal-prepass">2. Depth and normal prepass</h3>
+<p>This stage draws opaque geometry with a simpler shader to record depth and surface direction. SSAO uses those images.</p>
+<p>When the depth prepass is enabled, its depth can also be copied to the main target so expensive lighting avoids repeatedly shading surfaces hidden behind other surfaces. The extra pass has its own cost, so measure the result instead of assuming it always helps.</p>
+<p>Wireframe mode skips this prepass and SSAO because triangle-filled depth is a poor match for drawing only triangle edges.</p>
+<h3 id="06-renderer--3-ssao">3. SSAO</h3>
+<p><strong>Screen-space ambient occlusion</strong> estimates where nearby surfaces block indirect light, using screen depth and normals. It adds contact shading around objects and corners.</p>
+<p>It only knows what the current screen buffers contain. It is not full world-space light simulation and cannot discover all hidden geometry.</p>
+<p>Sample count, radius, bias, power, half-resolution mode, and blur affect its cost and appearance. Too much strength can make a bright stylized arena look dirty or dark at every prop edge.</p>
+<h3 id="06-renderer--4-opaque-lighting-and-the-environment">4. Opaque lighting and the environment</h3>
+<p>The main shader combines material values, direct lights, shadows, and indirect lighting. Current light limits per frame are 4 directional, 64 point, and 16 spot lights. Extra lights beyond these arrays are not all processed.</p>
+<p>The environment is an HDR image representing surrounding light. The renderer prepares cube maps for the visible environment and filtered versions used for diffuse and rough reflections. This is <strong>image-based lighting</strong>, or IBL.</p>
+<p>Diffuse lighting describes broad surface response. Specular lighting describes reflection. The engine also has ambient sky/ground settings. These controls help fill surfaces that are not facing a direct light.</p>
+<p>The skybox is the visible background. It has its own toggle. Turning it off does not require turning off indirect diffuse or specular lighting.</p>
+<h3 id="06-renderer--5-transmission-and-transparency">5. Transmission and transparency</h3>
+<p>The transmission path copies the already drawn opaque scene/background so a transmitting surface can sample what is behind it. This is a screen-based approximation, not ray-traced refraction through arbitrary layers.</p>
+<p>Other transparent materials are then drawn with blending. Transparent objects are harder to sort perfectly than opaque ones, particularly when surfaces overlap or intersect. Keep that limitation in mind when designing effects.</p>
+<h3 id="06-renderer--6-bloom-exposure-and-tone-mapping">6. Bloom, exposure, and tone mapping</h3>
+<p>The scene is drawn into a floating-point HDR target. <strong>HDR</strong> allows brightness values greater than 1, so bright lights and emissive surfaces keep useful brightness information before display conversion.</p>
+<p>Bloom filters bright parts of the image through smaller images and combines a soft glow. <code>BloomThreshold</code> selects what contributes; <code>BloomIntensity</code> sets how much glow is added.</p>
+<p>Exposure scales brightness. An ACES-style tone-mapping curve compresses HDR values into a displayable range. The shader then applies a display gamma conversion. This is why a numeric base color is not necessarily the exact final screenshot color.</p>
+<p>Color textures should be read with their color-space meaning intact. Base-color images and data textures such as normals do not have the same interpretation. Accidentally treating a normal map as display color changes the numbers used by lighting.</p>
+<h3 id="06-renderer--7-fxaa-and-overlays">7. FXAA and overlays</h3>
+<p>FXAA is a final image filter that softens jagged edges using local contrast. It can reduce aliasing cheaply but may soften fine details too.</p>
+<p>Debug lines and the canvas are drawn after scene post-processing. ImGui is rendered after the scene renderer finishes. This helps text remain readable rather than glowing and changing with scene exposure.</p>
+<h2 id="06-renderer--what-framebuffers-and-gpu-buffers-are">What framebuffers and GPU buffers are</h2>
+<p>A <strong>framebuffer</strong> chooses where drawing goes. It can point to textures containing color, depth, or other values. Render-to-texture is what makes SSAO, shadows, bloom, and final image filters possible.</p>
+<p>A <strong>GPU buffer</strong> stores data on the GPU: vertices, indices, camera values, light arrays, object transforms, or bone matrices. Uniform buffers group values so shaders can access them consistently. Haki keeps shared camera/light data separate from per-object data.</p>
+<p>The wrappers in <code>src/Haki/GL</code> create, bind, move, and release these resources. They hide repeated OpenGL setup; they do not remove the need for a valid context and correct lifetime.</p>
+<h2 id="06-renderer--resolution-and-cost">Resolution and cost</h2>
+<p>Telemetry distinguishes three sizes:</p>
+<table>
+<thead>
+<tr>
+<th>Size</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Window</td>
+<td>Logical desktop dimensions</td>
+</tr>
+<tr>
+<td>Game</td>
+<td>Actual framebuffer pixels, including display scaling</td>
+</tr>
+<tr>
+<td>Render</td>
+<td>Internal scene target after render-height and render-scale choices</td>
+</tr>
+</tbody>
+</table>
+<p>With a 1920×1080 framebuffer, <code>renderHeight = 720</code>, and <code>renderScale = 1</code>, the internal target is 1280×720. A render scale of 0.5 then makes it 640×360. Presentation scales the result to the game framebuffer; canvas overlays use the output viewport.</p>
+<p>Lowering render scale reduces pixel work but does not necessarily reduce the number of objects, physics work, or shadow draws. A CPU bottleneck may barely improve.</p>
+<h2 id="06-renderer--reading-the-counters">Reading the counters</h2>
+<p><code>SubmittedItems</code> is not the same as <code>DrawCalls</code>. Some submissions are culled or skipped; others produce work in multiple passes. Separate counters track shadows, depth/SSAO, bloom, transmission, canvas, and state changes.</p>
+<p>GPU timings arrive a few frames later through timer queries. CPU time around render submission measures CPU work and waiting, not the same thing as pure GPU execution time. Use both rather than treating one number as the whole cost.</p>
+<h2 id="06-renderer--try-this">Try this</h2>
+<p>On the same camera view, toggle SSAO, bloom, and shadows one at a time. Predict which visible change and which timing/counter should change. Then compare. This teaches more than changing several settings together.</p>
+<h2 id="06-renderer--source-reading-route">Source reading route</h2>
+<ol>
+<li><span class="source">RendererTypes.h <small>src/Haki/Renderer/RendererTypes.h</small></span>: inputs, settings, limits, and counters.</li>
+<li><span class="source">Scene.cpp <small>src/Haki/Scene/Scene.cpp</small></span>: gathering and submitting render items.</li>
+<li><span class="source">Renderer.cpp <small>src/Haki/Renderer/Renderer.cpp</small></span>: <code>BeginFrame</code>, <code>ExecuteForwardPass</code>, <code>EndFrame</code>, then individual passes.</li>
+<li><span class="source">GltfPBR.vert <small>Assets/Engine/Shaders/GltfPBR.vert</small></span> and <span class="source">GltfPBR.frag <small>Assets/Engine/Shaders/GltfPBR.frag</small></span>: surface shaders.</li>
+<li><span class="source">GL wrappers <small>src/Haki/GL</small></span>: mesh, buffer, texture, shader, and framebuffer ownership.</li>
+</ol></article><article id="07-physics"><h1 id="07-physics--7-physics">7. Physics</h1>
+<p>Jolt provides collision detection and movement simulation. Haki connects Jolt objects to entities, transforms, Lua callbacks, and Blender-authored data.</p>
+<p>The engine uses one <code>PhysicsSystem</code> per scene. <code>PhysicsCore</code> supplies shared Jolt setup, temporary working memory, and a worker-thread pool.</p>
+<h2 id="07-physics--mesh-collider-and-body-are-separate">Mesh, collider, and body are separate</h2>
+<p>A rendered mesh determines what you see. A <strong>collider</strong> is a simpler mathematical shape used for contact tests. A <strong>rigid body</strong> describes how that shape moves and responds.</p>
+<p>A fence can look curved and detailed while using one or two box colliders. For a small top-down arena, simple collision is often easier to control and cheaper than testing every visual triangle.</p>
+<p>Current collider shapes are box, sphere, and upright capsule. This integration does not currently expose general triangle-mesh or convex-hull authoring as another collider type.</p>
+<h2 id="07-physics--body-motion-types">Body motion types</h2>
+<table>
+<thead>
+<tr>
+<th>Motion type</th>
+<th>Who moves it?</th>
+<th>Suitable examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Static</td>
+<td>It stays where it was placed unless explicitly repositioned</td>
+<td>Floor, walls, rock cover</td>
+</tr>
+<tr>
+<td>Dynamic</td>
+<td>Physics integrates velocity, gravity, and collision response</td>
+<td>A falling prop or knocked object</td>
+</tr>
+<tr>
+<td>Kinematic</td>
+<td>Gameplay supplies a target transform; physics follows it</td>
+<td>A moving platform or scripted obstacle</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Mass</strong> affects a dynamic body's response to impulses. <strong>Friction</strong> resists sliding at contact. <strong>Restitution</strong> controls bounce. <strong>Damping</strong> gradually reduces motion. Gravity factor scales gravity for that body.</p>
+<p>A mass of zero in the Haki component means use the shape-based default mass calculation, not “an infinitely light dynamic object.”</p>
+<p>A <strong>sensor</strong> detects overlap without acting as a solid obstacle. Bush zones, pickups, and danger zones can use sensors. Sensor behavior and collision layer filtering are separate choices that need to agree.</p>
+<p>The JSON parser derives a layer when one is not supplied: sensors use Trigger, ordinary static bodies use Static, and other ordinary bodies use Dynamic. Creating components directly in C++ means you must also choose consistent values there.</p>
+<h2 id="07-physics--shape-sizes">Shape sizes</h2>
+<p>Box <code>halfExtents = [1, 0.5, 2]</code> means a full size of 2×1×4 before transform scale.</p>
+<p>A capsule's <code>halfHeight</code> is half its straight middle section, excluding the rounded ends:</p>
+<pre><code class="language-text">total capsule height = 2 × halfHeight + 2 × radius
+</code></pre>
+<p>For radius 0.35 and half-height 0.55, total height is 1.8.</p>
+<p>Ordinary collider offsets are local to the entity. Haki applies transform scale to collider dimensions and offsets when creating the shape. A sphere uses the largest scale axis for its radius; a capsule uses the largest X/Z scale for radius and Y scale for height.</p>
+<p>The character capsule has a separate rule: its configured dimensions are used directly and its shape is shifted upward so the entity origin is at the feet. Keep the controller transform scale at one and resize the visual separately.</p>
+<p>The authoring pipeline rejects mirrored or sheared physics transforms. Shear means a transform has skewed the axes rather than simply rotating and scaling them. Apply or fix these transforms in Blender instead of relying on the runtime's defensive dimension clamping.</p>
+<h2 id="07-physics--who-controls-the-transform">Who controls the transform</h2>
+<p>This is the most important rule when debugging motion:</p>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>Before the physics step</th>
+<th>After the physics step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Static body</td>
+<td>Usually unchanged</td>
+<td>Remains at its physics placement</td>
+</tr>
+<tr>
+<td>Kinematic body</td>
+<td>Haki reads the entity's target transform</td>
+<td>Jolt has moved it toward that target during the step</td>
+</tr>
+<tr>
+<td>Dynamic body</td>
+<td>Jolt has its current position and velocity</td>
+<td>Haki copies active-body position/rotation back to the entity</td>
+</tr>
+<tr>
+<td>Character controller</td>
+<td>Gameplay supplies desired horizontal velocity</td>
+<td>Collision-corrected position, velocity, and grounded state are copied back</td>
+</tr>
+</tbody>
+</table>
+<p>Changing a dynamic body's transform field alone is not a general teleport operation. Physics can overwrite it. C++ has <code>PhysicsSystem::Teleport()</code> to synchronize an explicit transform change with Jolt. The current Lua <code>set_position()</code> writes the transform: character controllers detect it as a teleport, but ordinary rigid bodies do not gain that same behavior automatically.</p>
+<p>Static transforms are not continuously uploaded as ordinary movement. Changing collider dimensions after body creation also does not automatically rebuild its Jolt shape. Use the supported live editing methods or reload/recreate the body when changing creation-time properties.</p>
+<h2 id="07-physics--the-character-controller">The character controller</h2>
+<p>The player uses Jolt <code>CharacterVirtual</code>, rather than an ordinary dynamic rigid body. Gameplay requests movement; the controller resolves that movement against surfaces, stairs, slopes, and gravity while remaining upright.</p>
+<p>Its minimum component combination is:</p>
+<pre><code class="language-text">Transform + CharacterController
+</code></pre>
+<p>Add <code>Script</code> for Lua movement, or <code>PlayerInput</code> for the built-in movement path. Do not also add <code>RigidBody</code> and <code>Collider</code> to the same controller entity. The controller already owns its capsule and the integration rejects that mixed setup.</p>
+<p>The controller has an internal kinematic body so queries and sensors can detect it. The integration keeps that body awake so entering a sensor still produces useful events.</p>
+<p>Each update:</p>
+<ol>
+<li>Detect an explicitly changed position, such as a respawn.</li>
+<li>Read requested XZ movement; the current movement path does not use requested Y velocity as a jump command.</li>
+<li>Combine grounded motion or airborne vertical velocity with gravity.</li>
+<li>Run Jolt's extended character update, including configured step support.</li>
+<li>Copy feet position, actual velocity, ground normal, and grounded state to the components.</li>
+</ol>
+<p>Requested speed and actual speed can differ. Pressing into a wall can request 5 m/s while moving almost nowhere. Animation correctly uses the resulting velocity rather than assuming the request succeeded.</p>
+<h2 id="07-physics--layers-decide-which-pairs-are-tested">Layers decide which pairs are tested</h2>
+<p>The current collision rules are:</p>
+<table>
+<thead>
+<tr>
+<th>Pair</th>
+<th>Collides?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Static ↔ Dynamic</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Static ↔ Character</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Static ↔ Static</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Static ↔ Trigger</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Dynamic ↔ Dynamic</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Dynamic ↔ Character</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Dynamic ↔ Trigger</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Character ↔ Character</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Character ↔ Trigger</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Trigger ↔ Trigger</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>Characters passing through one another is an explicit game-oriented rule. It does not prevent an attack query from finding a character.</p>
+<p><strong>Broad phase</strong> is the cheap early search that finds possible nearby collision pairs. <strong>Narrow phase</strong> tests their actual shapes. Jolt uses these stages internally; Haki supplies the layers and filters that determine eligible pairs.</p>
+<h2 id="07-physics--queries-ask-a-question-without-creating-a-new-object">Queries ask a question without creating a new object</h2>
+<p>A <strong>raycast</strong> asks what a line hits first. An <strong>overlap sphere</strong> asks which shapes intersect a sphere now.</p>
+<pre><code class="language-lua">local hit = physics.raycast(vec3(0, 3, 0), vec3(0, -1, 0), 10)
+if hit then
+    log.info(&quot;Ground distance&quot;, hit.distance)
+end
+
+local nearby = physics.overlap_sphere(self.entity:position(), 2)
+for _, other in ipairs(nearby) do
+    if other ~= self.entity and other:is_character() then
+        -- This is a possible target; gameplay still decides range, team, and damage.
+    end
+end
+</code></pre>
+<p>These snippets belong inside a script callback. Queries normally exclude the Trigger layer; the optional <code>includeTriggers</code> argument includes it. There is no automatic “ignore the caller” rule in the shown Lua query. Filter self and unsuitable targets in gameplay.</p>
+<p>A sphere overlap does not answer whether a wall is between two players, nor whether a target lies in front of the attacker. Add line-of-sight and direction checks when the attack needs them.</p>
+<h2 id="07-physics--contacts-become-lua-events-after-simulation">Contacts become Lua events after simulation</h2>
+<p>Jolt can invoke contact listeners on its worker threads. Those listeners queue raw body IDs under a lock. They do not call Lua or modify arbitrary scene components directly.</p>
+<p>After the step, Haki resolves IDs to entities and dispatches events on the main scene update path:</p>
+<pre><code class="language-text">Jolt workers detect contact
+  → queue raw event
+  → physics step completes
+  → resolve entities
+  → ScriptSystem dispatches callback
+</code></pre>
+<p>Solid events call <code>on_contact_begin/end</code>; sensor events call <code>on_trigger_enter/exit</code>. Entity scripts receive the other entity. Scene scripts receive both entities.</p>
+<p>These are contact events, not a full damage system. Do not assume one callback equals one attack or one damage application. Gameplay should track attack windows, targets already hit, or cooldowns as appropriate.</p>
+<h2 id="07-physics--limits-and-threading">Limits and threading</h2>
+<p>The default world reserves capacity for 4096 bodies, 4096 body pairs, and 2048 contact constraints. These are configured limits, not benchmark guarantees. The physics system logs capacity problems rather than silently making them disappear.</p>
+<p>Physics runs at the fixed simulation step. Jolt uses workers internally, but Lua and ordinary scene mutation remain on the engine's update path. Moving gameplay onto threads requires more than calling it from a Jolt callback.</p>
+<p>Removing a rigid body, collider, or controller component triggers registered cleanup hooks. Destroying the scene removes its world and remaining bodies. These hooks are why removing ECS data must also clean up the matching Jolt object instead of leaving an invisible collider behind.</p>
+<h2 id="07-physics--try-this">Try this</h2>
+<p>Make one floor, one dynamic crate, one sensor, and one controller in a test scene. First predict which pairs interact from the layer table. Then show collider debug shapes and compare the shape positions with the visible artwork.</p>
+<h2 id="07-physics--source-reading-route">Source reading route</h2>
+<ol>
+<li><span class="source">PhysicsTypes.h <small>src/Haki/Physics/PhysicsTypes.h</small></span> and <span class="source">Components.h <small>src/Haki/Scene/Components.h</small></span>: values and component data.</li>
+<li><span class="source">PhysicsCore.cpp <small>src/Haki/Physics/PhysicsCore.cpp</small></span>: process-wide Jolt support.</li>
+<li><span class="source">PhysicsSystem.cpp <small>src/Haki/Systems/PhysicsSystem.cpp</small></span>: <code>CreatePendingBodies</code>, <code>Update</code>, <code>CreatePendingCharacters</code>, <code>UpdateCharacters</code>.</li>
+<li><span class="source">PhysicsLayers.cpp <small>src/Haki/Physics/PhysicsLayers.cpp</small></span>: collision rules.</li>
+<li><span class="source">PhysicsSettings.h <small>src/Haki/Physics/PhysicsSettings.h</small></span>: capacities and gravity.</li>
+</ol></article><article id="08-animation"><h1 id="08-animation--8-animation">8. Animation</h1>
+<p>Animation changes the pose of the character's visual mesh. Character movement changes where its controller is in the world. Haki connects them through measured movement speed, but they remain separate jobs.</p>
+<h2 id="08-animation--the-pieces">The pieces</h2>
+<table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Skinned mesh</td>
+<td>A mesh whose vertices can follow joints</td>
+</tr>
+<tr>
+<td>Skeleton</td>
+<td>A hierarchy of pose nodes plus the joints used to deform the mesh</td>
+</tr>
+<tr>
+<td>Bind pose</td>
+<td>The reference pose used when the mesh was attached to the skeleton</td>
+</tr>
+<tr>
+<td>Clip</td>
+<td>Timed changes to node translation, rotation, or scale</td>
+</tr>
+<tr>
+<td>Animator</td>
+<td>Current playback and blending state for an entity</td>
+</tr>
+<tr>
+<td>Pose</td>
+<td>The set of local transforms for the skeleton at one moment</td>
+</tr>
+<tr>
+<td>Joint palette</td>
+<td>The final matrices sent to the GPU to deform vertices</td>
+</tr>
+</tbody>
+</table>
+<p>Blender calls the skeleton an armature. A joint often corresponds to a bone, but the imported pose hierarchy may also include non-joint ancestor nodes needed to preserve correct transforms.</p>
+<p>The hierarchy is stored parent before child, so the system can build each node's world-within-the-skeleton transform after its parent.</p>
+<h2 id="08-animation--what-a-clip-contains">What a clip contains</h2>
+<p>A walking clip does not store a new full mesh for every frame. It stores keys such as “at 0.2 seconds this node has this rotation.” The runtime finds a pose between those keys.</p>
+<p><strong>Interpolation</strong> means finding an in-between value. Haki supports:</p>
+<ul>
+<li><strong>Step:</strong> hold the previous key until the next one.</li>
+<li><strong>Linear:</strong> blend positions and scales between adjacent keys; smoothly blend rotations using quaternion interpolation.</li>
+</ul>
+<p>The glTF animation loader currently rejects <code>CUBICSPLINE</code> interpolation. Export clips in a supported form instead of assuming every Blender animation curve will load unchanged.</p>
+<p>Tracks without a keyed value use the skeleton's bind transform for that part. A named clip in an animator maps to an animation asset handle, so Lua uses a short gameplay name rather than a model file path.</p>
+<h2 id="08-animation--from-time-to-a-deformed-mesh">From time to a deformed mesh</h2>
+<p><code>AnimationSystem::Update()</code> performs this chain:</p>
+<ol>
+<li>Find the skeleton and animator for a skinned mesh.</li>
+<li>Advance the current clip or locomotion phase using simulation delta time.</li>
+<li>Sample local pose transforms.</li>
+<li>Blend poses if a transition is active.</li>
+<li>Combine local transforms through the pose hierarchy.</li>
+<li>Build final joint matrices using bind information.</li>
+<li>Store those matrices on the skinned renderer for rendering.</li>
+</ol>
+<p>For each joint, the code combines inverse mesh bind-world, the current global joint pose, and inverse bind matrix. The bind corrections ensure that “no animation” reproduces the reference mesh instead of applying its original placement twice.</p>
+<p>You do not need to derive those matrices to play a clip. They become relevant when a mesh explodes, folds incorrectly, or jumps position even though its controller transform looks correct.</p>
+<h3 id="08-animation--how-a-vertex-follows-bones">How a vertex follows bones</h3>
+<p>Each skinned vertex has up to four joint indices and weights in the current shader input. A vertex near the elbow can partly follow the upper arm and partly follow the forearm. The GPU combines the selected joint transformations using those weights.</p>
+<p>The renderer's current joint palette limit is <strong>128 joints</strong>. Check the imported model against that limit; the animation system is not an unlimited-bone renderer.</p>
+<p>If a skinned renderer has a valid skeleton but no animator, the system can produce its bind pose. Missing skeleton data clears usable skin matrices instead.</p>
+<h2 id="08-animation--locomotion-uses-speed">Locomotion uses speed</h2>
+<p>Locomotion means the repeating movement animation: idle, walk, run. Haki can blend along a one-dimensional speed list. “One-dimensional” just means speed is the input, rather than a larger graph with several inputs.</p>
+<p>For example, an authored blend list could associate:</p>
+<pre><code class="language-text">0 m/s → Idle
+2 m/s → Walk
+5 m/s → Run
+</code></pre>
+<p>At a speed between two samples, the system blends the neighboring poses. It smooths the blend position over time so a small speed change does not jerk the pose. Clips share a normalized phase, helping their movement cycles stay aligned while blending.</p>
+<p>The speed comes from the nearest character controller ancestor's <strong>actual horizontal velocity</strong>. This matters when a wall stops the character: the animation should not run at full speed simply because the movement button is held.</p>
+<p>There are also older idle/move settings for simpler scenes. Read <code>LocomotionAnimationComponent</code> and its parser before adding new blend fields; names in Blender, JSON, and C++ are related but not always identical.</p>
+<p><code>MaxPlaybackScale</code> can allow faster playback beyond the final authored speed. It is a playback adjustment, not a root-motion movement system.</p>
+<h2 id="08-animation--playing-an-action-from-lua">Playing an action from Lua</h2>
+<p>The Lua entity methods can find the entity's animator or an attached child's animator. Clip names must already exist in that animator.</p>
+<pre><code class="language-lua">-- Run once when the gameplay action starts.
+if self.entity:has_animation(&quot;Punch&quot;) then
+    self.entity:play_animation(&quot;Punch&quot;, {
+        fade = 0.12,
+        loop = false,
+        speed = 1.0
+    })
+end
+</code></pre>
+<p>This overrides locomotion for the one-shot. When it finishes, the animator can blend back to locomotion. Avoid calling <code>play_animation</code> every update while a button is held: repeatedly starting an action can prevent it from progressing as intended.</p>
+<p>For a pose that should remain at the end:</p>
+<pre><code class="language-lua">self.entity:play_animation(&quot;Death&quot;, {
+    fade = 0.15,
+    loop = false,
+    hold = true
+})
+</code></pre>
+<p>Use <code>self.entity:stop_animation(0.2)</code> to return to locomotion with a fade. Without locomotion, stopping freezes clip playback instead.</p>
+<p>Useful queries include <code>has_animator()</code>, <code>has_animation(name)</code>, <code>animation()</code>, <code>animation_time()</code>, <code>animation_length(name)</code>, <code>animation_finished()</code>, and <code>locomotion_speed()</code>. While locomotion owns the pose, <code>animation()</code> reports <code>"locomotion"</code> rather than one fixed clip name.</p>
+<p><code>animation_finished()</code> is a playback state flag, not a guaranteed queued event. Automatic return to locomotion resets it. If gameplay needs a reliable attack window or completion event, design that timing explicitly rather than assuming an animation-event system exists.</p>
+<h2 id="08-animation--crossfading">Crossfading</h2>
+<p>A crossfade gradually mixes the previous pose with the new target pose. Haki keeps the last evaluated pose and uses it as the starting pose, then increases the new pose's weight over the fade duration.</p>
+<p>Positions and scales are mixed normally. Rotations use quaternion interpolation and choose compatible signs so the blend takes the short rotation path.</p>
+<p>This avoids a hard jump between idle and punch. It does not automatically align feet, prevent all sliding, or keep a weapon's hand contact fixed. Those need suitable source animation and, for more advanced behavior, additional systems.</p>
+<h2 id="08-animation--movement-and-attacks-remain-gameplay-work">Movement and attacks remain gameplay work</h2>
+<p>There is no general root-motion path that extracts a clip's travel and moves the character controller through physics. Use in-place locomotion for the current controller workflow. A traveling root in a downloaded clip can move the visual away from its capsule.</p>
+<p>Likewise, a fist passing through an enemy in the animation does not automatically deal damage. Gameplay must choose the hit time, query targets, apply rules, and manage repeated hits.</p>
+<p>The current system is a clip player with fades and a speed blend. Full animation graphs, layered upper-body masks, inverse kinematics, and a generalized animation-event editor are additional work.</p>
+<h2 id="08-animation--try-this">Try this</h2>
+<p>Walk toward a wall while watching <code>locomotion_speed()</code>. Then trigger a one-shot and let it return to locomotion. This checks the whole chain: controller result → speed blend → action override → pose → skinned rendering.</p>
+<h2 id="08-animation--source-reading-route">Source reading route</h2>
+<ol>
+<li><span class="source">Skeleton.h <small>src/Haki/AssetManager/Skeleton.h</small></span> and <span class="source">AnimationClip.h <small>src/Haki/AssetManager/AnimationClip.h</small></span>: loaded data.</li>
+<li><span class="source">GltfSkeletonLoader.cpp <small>src/Haki/AssetLoader/GltfSkeletonLoader.cpp</small></span> and <span class="source">GltfAnimationClipLoader.cpp <small>src/Haki/AssetLoader/GltfAnimationClipLoader.cpp</small></span>: import rules.</li>
+<li><span class="source">AnimationSystem.cpp <small>src/Haki/Systems/AnimationSystem.cpp</small></span>: <code>SamplePose</code>, <code>BlendPoses</code>, <code>ComposePose</code>, <code>Play</code>, and <code>Update</code>.</li>
+<li><span class="source">ScriptBindings.cpp <small>src/Haki/Scripting/ScriptBindings.cpp</small></span>: animator lookup and Lua methods.</li>
+<li><span class="source">GltfPBR.vert <small>Assets/Engine/Shaders/GltfPBR.vert</small></span>: GPU skinning.</li>
+</ol></article><article id="09-lua-gameplay"><h1 id="09-lua-gameplay--9-lua-gameplay">9. Lua gameplay</h1>
+<p>Lua is where you can change game rules quickly. C++ provides controlled access to engine features; Lua uses that access to build behaviors.</p>
+<p>Each scene has its own <code>ScriptSystem</code> and Lua state. Entity scripts run as separate instances inside that shared scene state. They are not separate Lua virtual machines for every entity.</p>
+<h2 id="09-lua-gameplay--how-a-c-binding-works">How a C++ binding works</h2>
+<p>A <strong>binding</strong> connects a Lua name to a C++ function. For example:</p>
+<pre><code class="language-text">Lua: entity:set_move_velocity(value)
+    → C++ binding validates the entity and component
+    → writes CharacterControllerComponent.DesiredVelocity
+    → the later physics step consumes that request
+</code></pre>
+<p>The Lua call is not a second physics engine. It is a friendlier way to reach the existing engine system. A missing component can therefore produce an error even when the Lua method name is valid.</p>
+<p>The API is registered in <code>ScriptBindings.cpp</code> using sol2. Its main groups are <code>vec3</code>, <code>quat</code>, entity methods, <code>scene</code>, <code>physics</code>, <code>input</code>, <code>draw</code>, <code>time</code>, and <code>log</code>.</p>
+<h2 id="09-lua-gameplay--anatomy-of-a-script">Anatomy of a script</h2>
+<p>A behavior file returns a table. The runtime loads that table, creates an instance table for each attached entity, injects <code>self.entity</code>, copies property defaults, and applies authored overrides.</p>
+<p>This movement example belongs on an entity with a character controller:</p>
+<pre><code class="language-lua">local movement = require(&quot;shared.lib.movement&quot;)
+
+---@class LearningPlayer : HakiEntityScript
+---@field speed number
+local Player = { properties = { speed = 5.0 } }
+
+function Player:on_update(dt)
+    local direction = movement.camera_relative(
+        input.move(), scene.primary_camera()
+    )
+
+    self.entity:set_move_velocity(direction * self.speed)
+    if direction:length() &gt; 0.001 then
+        self.entity:set_rotation(quat.look_rotation(direction))
+    end
+end
+
+return Player
+</code></pre>
+<p>There is no <code>dt</code> multiplication on the requested velocity. The value is already metres per second; physics applies the time step. For manually integrating a position, <code>position + velocity * dt</code> would need the multiplication.</p>
+<p>In Lua, <code>Player:on_update(dt)</code> is shorthand for a function that receives <code>self</code> first. Likewise <code>entity:position()</code> passes the entity as the method's first argument. This is why replacing <code>:</code> with <code>.</code> arbitrarily breaks calls.</p>
+<h2 id="09-lua-gameplay--properties-become-instance-fields">Properties become instance fields</h2>
+<p><code>properties = { speed = 5 }</code> defines a default. A scene's script component can override it for one entity. During execution, read <code>self.speed</code>.</p>
+<p>The supported authored property values are booleans, numbers, strings, and vec3 values. The runtime makes appropriate copies of property values rather than sharing every mutable vector accidentally.</p>
+<p>State such as cooldown timers also belongs on <code>self</code>:</p>
+<pre><code class="language-lua">function Player:on_start()
+    self.cooldown = 0
+end
+
+function Player:on_update(dt)
+    self.cooldown = math.max(0, self.cooldown - dt)
+end
+</code></pre>
+<p>These are separate illustrative callbacks, not additions that should overwrite the movement callback without combining their contents.</p>
+<p>Avoid using one mutable module-level variable as if it were private state for every attached entity. A loaded class/module can be shared by several script instances.</p>
+<h2 id="09-lua-gameplay--entity-scripts-and-scene-scripts">Entity scripts and scene scripts</h2>
+<p>An <strong>entity script</strong> belongs to one entity. Movement, a crate's health, or a hazard's local behavior fits there.</p>
+<p>A <strong>scene script</strong> belongs to the arena as a whole. Match rules, coordinating a camera, or a shared round timer fits there. It does not receive <code>self.entity</code>; it finds entities through <code>scene</code> queries.</p>
+<p>Both are authored through the Blender add-on and exported as paths. Disabling a script in Blender only changes runtime behavior after the relevant export/import updates the scene component.</p>
+<h2 id="09-lua-gameplay--callback-timing">Callback timing</h2>
+<table>
+<thead>
+<tr>
+<th>Callback</th>
+<th>When it runs</th>
+<th>Arguments after <code>self</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>on_start</code></td>
+<td>Once when a new instance starts on a simulation update</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>on_update</code></td>
+<td>Each positive simulation tick</td>
+<td>Fixed <code>dt</code></td>
+</tr>
+<tr>
+<td><code>on_contact_begin/end</code></td>
+<td>After physics, for solid contact events</td>
+<td>Other entity; scene script gets both</td>
+</tr>
+<tr>
+<td><code>on_trigger_enter/exit</code></td>
+<td>After physics, for sensor contact events</td>
+<td>Other entity; scene script gets both</td>
+</tr>
+<tr>
+<td><code>on_draw</code></td>
+<td>Once per rendered scene frame after the instance has started</td>
+<td>Render-frame <code>dt</code>, or zero when paused</td>
+</tr>
+<tr>
+<td><code>on_destroy</code></td>
+<td>When an entity's running script component is removed/destroyed</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p>The scene script starts before entity scripts and its update runs before entity updates. Do not rely on a meaningful order between unrelated entity scripts. Coordinate explicitly when one behavior must wait for another's result.</p>
+<p><code>ScriptSystem::Shutdown()</code> clears scene state rather than acting as a guaranteed per-script save callback. Do not use <code>on_destroy</code> as the only way to persist important game data when the entire scene or program exits.</p>
+<p>Drawing belongs in <code>on_draw</code>, which receives a temporary canvas context. Calling <code>draw.*</code> from <code>on_update</code> raises an error.</p>
+<h2 id="09-lua-gameplay--finding-and-talking-to-entities">Finding and talking to entities</h2>
+<pre><code class="language-lua">local player = scene.find(&quot;player&quot;)
+if player and player:valid() then
+    log.info(player:name(), player:position())
+end
+</code></pre>
+<p>This example assumes the authored stable ID is literally <code>player</code>. Blender-authored IDs are often UUIDs. <code>scene.find_by_name("Player")</code> is convenient for a prototype, but repeated names can make the result ambiguous.</p>
+<p>Other helpers include <code>scene.primary_camera()</code>, <code>scene.characters()</code>, and <code>scene.entities_with_script(path)</code>. <code>entity:script()</code> returns its running instance table if it has one, allowing game behaviors to call known methods on each other.</p>
+<p>Always consider lifetime. A cached entity may have been destroyed. Lua entity methods validate access, but your game should still check optional results and <code>valid()</code> where appropriate.</p>
+<p>Lua destruction requests are queued until the current callback batch ends. This avoids destroying registry entries in the middle of the loop that is visiting them. Do not assume <code>destroy()</code> removes the entity in the middle of the very next Lua expression.</p>
+<h2 id="09-lua-gameplay--script-paths-and-modules">Script paths and modules</h2>
+<p>Scene-local script paths start at the scene's <code>Scripts/</code> folder:</p>
+<pre><code class="language-text">player.lua
+lib/combat.lua
+</code></pre>
+<p>Reusable modules live under <code>Assets/Game/Shared/Scripts</code>:</p>
+<pre><code class="language-lua">local movement = require(&quot;shared.lib.movement&quot;)
+</code></pre>
+<p>The custom <code>require</code> resolves the module, runs it once, and caches its returned value. It supports local modules too, such as <code>require("lib.combat")</code>. Module names use dots; script component paths use relative file paths ending in <code>.lua</code>.</p>
+<p>The Lua state opens basic, math, string, table, coroutine, and UTF-8 libraries. It does not expose normal <code>io</code>, <code>os</code>, <code>debug</code>, or <code>package</code> access, and general file-loading helpers are removed. Modules are resolved through Haki's allowed roots. This is controlled gameplay scripting, not a general-purpose shell environment.</p>
+<h2 id="09-lua-gameplay--errors-and-reloads">Errors and reloads</h2>
+<p>A callback error is logged with the script path, entity ID when available, callback name, and Lua stack trace. The failing instance is disabled until a successful script reload. This avoids printing the same failure every frame.</p>
+<p>The game polls for script changes at roughly half-second intervals when reload is enabled. A successful reload replaces class functions while preserving the instance table. Existing health values, timers, and other fields can remain.</p>
+<p>That also means reload is <strong>not the same as restarting the scene</strong>. Changing a property default or adding initialization in <code>on_start</code> does not necessarily reset existing instances or rerun their startup. Reload the scene when you need fresh state.</p>
+<p>Editing an already loaded module causes the system to clear module caches and reload script classes, because those scripts may have captured the module in a local variable. This is broader than reloading only one behavior file.</p>
+<p>Shader hot reload is separate and follows shader source files through the asset manager. Meshes, colliders, and imported scene structure do not all gain automatic live reload because scripts do.</p>
+<h2 id="09-lua-gameplay--why-the-ide-understands-the-bindings">Why the IDE understands the bindings</h2>
+<p>The real implementation is C++. Lua Language Server cannot discover that API just by reading your gameplay files.</p>
+<p><code>tools/lua/library/haki.lua</code> supplies type and method descriptions. <code>.luarc.json</code> tells the editor to include them and use Lua 5.4. These descriptions provide completion and help catch incorrect arguments; they do not implement the engine API.</p>
+<p>Never <code>require</code> the definition file in gameplay. Open the repository root in your editor and use LuaLS. A syntax highlighter alone cannot provide the same completion. See the <span class="source">Lua setup guide <small>tools/lua/README.md</small></span>.</p>
+<p>When adding a C++ binding, update the definitions and meaningful tests in the same change. Otherwise the runtime and IDE tell different stories.</p>
+<h2 id="09-lua-gameplay--current-api-boundaries">Current API boundaries</h2>
+<p>The runtime currently exposes entity lookup, movement, selected body operations, camera settings, animation, queries, simple drawing, input, logging, and time. It does not expose every C++ function automatically.</p>
+<p>For example, a C++ scene-manager feature is not automatically a Lua <code>scene</code> method. General entity spawning, a full UI system, mouse-to-ground aiming, and network commands need their own supported APIs where the current bindings do not provide them.</p>
+<h2 id="09-lua-gameplay--try-this">Try this</h2>
+<p>Read a simple arena player script. For each engine method, find the matching binding and identify the component it reads or writes. This makes missing-component errors much easier to understand.</p>
+<h2 id="09-lua-gameplay--source-reading-route">Source reading route</h2>
+<ol>
+<li><span class="source">ScriptSystem.h <small>src/Haki/Scripting/ScriptSystem.h</small></span>: lifecycle and reload contract.</li>
+<li><span class="source">ScriptSystem.cpp <small>src/Haki/Scripting/ScriptSystem.cpp</small></span>: instance creation, callbacks, modules, and reloads.</li>
+<li><span class="source">ScriptBindings.cpp <small>src/Haki/Scripting/ScriptBindings.cpp</small></span>: the actual exposed API.</li>
+<li><span class="source">ScriptPaths.h <small>src/Haki/Scripting/ScriptPaths.h</small></span>: local/shared path resolution.</li>
+<li><span class="source">haki.lua <small>tools/lua/library/haki.lua</small></span>: searchable signatures and callback types.</li>
+<li><span class="source">Game/Shared/Scripts <small>Assets/Game/Shared/Scripts</small></span>: reusable gameplay helpers.</li>
+</ol></article><article id="10-input-ui-and-tools"><h1 id="10-input-ui-and-tools--10-input-ui-and-development-tools">10. Input, UI, and development tools</h1>
+<p>There are three separate layers here: input tells the game what the player requested; the canvas draws game overlays; ImGui provides development controls.</p>
+<h2 id="10-input-ui-and-tools--window-and-input">Window and input</h2>
+<p><code>Window</code> creates a GLFW window and OpenGL context, loads OpenGL functions through GLAD, polls desktop events, and presents frames. It keeps framebuffer dimensions updated when the display changes.</p>
+<p><code>InputManager</code> connects devices to gainput and exposes queries for keyboard, mouse, and gamepads. It also supports C++ action mappings so an action can be associated with a device control.</p>
+<p>The main loop polls events and updates input once per rendered frame before simulation. Input has both held state and transition state:</p>
+<table>
+<thead>
+<tr>
+<th>Query</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Down</td>
+<td>The button is held now</td>
+</tr>
+<tr>
+<td>Pressed</td>
+<td>It changed from up to down in the current input sample</td>
+</tr>
+<tr>
+<td>Released</td>
+<td>It changed from down to up in the current input sample</td>
+</tr>
+</tbody>
+</table>
+<p>Held input fits movement. A press edge fits starting an action. Remember that several simulation ticks may share one sampled frame's input, as explained in <a href="#02-startup-and-frame-loop--input-timing-matters">chapter 2</a>.</p>
+<p>Lua examples use lowercase names:</p>
+<pre><code class="language-lua">local attacking = input.mouse_down(&quot;left&quot;)
+local dodgePressed = input.key_pressed(&quot;space&quot;)
+local superPressed = input.key_pressed(&quot;r&quot;)
+</code></pre>
+<p>These queries do not implement attacks, dodges, or supers. Gameplay must connect the intent to cooldowns, movement, damage, animation, and effects.</p>
+<p>The underlying C++ input API includes mouse position/delta/scroll and gamepad support. The Lua bindings expose a selected subset. A working C++ mouse query does not imply a Lua ground-aim API already exists.</p>
+<h2 id="10-input-ui-and-tools--camera-relative-movement">Camera-relative movement</h2>
+<p>For the top-angled arena camera, pressing W should usually mean moving toward the top of the screen along the ground.</p>
+<p>The movement helper takes the camera's forward vector, removes its vertical part, normalizes it, and builds a perpendicular right vector. Input X/Y values are converted into a world XZ direction from those two vectors.</p>
+<p>The built-in controller input combines WASD and the first gamepad's left stick. It limits the resulting input length so diagonal movement does not become faster just because two buttons are held. Its gamepad index is zero-based.</p>
+<p>The C++ <code>PlayerControllerSystem</code> runs before Lua. If a character uses both built-in <code>PlayerInput</code> and a Lua movement script, Lua can overwrite the desired velocity. Pick one clear owner for gameplay movement rather than tuning two competing speed values.</p>
+<h2 id="10-input-ui-and-tools--who-owns-input-while-editing">Who owns input while editing?</h2>
+<p>When ImGui owns keyboard or mouse input, the game gates the corresponding gameplay controls. Free-look also stops ordinary player control so WASD can move the development camera.</p>
+<p>The debug camera owns a separate pose copied from the gameplay view when activated. It does not move the scene's primary camera component. Its projection override can also show a different view without rewriting the exported camera.</p>
+<p>When comparing Blender and runtime framing, choose the gameplay camera and scene projection first. Otherwise you may be comparing an authored camera with a temporary development view.</p>
+<h2 id="10-input-ui-and-tools--the-canvas">The canvas</h2>
+<p>The engine's <code>Canvas</code> queues rectangles, sprites, and text for one frame. The renderer draws them over the finished scene and clears them afterward. This is called <strong>immediate-mode drawing</strong>: code describes what to draw again each frame, rather than creating a permanent button object once.</p>
+<p>Coordinates start at the output viewport's top-left. X increases right; Y increases down. Units are output pixels. Higher layers draw on top, and later calls within the same layer draw on top of earlier ones.</p>
+<p>The canvas groups neighboring compatible quads into texture batches to reduce draw calls. A <strong>quad</strong> is a four-corner shape drawn as triangles. Text becomes a sequence of glyph quads.</p>
+<h2 id="10-input-ui-and-tools--screen-hud-versus-world-labels">Screen HUD versus world labels</h2>
+<p>A screen HUD stays in a fixed screen position. A world label follows a 3D point, but is drawn at a stable pixel size facing the camera. The latter is often called a billboard.</p>
+<p>These are callbacks you could place in a player script:</p>
+<pre><code class="language-lua">function Player:on_draw(dt)
+    draw.screen_text(20, 20, &quot;Prototype&quot;, {
+        size = 20,
+        color = {1, 1, 1, 1}
+    })
+
+    draw.label(self.entity:position() + vec3(0, 2, 0), &quot;Player&quot;, {
+        size = 18,
+        color = {1, 1, 1, 1},
+        depth_test = true
+    })
+end
+</code></pre>
+<p><code>draw.label</code> projects the anchor point through the current camera. With depth testing enabled, scene geometry covering that anchor can hide the label. It is an anchor visibility test, not a fully simulated 3D text mesh.</p>
+<p>The canvas uses display-color values with alpha. It is drawn after scene tone mapping, so changing scene exposure should not act as the main brightness control for the HUD.</p>
+<h2 id="10-input-ui-and-tools--fonts">Fonts</h2>
+<p><code>Font</code> reads a TrueType file and bakes glyphs into an atlas: one texture containing many character images. Drawing text looks up glyph rectangles inside that atlas.</p>
+<p>The present font path covers printable ASCII, not a full international text shaping and localization system. Text can be scaled from its bake size, but very large scaling can look soft. This is one reason a complete game UI may eventually need more font and layout support.</p>
+<h2 id="10-input-ui-and-tools--imgui-is-the-development-interface">ImGui is the development interface</h2>
+<p>The runtime overlay provides hierarchy and inspector panes, graphics controls, physics debug visibility, pause/step, reload controls, script errors, and project/window settings.</p>
+<p>Useful default shortcuts when the development UI is available:</p>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td>Toggle hierarchy</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>Toggle inspector</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>Toggle telemetry; during playtest, toggle its playtest telemetry</td>
+</tr>
+<tr>
+<td>F6 or Pause</td>
+<td>Pause/resume simulation outside playtest</td>
+</tr>
+<tr>
+<td>F7</td>
+<td>Request one simulation tick while paused</td>
+</tr>
+<tr>
+<td>F11</td>
+<td>Enter/leave fullscreen playtest</td>
+</tr>
+</tbody>
+</table>
+<p>Playtest hides development overlays and uses the gameplay camera. Temporary fullscreen playtest is different from the saved fullscreen preference in project settings.</p>
+<p>The editor panels overlay the game. They do not currently define a separate game viewport render target that shrinks when a pane opens.</p>
+<p>Changing a live entity in the inspector does not automatically write that entity back to its Blender source. Project setting persistence covers a different set of values, as described in <a href="#04-files-and-serialization--what-saving-means-today">chapter 4</a>.</p>
+<p>RmlUI is a possible future game UI choice. It is not integrated in the current runtime source. The existing canvas is useful for labels, health bars, prototype HUDs, and telemetry; it is not a complete menu layout, focus, and widget framework.</p>
+<h2 id="10-input-ui-and-tools--debug-drawing">Debug drawing</h2>
+<p><code>DebugDraw</code> queues lines and shapes such as boxes and capsules. These help answer “what does the physics system think is here?” or “which bounds are used for culling?”</p>
+<p>Collider overlays can distinguish solid bodies, sensors, and characters. A visible mesh may be offset from its collider; showing both makes that error much clearer than guessing from collision behavior alone.</p>
+<p>These drawings last one frame unless queued again. They are development graphics, not permanent scene meshes or exported kit assets.</p>
+<h2 id="10-input-ui-and-tools--telemetry-learning-where-the-time-goes">Telemetry: learning where the time goes</h2>
+<p>Telemetry uses the engine canvas and fonts. It tracks recent average/minimum FPS, frame time, CPU stages, GPU passes, graphics toggles, available GPU memory information, and dimensions.</p>
+<p><strong>Milliseconds are often more useful than FPS.</strong> A 60 FPS frame has about 16.67 ms total. A 120 FPS frame has about 8.33 ms. Saving 2 ms matters even when the FPS number changes differently at different starting rates.</p>
+<p>CPU timings measure work on the main processor. GPU timings measure rendering work through queries and can arrive later. They are not independent values you should always add into one total: CPU and GPU work can overlap.</p>
+<p>VRAM reporting depends on what the driver exposes; unavailable data should not be read as zero memory use. Several reported values are smoothed or refreshed periodically, so an overlay is a diagnosis aid rather than a per-instruction trace.</p>
+<h2 id="10-input-ui-and-tools--logging">Logging</h2>
+<p><code>Logger</code> routes messages to the installed logger; startup uses <code>ConsoleLogger</code>. Lua's <code>log.info/warn/error</code> feeds into the same general reporting path with script context.</p>
+<p>Start with the first useful error, not the last visual symptom. A missing material load can cause a skipped draw later. A disabled script instance can make movement stop while rendering and physics remain healthy.</p>
+<h2 id="10-input-ui-and-tools--try-this">Try this</h2>
+<p>Pause, turn on collider drawing, and inspect the empty player controller. Step once with F7. Then compare Window, Game, and Render dimensions while changing render scale. This separates simulation behavior from picture size.</p>
+<h2 id="10-input-ui-and-tools--source-reading-route">Source reading route</h2>
+<ol>
+<li><span class="source">Window.cpp <small>src/Haki/Platform/Window.cpp</small></span>: desktop window and context.</li>
+<li><span class="source">InputManager.h <small>src/Haki/Input/InputManager.h</small></span>: available C++ input features.</li>
+<li><span class="source">Canvas.h <small>src/Haki/Renderer/Canvas.h</small></span> and <span class="source">Font.h <small>src/Haki/Renderer/Font.h</small></span>: drawing rules.</li>
+<li><span class="source">ImGuiManager.cpp <small>src/Haki/Debug/ImGuiManager.cpp</small></span> and <span class="source">EditorPanels.cpp <small>src/Haki/Debug/EditorPanels.cpp</small></span>: development UI.</li>
+<li><span class="source">TelemetryOverlay.cpp <small>src/Haki/Debug/TelemetryOverlay.cpp</small></span>: measurements and displayed values.</li>
+<li><span class="source">Logger.h <small>src/Haki/Logging/Logger.h</small></span>: log interface.</li>
+</ol></article><article id="11-working-on-the-engine"><h1 id="11-working-on-the-engine--11-working-on-the-engine">11. Working on the engine</h1>
+<p>Start with one behavior you can observe. Follow its data from the authored file to the component, system, and output. This is more effective than trying to understand every engine file before changing anything.</p>
+<h2 id="11-working-on-the-engine--build-and-run">Build and run</h2>
+<p>Run these commands from the repository root:</p>
+<pre><code class="language-sh">cmake -S . -B build
+cmake --build build -j2
+./build/Engine
+</code></pre>
+<p>The project uses C++20 and CMake. Configuration fetches several pinned library versions, so the first setup needs access to those dependency sources. A Linux development environment also needs the compiler and the desktop/OpenGL development libraries required by the configured GLFW build. The exact package names depend on the distribution.</p>
+<p>The <code>HakiEngine</code> target is the engine library. <code>Engine</code> is the runnable program. <code>HakiAssets</code> prepares the runtime asset copy. Tests are configured through CTest when <code>BUILD_TESTING</code> is enabled.</p>
+<p>Keep the working-directory distinction in mind: running from the root reads source <code>Assets</code>; running from <code>build</code> reads packaged <code>build/Assets</code>.</p>
+<h3 id="11-working-on-the-engine--python-tools">Python tools</h3>
+<p>If the project environment does not exist yet:</p>
+<pre><code class="language-sh">python3 -m venv .venv
+.venv/bin/python -m pip install -r tools/requirements.txt
+</code></pre>
+<p>Use that interpreter for the importer and Python tests. Blender has its own interpreter, so installing project dependencies does not change Blender's bundled Python automatically.</p>
+<p>The add-on installation and setup are documented in <span class="source">tools/blender/README.md <small>tools/blender/README.md</small></span>. Point the add-on at the project root, project Python, and built engine executable as required by that workflow.</p>
+<h3 id="11-working-on-the-engine--optional-development-features">Optional development features</h3>
+<p>The defaults enable ImGui and the free-look camera. You can configure a build with them disabled:</p>
+<pre><code class="language-sh">cmake -S . -B build \
+  -DHAKI_ENABLE_IMGUI=OFF \
+  -DHAKI_ENABLE_DEBUG_CAMERA=OFF
+cmake --build build -j2
+</code></pre>
+<p>These are build choices, not <code>Project.json</code> renderer switches. Turning them off removes useful development controls from that build; turn them back on for the normal tooling experience.</p>
+<h2 id="11-working-on-the-engine--a-source-map">A source map</h2>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Start with</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Startup, update order, shutdown</td>
+<td><span class="source">Core/Game.cpp <small>src/Haki/Core/Game.cpp</small></span></td>
+</tr>
+<tr>
+<td>Project setting defaults/validation/save</td>
+<td><span class="source">Core/ProjectSettings.cpp <small>src/Haki/Core/ProjectSettings.cpp</small></span></td>
+</tr>
+<tr>
+<td>Scene requests and lifetime</td>
+<td><span class="source">Scene/SceneManager.cpp <small>src/Haki/Scene/SceneManager.cpp</small></span></td>
+</tr>
+<tr>
+<td>Scene data and per-tick work</td>
+<td><span class="source">Scene/Components.h <small>src/Haki/Scene/Components.h</small></span>, <span class="source">Scene/Scene.cpp <small>src/Haki/Scene/Scene.cpp</small></span></td>
+</tr>
+<tr>
+<td>JSON loading rules</td>
+<td><span class="source">Serialization/SceneSerializer.cpp <small>src/Haki/Serialization/SceneSerializer.cpp</small></span></td>
+</tr>
+<tr>
+<td>Catalogs, handles, resource lifetime</td>
+<td><span class="source">AssetManager <small>src/Haki/AssetManager</small></span></td>
+</tr>
+<tr>
+<td>Model and material decoding</td>
+<td><span class="source">AssetLoader <small>src/Haki/AssetLoader</small></span></td>
+</tr>
+<tr>
+<td>Drawing and image effects</td>
+<td><span class="source">Renderer <small>src/Haki/Renderer</small></span>, <span class="source">GL <small>src/Haki/GL</small></span>, <span class="source">engine shaders <small>Assets/Engine/Shaders</small></span></td>
+</tr>
+<tr>
+<td>Body and controller behavior</td>
+<td><span class="source">Systems/PhysicsSystem.cpp <small>src/Haki/Systems/PhysicsSystem.cpp</small></span>, <span class="source">Physics <small>src/Haki/Physics</small></span></td>
+</tr>
+<tr>
+<td>Animation blending</td>
+<td><span class="source">Systems/AnimationSystem.cpp <small>src/Haki/Systems/AnimationSystem.cpp</small></span></td>
+</tr>
+<tr>
+<td>Lua behavior and API</td>
+<td><span class="source">Scripting <small>src/Haki/Scripting</small></span>, <span class="source">Lua definitions <small>tools/lua/library/haki.lua</small></span></td>
+</tr>
+<tr>
+<td>Blender controls and metadata</td>
+<td><span class="source">haki_editor <small>tools/blender/haki_editor</small></span></td>
+</tr>
+<tr>
+<td>Disk import and runtime packaging</td>
+<td><span class="source">importer <small>tools/import_gltf_pack.py</small></span>, <span class="source">packager <small>tools/package_assets.py</small></span></td>
+</tr>
+<tr>
+<td>Live inspector and measurements</td>
+<td><span class="source">Debug <small>src/Haki/Debug</small></span></td>
+</tr>
+</tbody>
+</table>
+<h2 id="11-working-on-the-engine--debug-by-following-the-data">Debug by following the data</h2>
+<h3 id="11-working-on-the-engine--blender-looks-correct-runtime-is-wrong">Blender looks correct, runtime is wrong</h3>
+<p>Follow this route:</p>
+<pre><code class="language-text">.blend → exported GLB + metadata → imported scene/catalog → loaded components → system result
+</code></pre>
+<p>At each boundary, ask whether the expected value exists there. If the scene JSON still contains a script disabled in Blender, the problem happened before script execution. If JSON has the right camera but the debug view differs, inspect camera selection and projection override.</p>
+<p>Confirm which <code>Assets</code> folder the process opened before changing the code. A source/build-copy mismatch can imitate an importer or renderer bug.</p>
+<h3 id="11-working-on-the-engine--the-player-does-not-move">The player does not move</h3>
+<ol>
+<li>Read the script log. An errored instance is disabled until reload.</li>
+<li>Check that the script is attached to the controller entity, not just the armature or visual mesh.</li>
+<li>Confirm it has <code>Transform</code> and <code>CharacterController</code>, without an extra rigid body/collider combination.</li>
+<li>Check pause state and whether free-look or ImGui currently owns input.</li>
+<li>Compare requested movement with actual velocity. Collision can correctly stop a valid request.</li>
+</ol>
+<p><code>entity has no characterController</code> means the API exists but the target entity lacks its required component. Installing editor definitions cannot solve that runtime ownership problem.</p>
+<h3 id="11-working-on-the-engine--the-player-faces-the-wrong-direction">The player faces the wrong direction</h3>
+<p>Separate three questions: is movement world-relative or camera-relative, is gameplay facing using negative Z forward, and does the visual need a local forward correction?</p>
+<p>Fixing a model's local orientation should not require rotating every movement vector or making the physics capsule sideways. Keep model correction on the attached visual.</p>
+<h3 id="11-working-on-the-engine--the-camera-is-too-far-away-or-has-the-wrong-projection">The camera is too far away or has the wrong projection</h3>
+<p>Inspect the primary camera in scene JSON, then the live camera component, then the active development camera/override. For orthographic views, inspect <code>orthoSize</code>; distance alone does not zoom the picture.</p>
+<p>For a gameplay follow issue, inspect the scene's camera script and the tick order. A script might clamp to arena bounds or wait until the player crosses a screen threshold. These are game rules, not automatic <code>SceneManager</code> behavior.</p>
+<h3 id="11-working-on-the-engine--a-material-is-black-or-unexpectedly-dark">A material is black or unexpectedly dark</h3>
+<p>Check the material/texture load errors, source paths, normals, backface winding, UVs, light direction/intensity, and environment settings. Disable one rendering effect at a time to isolate the cause.</p>
+<p>The canyon shoreline issue is a useful concrete example. The bank and water slab overlapped; combining and recalculating the open mesh could flip bank-top normals downward. Blender's display hid the problem more easily than the runtime lighting did. Correct material colors alone could not repair those normals.</p>
+<p>The fix preserved the intended per-part winding. A Blender smoke check now verifies exported top-triangle winding, upward normals after Y-up conversion, and palette UVs. See <span class="source">blender_canyon_water_smoke.py <small>tools/tests/blender_canyon_water_smoke.py</small></span>. It demonstrates why checking the actual exported geometry is more useful than only judging a viewport screenshot.</p>
+<h3 id="11-working-on-the-engine--an-animation-looks-broken">An animation looks broken</h3>
+<p>Check that the mesh, skeleton, and clips agree; named clips exist; interpolation is supported; the visual parent/local transform is correct; and the controller is not being moved by an unintended animated root.</p>
+<p>A good capsule position with a displaced mesh points toward the visual/animation path. A good pose that faces sideways points toward local orientation or facing conventions.</p>
+<h3 id="11-working-on-the-engine--settings-revert">Settings revert</h3>
+<p>Check the loaded project path and autosave state. The runtime persists project settings to the project it opened. Importers preserve those settings, but a different working directory can make you inspect a different <code>Project.json</code>.</p>
+<p>Disabling autosave itself must be saved explicitly if you want that preference to survive the next launch. Entity inspector edits and project rendering settings have different persistence rules.</p>
+<h3 id="11-working-on-the-engine--performance-drops">Performance drops</h3>
+<p>Compare CPU stages and GPU passes before reducing poly count blindly. Try one controlled change: lower internal render resolution, turn off shadows, or pause simulation. Observe which change affects frame time.</p>
+<p>If lowering resolution helps a lot, pixel shading/post-processing may matter. If it barely helps, inspect CPU work, object submissions, simulation, and shadow geometry. These observations suggest where to investigate; they do not replace measurement.</p>
+<h2 id="11-working-on-the-engine--adding-a-feature-across-the-whole-pipeline">Adding a feature across the whole pipeline</h2>
+<p>Suppose you add a gameplay component that must be authored in Blender. A C++ struct alone is only the first piece.</p>
+<ol>
+<li><strong>Define its data and owner.</strong> Is it per entity, per scene, or per project? What are its defaults and units?</li>
+<li><strong>Implement runtime behavior.</strong> Decide which system reads it, when it runs, and which other system owns any shared transform/state.</li>
+<li><strong>Define its stored form.</strong> Add description/parsing/validation in the serializer. Decide which values are authored and which are runtime-only.</li>
+<li><strong>Carry it through import.</strong> Update importer metadata handling and exported JSON generation.</li>
+<li><strong>Expose authoring controls.</strong> Add Blender properties, validation, and metadata export. Update add-on packaging when distributing it.</li>
+<li><strong>Expose gameplay access if needed.</strong> Add C++ bindings, Lua definitions, and useful inspector controls.</li>
+<li><strong>Check the complete route.</strong> Test valid data, a useful failure case, export/import, scene load, and visible runtime behavior.</li>
+<li><strong>Document the behavior.</strong> Include defaults, units, ownership, and persistence rules.</li>
+</ol>
+<p>Do not add every layer when the feature does not need it. A local Lua cooldown may need no new component or Blender control. A renderer-wide preference belongs in renderer/project settings rather than an arbitrary scene entity.</p>
+<h2 id="11-working-on-the-engine--tests-that-already-exist">Tests that already exist</h2>
+<p>C++ tests cover scene lifetimes/transitions, serialization, assets/handles, physics, controllers, animation, transforms, scripting, camera projection, renderer helpers, project settings, and development UI behavior.</p>
+<p>List configured tests without running them:</p>
+<pre><code class="language-sh">ctest --test-dir build -N
+</code></pre>
+<p>Run all configured C++ tests, or one relevant group:</p>
+<pre><code class="language-sh">ctest --test-dir build --output-on-failure
+ctest --test-dir build -R 'Serialization|SceneManager' --output-on-failure
+</code></pre>
+<p>Some graphics/input tests need a usable desktop/OpenGL context. Tests marked with skip return code 77 can skip when that environment is unavailable. A skip is not proof that rendering passed.</p>
+<p>Python pipeline tests use <code>unittest</code>:</p>
+<pre><code class="language-sh">.venv/bin/python -m unittest discover -s tools/tests -p 'test_*.py'
+</code></pre>
+<p>Blender smoke scripts are separate and need Blender's <code>bpy</code> environment. They are not ordinary host-Python unit tests. Read their header before running them; an authoring smoke test may create temporary scene data and should be run in an appropriate Blender session or background process.</p>
+<p>When changing a system, run the tests that exercise the changed behavior and a relevant end-to-end check. A JSON parser unit test cannot prove that Blender exported a visible collider attachment correctly; a screenshot cannot prove that malformed data is rejected safely.</p>
+<h2 id="11-working-on-the-engine--a-practical-learning-sequence">A practical learning sequence</h2>
+<ol>
+<li>Follow one crate from Blender to GLB, catalog, loaded mesh, entity, and draw submission.</li>
+<li>Follow one movement request from Lua through the controller to the attached visual.</li>
+<li>Trigger a one-shot animation and trace its return to locomotion.</li>
+<li>Add a small scene-local Lua rule with a property and a visible label.</li>
+<li>Change one renderer setting and explain the pass/timing change.</li>
+<li>Add a small engine feature only after you can identify which missing capability requires it.</li>
+</ol>
+<p>For the planned online arena game, networking will introduce new questions: which machine owns the authoritative state, how inputs are sent, how clients predict movement, and how corrections are displayed. Fixed-step simulation is useful groundwork, but the present code does not already solve those questions.</p>
+<p>Use the current engine to finish a small, measurable local gameplay loop first. The code map and ownership rules in this guide help you place the next feature when that loop exposes a real need.</p></article><article id="glossary"><h1 id="glossary--glossary">Glossary</h1>
+<p>These are working definitions for this project, not formal textbook definitions.</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Plain meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Accumulator</td>
+<td>Unprocessed simulation time saved between rendered frames</td>
+</tr>
+<tr>
+<td>Alpha</td>
+<td>A value used for transparency or cutout coverage</td>
+</tr>
+<tr>
+<td>Animation clip</td>
+<td>Timed keys that change skeleton node transforms</td>
+</tr>
+<tr>
+<td>Armature</td>
+<td>Blender's skeleton used to pose a character</td>
+</tr>
+<tr>
+<td>Asset</td>
+<td>A reusable resource such as a mesh, texture, or clip</td>
+</tr>
+<tr>
+<td>Atlas</td>
+<td>One texture containing many smaller images, such as font glyphs</td>
+</tr>
+<tr>
+<td>Authoritative state</td>
+<td>The state a game treats as the final truth; especially important for networking</td>
+</tr>
+<tr>
+<td>Backface culling</td>
+<td>Skipping the side of a triangle defined as facing away</td>
+</tr>
+<tr>
+<td>Billboard</td>
+<td>A visual that faces the camera; Haki canvas billboards follow a world anchor</td>
+</tr>
+<tr>
+<td>Bind pose</td>
+<td>The reference pose used when a mesh was attached to its skeleton</td>
+</tr>
+<tr>
+<td>Binding</td>
+<td>A connection that lets Lua call a C++ feature</td>
+</tr>
+<tr>
+<td>Blend</td>
+<td>Mix two values, images, or poses</td>
+</tr>
+<tr>
+<td>Bloom</td>
+<td>A post-process glow spread from bright image regions</td>
+</tr>
+<tr>
+<td>Broad phase</td>
+<td>The cheap physics search for possible collision pairs</td>
+</tr>
+<tr>
+<td>Buffer</td>
+<td>An area of memory storing data; GPU buffers hold data used for drawing</td>
+</tr>
+<tr>
+<td>Catalog</td>
+<td>A table connecting stable asset names to typed sources</td>
+</tr>
+<tr>
+<td>Collider</td>
+<td>A shape used for collision, separate from visible geometry</td>
+</tr>
+<tr>
+<td>Component</td>
+<td>One piece of data attached to an entity</td>
+</tr>
+<tr>
+<td>Context, OpenGL</td>
+<td>The active connection/state needed to use OpenGL for a window</td>
+</tr>
+<tr>
+<td>Crossfade</td>
+<td>A gradual transition between poses</td>
+</tr>
+<tr>
+<td>Delta time / dt</td>
+<td>The seconds represented by an update</td>
+</tr>
+<tr>
+<td>Deserialize</td>
+<td>Read stored data and rebuild usable objects from it</td>
+</tr>
+<tr>
+<td>Draw call</td>
+<td>One instruction to the GPU to draw a range of geometry</td>
+</tr>
+<tr>
+<td>Dynamic body</td>
+<td>A body moved by physics forces, velocity, and collision response</td>
+</tr>
+<tr>
+<td>ECS</td>
+<td>Entity-component system: build objects from data and process them with systems</td>
+</tr>
+<tr>
+<td>Entity</td>
+<td>A runtime object identifier to which components can be attached</td>
+</tr>
+<tr>
+<td>Factory</td>
+<td>A function that creates an object when requested</td>
+</tr>
+<tr>
+<td>Fixed step</td>
+<td>A simulation update using the same time interval each tick</td>
+</tr>
+<tr>
+<td>Fragment shader</td>
+<td>GPU code that computes a candidate pixel's surface output</td>
+</tr>
+<tr>
+<td>Frame</td>
+<td>One rendered picture, or one pass through the outer game loop</td>
+</tr>
+<tr>
+<td>Framebuffer</td>
+<td>A selection of images into which drawing writes</td>
+</tr>
+<tr>
+<td>Frustum</td>
+<td>The volume visible through a camera</td>
+</tr>
+<tr>
+<td>Frustum culling</td>
+<td>Avoiding ordinary drawing for bounds outside that volume</td>
+</tr>
+<tr>
+<td>Generation</td>
+<td>A version in a handle that prevents reuse of an old slot reference</td>
+</tr>
+<tr>
+<td>GLB</td>
+<td>Binary container form of glTF model data</td>
+</tr>
+<tr>
+<td>glTF</td>
+<td>Model format containing meshes and related scene/material/animation data</td>
+</tr>
+<tr>
+<td>Handle</td>
+<td>A small checked reference to a resource, rather than owning its contents</td>
+</tr>
+<tr>
+<td>Hash</td>
+<td>A number calculated from data such as a string</td>
+</tr>
+<tr>
+<td>HDR</td>
+<td>A color representation that can keep brightness above the normal display range</td>
+</tr>
+<tr>
+<td>Hierarchy</td>
+<td>Parent/child relationships</td>
+</tr>
+<tr>
+<td>Hot reload</td>
+<td>Replacing supported loaded code/resources after their source files change</td>
+</tr>
+<tr>
+<td>IBL</td>
+<td>Image-based lighting: use an environment image to help light surfaces</td>
+</tr>
+<tr>
+<td>Index</td>
+<td>A reference into a list; mesh indices let triangles reuse vertices</td>
+</tr>
+<tr>
+<td>Interpolation</td>
+<td>Finding an in-between value from known values</td>
+</tr>
+<tr>
+<td>Joint palette</td>
+<td>The matrices used to deform a skinned mesh for the current pose</td>
+</tr>
+<tr>
+<td>Kinematic body</td>
+<td>A physics body whose movement target is supplied by gameplay</td>
+</tr>
+<tr>
+<td>Local transform</td>
+<td>Placement relative to a parent or model coordinate system</td>
+</tr>
+<tr>
+<td>Locomotion</td>
+<td>Repeating movement animation such as idle, walk, and run</td>
+</tr>
+<tr>
+<td>Material</td>
+<td>Shader inputs and drawing rules for one surface appearance</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td>Numbers arranged to represent and combine transformations</td>
+</tr>
+<tr>
+<td>Mesh</td>
+<td>Geometry: vertices, triangle/index data, and related surface attributes</td>
+</tr>
+<tr>
+<td>Narrow phase</td>
+<td>Physics tests using the actual candidate shapes</td>
+</tr>
+<tr>
+<td>Normal</td>
+<td>A direction describing which way a surface faces</td>
+</tr>
+<tr>
+<td>Orthographic</td>
+<td>Projection where distance does not shrink an object's apparent size</td>
+</tr>
+<tr>
+<td>Ownership</td>
+<td>Responsibility for a resource's lifetime or a piece of state</td>
+</tr>
+<tr>
+<td>PBR</td>
+<td>A lighting/material approach using consistent reflection properties such as roughness</td>
+</tr>
+<tr>
+<td>Perspective</td>
+<td>Projection where farther objects appear smaller</td>
+</tr>
+<tr>
+<td>Pose</td>
+<td>Skeleton transforms at one moment</td>
+</tr>
+<tr>
+<td>Post-processing</td>
+<td>Filtering/adjusting a rendered image</td>
+</tr>
+<tr>
+<td>Prefab</td>
+<td>A reusable description expanded into scene entities at load time</td>
+</tr>
+<tr>
+<td>Projection</td>
+<td>The camera operation mapping a 3D view toward a 2D image</td>
+</tr>
+<tr>
+<td>Quaternion</td>
+<td>A four-number representation of a rotation</td>
+</tr>
+<tr>
+<td>Rasterization</td>
+<td>Turning projected triangles into covered screen samples</td>
+</tr>
+<tr>
+<td>Raycast</td>
+<td>Ask which collider a line hits first</td>
+</tr>
+<tr>
+<td>Registry</td>
+<td>EnTT's storage for the entities and components of a scene</td>
+</tr>
+<tr>
+<td>Render pass</td>
+<td>One stage of drawing with a particular purpose/output</td>
+</tr>
+<tr>
+<td>Rigid body</td>
+<td>Physics data describing a solid shape's motion and response</td>
+</tr>
+<tr>
+<td>Root motion</td>
+<td>Movement taken from an animation's root and applied to the gameplay object</td>
+</tr>
+<tr>
+<td>Runtime</td>
+<td>The engine while it is executing, with live state in memory</td>
+</tr>
+<tr>
+<td>Schema</td>
+<td>The accepted fields, types, and rules of a stored format</td>
+</tr>
+<tr>
+<td>Sensor / trigger</td>
+<td>An overlap-detecting shape that does not act as solid cover</td>
+</tr>
+<tr>
+<td>Serialize</td>
+<td>Convert structured data into a form that can be stored or sent</td>
+</tr>
+<tr>
+<td>Shader</td>
+<td>A program running on the GPU</td>
+</tr>
+<tr>
+<td>Shadow map</td>
+<td>Depth recorded from a light's view to test light blocking</td>
+</tr>
+<tr>
+<td>Skinning</td>
+<td>Deforming mesh vertices using weighted joint transforms</td>
+</tr>
+<tr>
+<td>SSAO</td>
+<td>Screen-space estimate of nearby surfaces blocking ambient light</td>
+</tr>
+<tr>
+<td>Submesh</td>
+<td>A drawable range of a mesh, often associated with a material</td>
+</tr>
+<tr>
+<td>System</td>
+<td>Code that operates on a particular set of components</td>
+</tr>
+<tr>
+<td>Texture</td>
+<td>An image or numeric grid sampled by the GPU</td>
+</tr>
+<tr>
+<td>Tick</td>
+<td>One simulation update</td>
+</tr>
+<tr>
+<td>Tone mapping</td>
+<td>Compressing HDR brightness into a displayable range</td>
+</tr>
+<tr>
+<td>Transform</td>
+<td>Position, rotation, and scale</td>
+</tr>
+<tr>
+<td>Uniform</td>
+<td>Shader input supplied by the CPU, shared across a drawing operation</td>
+</tr>
+<tr>
+<td>UV</td>
+<td>Texture lookup coordinates on a surface</td>
+</tr>
+<tr>
+<td>Vertex</td>
+<td>A mesh point with attributes such as position, normal, and UV</td>
+</tr>
+<tr>
+<td>Vertex shader</td>
+<td>GPU code that transforms a mesh's vertices</td>
+</tr>
+<tr>
+<td>View matrix</td>
+<td>Transform expressing the world relative to a camera</td>
+</tr>
+<tr>
+<td>Viewport</td>
+<td>The output rectangle used for rendering</td>
+</tr>
+<tr>
+<td>World transform</td>
+<td>Placement in the scene's shared coordinate system</td>
+</tr>
+</tbody>
+</table></article></main></body></html>

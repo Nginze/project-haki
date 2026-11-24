@@ -1,0 +1,10 @@
+{
+  "type": "haki.scene",
+  "version": 1,
+  "id": "disabled-environment",
+  "assetCatalog": "DefaultEnvironmentCatalog.json",
+  "environment": null,
+  "entities": [
+    {"id": "camera", "components": {"camera": {"primary": true}}}
+  ]
+}

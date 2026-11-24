@@ -1421,9 +1421,18 @@ SceneLoadResult SceneSerializer::Deserialize(const std::filesystem::path &source
     description.Id = document.value("id", std::string{});
     if (document.contains("environment"))
     {
+        // Explicit null opts out of the engine environment (skybox and IBL).
+        if (!document["environment"].is_null())
+        {
+            description.Environment.emplace();
+            valid = ParseEnvironment(document["environment"], *description.Environment, source,
+                                     "/environment", result.Errors) && valid;
+        }
+    }
+    else if (catalog_->Find(EnvironmentDescription{}.Texture))
+    {
+        // Project scenes import the engine catalog. Standalone catalogs may omit it.
         description.Environment.emplace();
-        valid = ParseEnvironment(document["environment"], *description.Environment, source,
-                                 "/environment", result.Errors) && valid;
     }
     bool sceneScriptPathValid = false;
     if (document.contains("script"))
