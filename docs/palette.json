@@ -1,25 +1,71 @@
 {
   "version": 1,
   "colorSpace": "sRGB",
-  "notes": "Provisional authoring swatches for docs/artdirection.md. Validate these colors together in the gameplay test arena before approving the final palette. The current engine does not load this file or apply palette tinting yet. Baked exports must be rebuilt when their authored colors change. Team colors are reserved; environment shading may interpolate within its assigned color families.",
+  "notes": "Authoring swatches aligned to the fresh 3D gameplay concept approved on 24 November 2026. Hex values are approximate authored targets; verify them under the benchmark lighting. Earlier beige/painterly concepts are not the reference. Existing exports and runtime are not automatically recolored by this file. Team colors remain reserved.",
   "rules": {
     "shadowColor": "#3A3550",
     "minBakedBrightness": 0.33,
     "maxTintShift": 0.25
   },
   "environment": {
-    "floor_sand": { "base": "#C9B98F", "shade": "#8E8AA0", "edge": "#B39B78" },
-    "floor_grass": { "base": "#9DB06A", "shade": "#5F7A6E" },
-    "floor_stone": { "base": "#7E8A99", "shade": "#56566E" },
-    "wall_top": { "base": "#E6D3A3", "alt": "#B9C4CF" },
-    "wall_side": { "base": "#8A6A4A", "alt": "#5E6B7A" },
-    "crate_wood": { "base": "#C98A4B", "highlight": "#DCAD75", "band": "#6B4A2E" },
-    "bush": { "base": "#3F8F4A", "highlight": "#7CC46A", "shade": "#386B53" },
-    "water": { "shallow": "#7FD1D9", "deep": "#2F7A9A" },
-    "shoreline": { "base": "#E3D4B3", "shade": "#A49AA8" },
-    "rope": { "base": "#CDB082", "highlight": "#E1CBA5" },
-    "cactus": { "base": "#648C58", "shade": "#436A52", "highlight": "#A4BC75", "thorn": "#D9CEAD" },
-    "flower": { "petal": "#C989A0", "center": "#D8BC77" }
+    "floor_sand": {
+      "base": "#F6AA7A",
+      "shade": "#D48B69",
+      "edge": "#CE845C"
+    },
+    "floor_grass": {
+      "base": "#9DB06A",
+      "shade": "#5F7A6E"
+    },
+    "floor_stone": {
+      "base": "#7E8A99",
+      "shade": "#56566E"
+    },
+    "wall_top": {
+      "base": "#EC7958",
+      "alt": "#DD7253"
+    },
+    "wall_side": {
+      "base": "#A56638",
+      "alt": "#855031"
+    },
+    "crate_wood": {
+      "base": "#CD8C45",
+      "highlight": "#E8B367",
+      "band": "#755038"
+    },
+    "bush": {
+      "base": "#3F8F4A",
+      "highlight": "#7CC46A",
+      "shade": "#386B53"
+    },
+    "water": {
+      "shallow": "#259ED4",
+      "deep": "#1685BC"
+    },
+    "shoreline": {
+      "base": "#B97955",
+      "shade": "#905C49"
+    },
+    "rope": {
+      "base": "#CDB082",
+      "highlight": "#E1CBA5"
+    },
+    "cactus": {
+      "base": "#648C58",
+      "shade": "#436A52",
+      "highlight": "#A4BC75",
+      "thorn": "#D9CEAD"
+    },
+    "flower": {
+      "petal": "#C989A0",
+      "center": "#D8BC77"
+    },
+    "concealment_grass": {
+      "base": "#FFD44F",
+      "highlight": "#FFE578",
+      "root": "#F3A62C"
+    }
   },
   "teams": {
     "ally": "#3FA9F5",
@@ -29,10 +75,21 @@
     "fire": "#FF8A2A",
     "ice": "#BFF4FF",
     "thunder": "#FFE34D",
-    "shadow": "#9B5CFF"
+    "shadow": "#9B5CFF",
+    "armament": "#24182F",
+    "armament_rim": "#9B5CFF",
+    "observation": "#79DFF0",
+    "conqueror": "#C54C85"
   },
   "ui": {
     "outline": "#1E1A2E",
     "text": "#FFFFFF"
+  },
+  "pickups": {
+    "haki_orb": {
+      "base": "#9B5CFF",
+      "core": "#FFFFFF",
+      "outline": "#1E1A2E"
+    }
   }
 }
