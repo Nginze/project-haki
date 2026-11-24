@@ -195,7 +195,7 @@ def clay_top(size=512, role="wall_top.base", alt="wall_top.alt"):
     base = rgb(role)
     patches = periodic_noise(h, w, 55, 55, 21)
     fine = periodic_noise(h, w, 10, 10, 22)
-    colour = base + (mix(role, alt, 1.0) - base) * smoothstep(0.1, 0.7, patches)[..., None] * 0.8
+    colour = base + (mix(role, alt, 1.0) - base) * smoothstep(0.1, 0.7, patches)[..., None] * 0.45
     colour = colour * (1 + 0.035 * fine)[..., None]
     colour = np.where((patches < -0.55)[..., None], lighten(colour, 0.05), colour)
     height = patches * 2 + fine * 1.5
@@ -275,15 +275,18 @@ def grass_blade(w=64, h=256):
     Orange root and edges, yellow body and tip, a soft lighter centre crease."""
     u, v = grid(h, w)
     root, base, high = rgb("concealment_grass.root"), rgb("concealment_grass.base"), rgb("concealment_grass.highlight")
-    mid = root + (base - root) * 0.55
-    colour = root + (mid - root) * smoothstep(0.2, 0.55, v)[..., None]
-    colour += (base - colour) * smoothstep(0.55, 0.9, v)[..., None]
-    colour += (high - colour) * smoothstep(0.88, 1.0, v)[..., None]
+    mid = root + (base - root) * 0.5
+    colour = root + (mid - root) * smoothstep(0.25, 0.6, v)[..., None]
+    colour += (base - colour) * smoothstep(0.6, 0.92, v)[..., None]
+    colour += (high - colour) * (0.7 * smoothstep(0.9, 1.0, v))[..., None]
     across = np.abs(u - 0.5) * 2
     colour += (root - colour) * (0.5 * smoothstep(0.45, 1.0, across) * (1 - 0.6 * v))[..., None]
     crease = 1 - smoothstep(0.0, 0.18, across)
     colour += (high - colour) * (0.25 * crease * smoothstep(0.2, 0.6, v))[..., None]
-    colour = darken(colour, 0.38 * (1 - smoothstep(0.0, 0.22, v)))
+    # Warm contact shading at the roots (deep orange, as in the kit sheet), not a cool grey:
+    # darkening yellow toward the shadow colour reads olive at gameplay distance.
+    deep = mix("concealment_grass.root", "wall_side.base", 0.45)
+    colour += (deep - colour) * (0.7 * (1 - smoothstep(0.0, 0.3, v)))[..., None]
     return np.clip(colour, 0, 1)
 
 

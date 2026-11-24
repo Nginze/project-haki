@@ -142,7 +142,7 @@ def material(name):
 
 
 # ---------------------------------------------------------------- UV rules (world metres)
-def uv_world(scale=1.0, offset=(0.5, 0.5), top=None):
+def uv_world(scale=1.0, offset=(0.5, 0.5), top=None, cap_scale=None):
     """Planar projection in metres. Up/down faces use (x, y). Side faces use the horizontal
     tangent for u and height for v; with `top` set, v = 1 - (top - z), so the top of a wall
     always meets the top of the side texture (cap band) whatever the wall's height."""
@@ -152,7 +152,8 @@ def uv_world(scale=1.0, offset=(0.5, 0.5), top=None):
         n = face.normal
         p = loop.vert.co
         if abs(n.z) > 0.7:
-            return ((p.x + ox) * scale, (p.y + oy) * scale)
+            k = scale if cap_scale is None else cap_scale
+            return ((p.x + ox) * k, (p.y + oy) * k)
         t = Vector((-n.y, n.x))
         if t.length < 1e-6:
             t = Vector((1, 0))
@@ -518,7 +519,7 @@ def clay_mass(cells, height, open_sides="", clamp=None, side="clay_side", top="c
     bmesh.ops.dissolve_degenerate(bm, edges=bm.edges, dist=1e-6)
     if open_sides:
         drop_open_faces(bm, open_sides)
-    return bm, by_up(top, side, 0.82), uv_world(top=height)
+    return bm, by_up(top, side, 0.82), uv_world(top=height, cap_scale=0.5)  # caps tile every 2 m
 
 
 def pebbles(piece, rng, count, height, area=0.32, mat="clay_top", centre=(0, 0)):
@@ -821,13 +822,20 @@ def water_module(name, closed="", inner=""):
     except ValueError:
         pass
     bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-6)
+    # Band quads can twist where their inner edge slides along an open cell edge. Triangulate
+    # here (so the exporter cannot split a twisted quad into one up- and one down-facing
+    # triangle), drop slivers and make every water triangle face up.
+    bmesh.ops.triangulate(bm, faces=list(bm.faces))
     bm.normal_update()
+    slivers = [f for f in bm.faces if f.calc_area() < 1e-7]
+    if slivers:
+        bmesh.ops.delete(bm, geom=slivers, context="FACES")
     for face in bm.faces:
         if face.normal.z < 0:
             face.normal_flip()
         for l in face.loops:
             l[uv].uv = (band_u.get(l.vert, 0.98), 0.5)
-    bmesh.ops.triangulate(bm, faces=[f for f in bm.faces if len(f.verts) > 4])
+    bm.normal_update()
     p.add(bm, "water", None, weld=False)
     # rim: loft along each shore run from the water edge out to the land top
     runs, current = [], []
@@ -925,7 +933,7 @@ GRASS_HEIGHT = 0.65
 BLADE_RINGS = ((0.0, 0.5), (0.16, 0.86), (0.36, 1.0), (0.58, 0.88), (0.78, 0.6), (0.91, 0.3), (1.0, 0.0))
 
 
-def blade(base, heading, lean, length, width=0.1, thickness=0.07, curl=0.35, sides=6):
+def blade(base, heading, lean, length, width=0.1, thickness=0.07, curl=0.35, sides=5):
     """Chunky teardrop blade (sheet 03 #3): rounded section, widest low, pointed tip, curving
     toward `heading`. UVs: u across the blade, v root -> tip (grass_blade.png)."""
     out = Vector((math.cos(heading), math.sin(heading), 0.0))
@@ -968,19 +976,26 @@ def blade(base, heading, lean, length, width=0.1, thickness=0.07, curl=0.35, sid
     return bm
 
 
+CAMERA_FACING = math.pi / 2  # blades lean back (+Y) so their broad face turns up toward the gameplay camera
+
+
 def grass_module(name, open_sides="", seed=1):
-    """Gameplay concealment grass for one cell (sheet 03 #1/#2): a dense field of overlapping
-    teardrop blades, about 6 x 6 per cell, full from above. Blades along closed (exposed) sides
-    are shorter and lean outward, so a patch reads as one rounded mass; open sides continue into
-    the neighbouring module with no border. A low root mass hides the soil between blades."""
+    """Gameplay concealment grass for one cell (sheet 03 #1/#2): broad teardrop blades in a
+    staggered grid (4 x 4 + 3 x 3), leaning back, away from the gameplay camera (toward +Y), so
+    each blade's broad face turns up toward the steep view instead of foreshortening to a stub. Blades on
+    exposed sides splay outward a little and are slightly shorter, so a patch reads as one
+    rounded mass; open sides continue into the neighbouring module with no border. A low root
+    mass hides the soil between blades.
+
+    The lean is camera-relative, so place these modules WITHOUT rotation: build the variant for
+    the cell's own open sides (see grass_piece()). Modules are exported in that orientation."""
     rng = random.Random(seed * 7919 + sum(ord(c) * (k + 1) for k, c in enumerate(open_sides)))
     p = Piece(name)
     p.sharp_angle = math.radians(89)
     closed = [d for d in DIRECTIONS if d not in open_sides]
-    # root mass (orange-dark, mostly hidden), flush on open sides
     cells = [(0, 0)] + [DIRECTIONS[d] for d in open_sides]
     outline = cell_outline(cells)
-    body_profile = [(0.0, 0.16), (0.08, 0.16), (0.13, 0.22)]
+    body_profile = [(0.0, 0.14), (0.1, 0.14), (0.16, 0.22)]
     rings = [offset_ring(outline, inset, z, round_radius=0.1, clamp=0.5) for z, inset in body_profile]
     body = loft(rings)
     bmesh.ops.remove_doubles(body, verts=body.verts, dist=1e-6)
@@ -989,45 +1004,70 @@ def grass_module(name, open_sides="", seed=1):
     for v in body.verts:
         v[body_normals] = (0, 0, 1)
     p.add(body, "grass", uv_const(0.5, 0.12), cull_bottom=True)
-    n = 7
-    step = 1.0 / n
-    for ix in range(n):
-        for iy in range(n):
-            x = -0.5 + step * (ix + 0.5) + rng.uniform(-0.3, 0.3) * step
-            y = -0.5 + step * (iy + 0.5) + rng.uniform(-0.3, 0.3) * step
-            # distance to the nearest exposed edge
-            edge, outward = 1.0, None
-            for d in closed:
-                dx, dy = DIRECTIONS[d]
-                dist = 0.5 - (x * dx + y * dy)
-                if dist < edge:
-                    edge, outward = dist, math.atan2(dy, dx)
-            rim = 1 - min(edge / 0.3, 1.0)
-            height = GRASS_HEIGHT * rng.uniform(0.86, 1.0) * (1 - 0.15 * rim)
-            if outward is not None and rim > 0:
-                heading = outward + rng.uniform(-0.6, 0.6)
-                lean = math.radians(rng.uniform(6, 12) + 10 * rim)
+    spots = [(-0.375 + 0.25 * ix, -0.375 + 0.25 * iy) for ix in range(4) for iy in range(4)]
+    spots += [(-0.25 + 0.25 * ix, -0.25 + 0.25 * iy) for ix in range(3) for iy in range(3)]
+    # back rows first so overlapping blades layer naturally toward the camera
+    spots.sort(key=lambda q: -q[1])
+    for sx, sy in spots:
+        x = sx + rng.uniform(-0.05, 0.05)
+        y = sy + rng.uniform(-0.05, 0.05)
+        edge, outward = 1.0, None
+        for d in closed:
+            dx, dy = DIRECTIONS[d]
+            dist = 0.5 - (x * dx + y * dy)
+            if dist < edge:
+                edge, outward = dist, (dx, dy)
+        rim = 1 - min(edge / 0.25, 1.0)
+        height = GRASS_HEIGHT * rng.uniform(0.9, 1.0) * (1 - 0.12 * rim)
+        # Lean back (face toward the camera), splayed outward on the side edges; front-edge
+        # blades stand a little more upright so the patch keeps a full front silhouette.
+        lean_dir = Vector((0.0, 1.0))
+        if outward is not None and rim > 0:
+            if outward == (0, -1):
+                lean_dir = Vector((0.0, 0.6))
             else:
-                heading = rng.uniform(0, math.tau)
-                lean = math.radians(rng.uniform(2, 8))
-            width = rng.uniform(0.14, 0.17)
-            # keep the leaning tips inside the cell on open sides
-            reach = math.sin(lean) * height + 0.05
-            bx = x - math.cos(heading) * reach * 0.3
-            by = y - math.sin(heading) * reach * 0.3
-            for d in DIRECTIONS:
-                dx, dy = DIRECTIONS[d]
-                limit = 0.5 if d in open_sides else 0.54
-                over = (bx + math.cos(heading) * reach) * dx + (by + math.sin(heading) * reach) * dy - limit
-                if over > 0:
-                    bx -= dx * over
-                    by -= dy * over
-            p.add(blade((bx, by, -0.03), heading, lean, height / math.cos(lean * 0.7) + 0.03, width,
-                        thickness=width * 0.7, curl=rng.uniform(0.08, 0.22)), "grass", None, cull_below=0.0)
+                lean_dir += Vector(outward) * (0.9 * rim)
+        heading = math.atan2(lean_dir.y, lean_dir.x) + rng.uniform(-0.4, 0.4)
+        lean = math.radians(rng.uniform(24, 34) + 6 * rim)
+        width = rng.uniform(0.2, 0.24)
+        # keep leaning tips inside the cell on open sides (slight overhang on exposed sides)
+        reach = math.sin(lean) * height * 1.1 + 0.04
+        # centre the leaning blade over its spot: base forward, tip back
+        bx, by = x - math.cos(heading) * reach * 0.5, y - math.sin(heading) * reach * 0.5
+        for d in DIRECTIONS:
+            dx, dy = DIRECTIONS[d]
+            limit = 0.5 if d in open_sides else 0.56
+            over = (bx + math.cos(heading) * reach) * dx + (by + math.sin(heading) * reach) * dy - limit
+            if over > 0:
+                bx -= dx * over
+                by -= dy * over
+            base_over = (bx * dx + by * dy) - (0.48 if d in open_sides else 0.44)  # base stays in the cell
+            if base_over > 0:
+                bx -= dx * base_over
+                by -= dy * base_over
+        p.add(blade((bx, by, -0.03), heading, lean, height / math.cos(lean * 0.6) + 0.03, width,
+                    thickness=width * 0.42, curl=rng.uniform(0.1, 0.25)), "grass", None, cull_below=0.0)
     return p.build()
 
 
-GRASS_MODULES = [_module_builder("grass", k, grass_module, seed=3) for k in MODULES]
+def grass_piece(cells, cell, seed=3):
+    """Unrotated grass module for a cell inside a patch, generated on demand and cached."""
+    i, j = cell
+    sides = "".join(d for d, (dx, dy) in DIRECTIONS.items() if (i + dx, j + dy) in cells)
+    name = "grass_" + (sides or "solo")
+    if name not in bpy.data.objects:
+        obj = grass_module(name, sides, seed=seed)
+        obj.location = (0, 0, -60)
+    return name
+
+
+GRASS_SIDES = ["".join(d for d, bit in zip("ENWS", (m & 1, m & 2, m & 4, m & 8)) if bit) for m in range(16)]
+GRASS_MODULES = []
+for _sides in GRASS_SIDES:
+    def _grass(sides=_sides):
+        return grass_module("grass_" + (sides or "solo"), sides, seed=3)
+    _grass.__name__ = "grass_" + (_sides or "solo")
+    GRASS_MODULES.append(_grass)
 
 
 def grass_a():
@@ -1050,7 +1090,7 @@ def cactus_flower():
     """Barrel cactus with ribs, thorn studs and one flower (sheet 03 #4), 0.6 x 0.6 x 1.0."""
     p = Piece("cactus_flower")
     p.sharp_angle = math.radians(70)
-    ribs, segments = 8, 32
+    ribs, segments = 8, 24
     body_h, radius = 0.92, 0.27
     rings = []
     zs = [0.0, 0.08, 0.27, 0.49, 0.67, 0.8, 0.88, 0.92]
@@ -1072,7 +1112,7 @@ def cactus_flower():
             if rng.random() < 0.85:
                 aa = a + (math.pi / ribs if z == 0.45 else 0)
                 r = radius * rr * 1.07 + 0.005
-                p.add(sphere((math.cos(aa) * r, math.sin(aa) * r, z), 0.022, segments=6, rings=4), "thorn", uv_const(0.5, 0.5))
+                p.add(sphere((math.cos(aa) * r, math.sin(aa) * r, z), 0.024, segments=5, rings=3), "thorn", uv_const(0.5, 0.5))
     # flower: five rounded petals and a domed centre
     top = body_h - 0.02
     for k in range(5):
@@ -1142,12 +1182,12 @@ def outskirts_plant(name="outskirts_plant", seed=5, size=1.0, leaves=6):
         top = rng.uniform(0.56, 0.74) * size
         out = Vector((math.cos(heading), math.sin(heading), 0))
         stem = [tuple(out * (reach * t * t) + Vector((0, 0, top * t))) for t in (0, 0.33, 0.66, 1.0)]
-        p.add(tube_path(stem, 0.02 * size, sides=6, uv_length=1.0), "stem", None)
+        p.add(tube_path(stem, 0.02 * size, sides=4, uv_length=1.0), "stem", None)
         p.add(broad_leaf(Vector(stem[-1]) - out * 0.06, heading + rng.uniform(-0.2, 0.2), rng.uniform(0.4, 0.48) * size,
-                         rng.uniform(0.4, 0.46) * size, droop=rng.uniform(0.4, 0.6), lift=0.08 * size, rows=7, sides=7), "leaf", None)
+                         rng.uniform(0.4, 0.46) * size, droop=rng.uniform(0.4, 0.6), lift=0.08 * size, rows=5, sides=5), "leaf", None)
     for k in range(4):
         heading = math.tau * k / 4 + rng.uniform(-0.4, 0.4)
-        p.add(broad_leaf((0, 0, 0.05), heading, 0.3 * size, 0.26 * size, droop=0.7, lift=0.15 * size), "leaf", None)
+        p.add(broad_leaf((0, 0, 0.05), heading, 0.3 * size, 0.26 * size, droop=0.7, lift=0.15 * size, rows=4, sides=4), "leaf", None)
     return p.build()
 
 
@@ -1160,7 +1200,7 @@ def small_shrub():
         heading = math.tau * k / 4 + math.pi / 4 + rng.uniform(-0.15, 0.15)
         out = Vector((math.cos(heading), math.sin(heading), 0))
         p.add(tube_path([(0, 0, 0), tuple(out * 0.05 + Vector((0, 0, 0.12)))], 0.022, sides=5, uv_length=1.0), "stem", None)
-        p.add(broad_leaf(tuple(out * 0.02 + Vector((0, 0, 0.14))), heading, 0.36, 0.36, droop=0.45, lift=0.12, rows=7, sides=7), "leaf", None)
+        p.add(broad_leaf(tuple(out * 0.02 + Vector((0, 0, 0.14))), heading, 0.36, 0.36, droop=0.45, lift=0.12, rows=5, sides=5), "leaf", None)
     return p.build()
 
 
@@ -1327,17 +1367,17 @@ def fence_post():
     p = Piece("fence_post")
     p.sharp_angle = math.radians(60)
     profile = [(0.085, 0.0), (0.092, 0.05), (0.09, 0.4), (0.093, 0.7), (0.088, FENCE_HEIGHT - 0.03), (0.07, FENCE_HEIGHT)]
-    rings = [[(math.cos(math.tau * k / 14) * r, math.sin(math.tau * k / 14) * r, z) for k in range(14)] for r, z in profile]
+    rings = [[(math.cos(math.tau * k / 10) * r, math.sin(math.tau * k / 10) * r, z) for k in range(10)] for r, z in profile]
     body = loft(rings, cap_start=False, cap_end=False)
     p.add(body, "wood", lambda f, l: (l.vert.co.z, math.atan2(l.vert.co.y, l.vert.co.x) * 0.09))
     cap = bmesh.new()
-    ring = [cap.verts.new((math.cos(math.tau * k / 14) * 0.07, math.sin(math.tau * k / 14) * 0.07, FENCE_HEIGHT)) for k in range(14)]
+    ring = [cap.verts.new((math.cos(math.tau * k / 10) * 0.07, math.sin(math.tau * k / 10) * 0.07, FENCE_HEIGHT)) for k in range(10)]
     cap.faces.new(ring)
     p.add(cap, "wood_end", lambda f, l: (l.vert.co.x / 0.25 + 0.5, l.vert.co.y / 0.25 + 0.5))
     # rope lashings where the ropes meet the post
     for z in ROPE_LEVELS:
-        lash = [(0.1 * math.cos(t * math.tau * 2.2 / 24), 0.1 * math.sin(t * math.tau * 2.2 / 24), z - 0.025 + t * 0.05 / 24) for t in range(25)]
-        p.add(tube_path(lash, 0.02, sides=6, uv_length=0.25), "rope", None)
+        lash = [(0.1 * math.cos(t * math.tau * 2.2 / 14), 0.1 * math.sin(t * math.tau * 2.2 / 14), z - 0.025 + t * 0.05 / 14) for t in range(15)]
+        p.add(tube_path(lash, 0.02, sides=5, uv_length=0.25), "rope", None)
     return p.build()
 
 
@@ -1347,7 +1387,7 @@ def fence_rope(name="fence_rope_1m", length=1.0):
     p.sharp_angle = math.radians(70)
     for z in ROPE_LEVELS:
         pts = [(length * t, 0.0, z - 0.05 * math.sin(math.pi * t)) for t in [k / 10 for k in range(11)]]
-        p.add(tube_path(pts, 0.03, sides=7, uv_length=0.25), "rope", None)
+        p.add(tube_path(pts, 0.03, sides=5, uv_length=0.25), "rope", None)
     return p.build()
 
 
@@ -1729,7 +1769,11 @@ def build_sample(origin=(0.0, -16.0)):
     p.add(bm, "sand", uv_world(0.5, offset=(0, 0)))
     ground = p.build(collection=collection)
     place_water(collection, water, origin)
-    place_cells(collection, "grass", {(4, 1), (4, 2), (4, 3), (5, 3), (6, 3)} | {(9, 4), (10, 4), (9, 5), (10, 5)}, origin)
+    grass = {(4, 1), (4, 2), (4, 3), (5, 3), (6, 3)} | {(9, 4), (10, 4), (9, 5), (10, 5)}
+    for cell in sorted(grass):
+        obj = bpy.data.objects.new(f"Grass_{cell[0]}_{cell[1]}", bpy.data.objects[grass_piece(grass, cell)].data)
+        obj.location = (ox + cell[0], oy + cell[1], 0)
+        collection.objects.link(obj)
     place_cells(collection, "wall", {(0, 6), (1, 6), (2, 6), (3, 6), (3, 7)}, origin)
     place_cells(collection, "wall", {(6, 7), (7, 7), (8, 7), (7, 8)}, origin)
     for name, cell in (("crate", (13, 6)), ("barrel", (12, 6)), ("haki_cache", (12, 4)), ("haki_orb", (13, 4)),

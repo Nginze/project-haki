@@ -64,6 +64,7 @@ def check(name, obj, directory):
         for primitive in mesh["primitives"]:
             material = document["materials"][primitive["material"]]["name"]
             positions = accessor(primitive["attributes"]["POSITION"])
+            stored = accessor(primitive["attributes"]["NORMAL"])
             indices = [v[0] for v in accessor(primitive["indices"])]
             for x, y, z in positions:  # glTF is Y-up: (x, z, -y) in Blender terms
                 assert -0.5001 <= x <= 0.5001 and -0.5001 <= z <= 0.5001, f"{name}: vertex outside its cell"
@@ -77,6 +78,7 @@ def check(name, obj, directory):
                 if material.endswith("water"):
                     assert all(abs(h - WATER_TOP) < 1e-5 for h in heights), f"{name}: water off its level"
                     assert normal.y > 0.99, f"{name}: water faces down"
+                    assert all(stored[j][1] > 0.99 for j in indices[i:i + 3]), f"{name}: exported water normal not up"
                     counts["water"] += 1
                 elif material.endswith("sand"):
                     assert all(abs(h) < 1e-5 for h in heights), f"{name}: land fill off the land level"
@@ -91,7 +93,13 @@ def check(name, obj, directory):
 
 variants = {"water_bank": "N", "water_outer": "NE"}
 inlet = {(0, 0), (1, 0), (2, 0), (0, 1), (1, 1), (0, 2)}  # a stepped inlet: banks, outer and inner corners
-with tempfile.TemporaryDirectory(prefix="canyon-water-check-") as temporary:
+# a channel along a stepped edge and a plus pool: one-wide runs, ends and mixed corners
+inlet |= {(5, y) for y in range(-3, 4)} | {(6, 2), (6, 3), (4, -2)} | {(9, 0), (8, 0), (10, 0), (9, 1), (9, -1)}
+library = kit["kit_collection"]()
+visibility = (library.hide_viewport, library.hide_render)
+library.hide_viewport = library.hide_render = False
+try:
+  with tempfile.TemporaryDirectory(prefix="canyon-water-check-") as temporary:
     names = ["water_bank", "water_outer", "water_inner"]
     for builder in names:
         kit[builder]()
@@ -100,5 +108,7 @@ with tempfile.TemporaryDirectory(prefix="canyon-water-check-") as temporary:
     for name in dict.fromkeys(names):
         counts = check(name, bpy.data.objects[name], temporary)
         print(name, counts, "passed")
+finally:
+    library.hide_viewport, library.hide_render = visibility
 
 print("CANYON_WATER_OK")
