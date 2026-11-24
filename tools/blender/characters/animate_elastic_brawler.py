@@ -249,6 +249,65 @@ def build():
     return report
 
 
+def posed_vertices(action, frame):
+    target = rig()
+    target.animation_data.action = action
+    bpy.context.scene.frame_set(frame)
+    evaluated = mesh().evaluated_get(bpy.context.evaluated_depsgraph_get())
+    world = mesh().matrix_world
+    return [world @ v.co for v in evaluated.data.vertices]
+
+
+def normalize_transforms():
+    """Bake the root scale and the rig's rotation into the rig and mesh data.
+
+    The assembled file had the root scaled 1.78x, the rig rotated -90/-90 deg and the mesh
+    counter-rotated under it. Blender's glTF exporter places a skinned mesh at its armature's
+    transform, so engine-side parenting of the mesh (Haki attached visual) lost that rotation
+    and the character fell flat as soon as the player turned. Afterwards every object in the
+    character is identity apart from the root's placement, so Blender and glTF agree.
+    Pose keys stay valid: bone-local rotations don't change under a rigid rotation and a
+    uniform scale; hips translation keys scale with the bones.
+    """
+    root, target, body = bpy.data.objects['ElasticBrawler'], rig(), mesh()
+    if all(o.matrix_world.is_identity for o in (target, body)):
+        return 0.0
+    probe = bpy.data.actions['Walk'] if 'Walk' in bpy.data.actions else None
+    before = posed_vertices(probe, 9) if probe else None
+    target.animation_data.action = None
+    for bone in target.pose.bones:
+        bone.location, bone.rotation_quaternion, bone.scale = Vector(), Quaternion(), Vector((1, 1, 1))
+    bpy.context.view_layer.update()
+    rig_world, mesh_world = target.matrix_world.copy(), body.matrix_world.copy()
+    scale = rig_world.to_scale()
+    if max(scale) - min(scale) > 1e-4:
+        raise RuntimeError('rig scale is not uniform: %s' % (tuple(scale),))
+    target.data.transform(rig_world)
+    body.data.transform(mesh_world)
+    for o in (root, target, body):
+        o.rotation_mode = 'QUATERNION'
+    root.location, root.rotation_quaternion, root.scale = Vector(), Quaternion(), Vector((1, 1, 1))
+    for o in (target, body):
+        o.matrix_parent_inverse = Matrix.Identity(4)
+        o.location, o.rotation_quaternion, o.scale = Vector(), Quaternion(), Vector((1, 1, 1))
+    for action in bpy.data.actions:
+        for curve in curves(action):
+            if curve.data_path.endswith('.location'):
+                for key in curve.keyframe_points:
+                    for point in (key.co, key.handle_left, key.handle_right):
+                        point.y *= scale[0]
+    bpy.context.view_layer.update()
+    error = 0.0
+    if probe:
+        after = posed_vertices(probe, 9)
+        error = max((a - b).length for a, b in zip(before, after))
+        target.animation_data.action = None
+        if error > 1e-3:
+            raise RuntimeError('normalizing moved the posed mesh by %.4f m' % error)
+    print('normalized transforms; posed mesh moved at most %.6f m' % error)
+    return error
+
+
 def contact_sheets(frames_dir=None):
     """Eight frames of each clip from the front and the side into one image per clip."""
     scene, target = bpy.context.scene, rig()
@@ -319,12 +378,14 @@ if __name__ == '__main__' and '--' in sys.argv:
     command = sys.argv[sys.argv.index('--') + 1:]
     if command[:1] == ['all']:
         clips = build()
+        normalize_transforms()
         bpy.ops.wm.save_as_mainfile(filepath=str(OUT / 'elastic-brawler-polished.blend'), compress=True)
         export()
         finish(clips)
         bpy.ops.wm.save_as_mainfile(filepath=str(OUT / 'elastic-brawler-polished.blend'), compress=True)
     elif command[:1] == ['build']:      # scratch run: build into another file
         clips = build()
+        normalize_transforms()
         bpy.ops.wm.save_as_mainfile(filepath=command[1], compress=True)
         print('REPORT', json.dumps(clips))
     elif command[:1] == ['sheets']:
