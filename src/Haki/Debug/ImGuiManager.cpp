@@ -412,6 +412,11 @@ void ImGuiManager::DrawLightingMenu(Renderer &renderer, Scene *scene)
     Sanitize(settings.AmbientIntensity, 0.3f, 0.0f, 10.0f);
     Sanitize(settings.Exposure, 1.0f, 0.01f, 10.0f);
     ImGui::DragFloat("Exposure", &settings.Exposure, 0.05f, 0.01f, 10.0f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
+    int tonemap = static_cast<int>(settings.Tonemap);
+    if (ImGui::Combo("Tonemapper", &tonemap, "ACES (filmic)\0Neutral (authored colours)\0"))
+    {
+        settings.Tonemap = static_cast<TonemapMode>(tonemap);
+    }
     ImGui::Checkbox("Indirect Diffuse (IBL)", &settings.IndirectDiffuseEnabled);
     ImGui::Checkbox("Indirect Specular (IBL)", &settings.IndirectSpecularEnabled);
     ImGui::BeginDisabled(settings.IndirectDiffuseEnabled && settings.IndirectSpecularEnabled);

@@ -102,6 +102,8 @@ ProjectSettings ProjectSettings::Load(const std::filesystem::path &path, Project
         Range(std::isfinite(p.Rendering.BloomDiffusion),"bloomDiffusion");
         p.Rendering.Exposure=r.value("exposure",p.Rendering.Exposure);
         Range(std::isfinite(p.Rendering.Exposure),"exposure");
+        if(r.contains("tonemapper")) { auto v=r.at("tonemapper").get<std::string>(); Range(v=="aces" || v=="neutral","tonemapper");
+            p.Rendering.Tonemap=v=="neutral"?TonemapMode::Neutral:TonemapMode::ACES; }
         p.Rendering.FxaaEnabled=r.value("fxaaEnabled",p.Rendering.FxaaEnabled);
         p.Rendering.FxaaContrastThreshold=r.value("fxaaContrastThreshold",p.Rendering.FxaaContrastThreshold);
         Range(std::isfinite(p.Rendering.FxaaContrastThreshold),"fxaaContrastThreshold");
@@ -148,6 +150,7 @@ nlohmann::json ProjectSettings::Sections() const {
     r["bloomSoftKnee"]=Rendering.BloomSoftKnee;
     r["bloomDiffusion"]=Rendering.BloomDiffusion;
     r["exposure"]=Rendering.Exposure;
+    r["tonemapper"]=Rendering.Tonemap==TonemapMode::Neutral?"neutral":"aces";
     r["fxaaEnabled"]=Rendering.FxaaEnabled;
     r["fxaaContrastThreshold"]=Rendering.FxaaContrastThreshold;
     r["fxaaRelativeThreshold"]=Rendering.FxaaRelativeThreshold;

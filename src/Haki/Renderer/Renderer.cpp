@@ -109,6 +109,7 @@ uniform sampler2D HakiHdrColor;
 uniform sampler2D HakiBloomColor;
 uniform float HakiExposure;
 uniform float HakiBloomIntensity;
+uniform int HakiTonemap;
 
 out vec4 FragColor;
 
@@ -122,12 +123,32 @@ vec3 AcesFitted(vec3 color)
     return clamp((color * (a * color + b)) / (color * (c * color + d) + e), 0.0, 1.0);
 }
 
+// Khronos PBR Neutral: identity below the compression start, smooth highlight roll-off.
+vec3 PbrNeutral(vec3 color)
+{
+    const float startCompression = 0.8 - 0.04;
+    const float desaturation = 0.15;
+    float x = min(color.r, min(color.g, color.b));
+    float offset = x < 0.08 ? x - 6.25 * x * x : 0.04;
+    color -= offset;
+    float peak = max(color.r, max(color.g, color.b));
+    if (peak < startCompression)
+    {
+        return clamp(color, 0.0, 1.0);
+    }
+    const float d = 1.0 - startCompression;
+    float newPeak = 1.0 - d * d / (peak + d - startCompression);
+    color *= newPeak / peak;
+    float g = 1.0 - 1.0 / (desaturation * (peak - newPeak) + 1.0);
+    return clamp(mix(color, vec3(newPeak), g), 0.0, 1.0);
+}
+
 void main()
 {
     vec3 sceneColor = max(texture(HakiHdrColor, vTexCoord).rgb, vec3(0.0));
     vec3 bloomColor = max(texture(HakiBloomColor, vTexCoord).rgb, vec3(0.0));
     vec3 hdrColor = (sceneColor + bloomColor * max(HakiBloomIntensity, 0.0)) * max(HakiExposure, 0.0);
-    vec3 mapped = AcesFitted(hdrColor);
+    vec3 mapped = HakiTonemap == 1 ? PbrNeutral(hdrColor) : AcesFitted(hdrColor);
     vec3 gammaCorrected = pow(mapped, vec3(1.0 / 2.2));
     FragColor = vec4(gammaCorrected, dot(gammaCorrected, vec3(0.299, 0.587, 0.114)));
 }
@@ -2090,6 +2111,7 @@ private:
 
         postProcessShader_.Bind();
         postProcessShader_.Set("HakiExposure", std::max(settings_.Exposure, 0.0f));
+        postProcessShader_.Set("HakiTonemap", static_cast<int>(settings_.Tonemap));
         const float bloomIntensity = bloomValid_ && std::isfinite(settings_.BloomIntensity)
                                          ? std::max(settings_.BloomIntensity, 0.0f)
                                          : 0.0f;

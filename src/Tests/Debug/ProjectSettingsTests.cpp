@@ -13,14 +13,16 @@ int main() {
     const auto path=root/"Project.json";
     Json doc={{"type","haki.scene-manifest"},{"version",1},{"entry","arena"},{"scenes",Json::array()},
         {"window",{{"title","My Game"},{"width",1600},{"height",900},{"vsync",false}}},
-        {"rendering",{{"renderScale",0.5},{"renderHeight",720},{"shadowFilter","pcss"},{"exposure",1.5}}},
+        {"rendering",{{"renderScale",0.5},{"renderHeight",720},{"shadowFilter","pcss"},{"exposure",1.5},{"tonemapper","neutral"}}},
         {"editor",{{"autosaveProjectSettings",false}}}};
     auto write=[&] {std::ofstream(path)<<doc.dump();};write();
     auto p=ProjectSettings::Load(path,ProjectSettings{});
     check(p.Title=="My Game" && p.Width==1600 && p.Height==900 && !p.Vsync,"window properties load");
-    check(p.Rendering.RenderScale==0.5f && p.Rendering.RenderHeight==720 && p.Rendering.ShadowFilter==ShadowFilterMode::PCSS,
+    check(p.Rendering.RenderScale==0.5f && p.Rendering.RenderHeight==720 && p.Rendering.ShadowFilter==ShadowFilterMode::PCSS
+          && p.Rendering.Tonemap==TonemapMode::Neutral,
           "renderer properties load");
     check(!p.Autosave && p.Rendering.ShadowsEnabled,"missing options keep defaults");
+    check(ProjectSettings{}.Rendering.Tonemap==TonemapMode::ACES,"ACES stays the default tonemapper");
     // Simulate a tool changing registrations while the editor holds its loaded settings.
     doc["entry"]="new-scene"; doc["scenes"].push_back({{"id","new-scene"},{"source","Scenes/new.scene.json"}});
     doc["rendering"]["futureOption"]="preserved"; write();

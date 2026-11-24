@@ -98,6 +98,15 @@ enum class ShadowFilterMode
     PCSS = 1
 };
 
+// Display transform applied after exposure. ACES is filmic (lifts dark channels, rolls off
+// highlights); Neutral (Khronos PBR Neutral) keeps base colours as authored up to ~0.8 and only
+// compresses highlights, which suits palette-driven stylised art.
+enum class TonemapMode
+{
+    ACES = 0,
+    Neutral = 1
+};
+
 struct RendererSettings
 {
     bool FrustumCullingEnabled = true;
@@ -138,6 +147,7 @@ struct RendererSettings
     float BloomSoftKnee = 0.5f;
     float BloomDiffusion = 7.0f;
     float Exposure = 1.0f;
+    TonemapMode Tonemap = TonemapMode::ACES;
     bool FxaaEnabled = true;
     float FxaaContrastThreshold = 0.0312f;
     float FxaaRelativeThreshold = 0.063f;
