@@ -60,6 +60,13 @@ class HakiObject(bpy.types.PropertyGroup):
     idle_clip: StringProperty(name='Idle Clip', default='Idle')
     move_clip: StringProperty(name='Movement Clip', default='Run')
     speed_threshold: FloatProperty(name='Movement Threshold (m/s)', default=0.1, min=0)
+    use_blend: BoolProperty(name='Idle / Walk / Run Speed Blend', default=False,
+        description='Blend three clips by the controller\'s actual speed instead of switching idle and movement')
+    walk_clip: StringProperty(name='Walk Clip', default='Walk')
+    walk_speed: FloatProperty(name='Walk Speed (m/s)', default=1.5, min=0.01,
+        description='Speed at which the walk clip plays at its authored rate')
+    run_speed: FloatProperty(name='Run Speed (m/s)', default=4.5, min=0.02,
+        description='Speed at which the movement clip plays at its authored rate')
     motion: EnumProperty(name='Motion', items=[(v, v.title(), '') for v in ('static','kinematic','dynamic')])
     layer: EnumProperty(name='Layer', items=[('auto','Automatic','Derived from motion and sensor')]+
                        [(v,v.title(),'') for v in ('static','dynamic','character','trigger')])
@@ -172,7 +179,12 @@ def metadata_for(obj):
         translation, rotation, scale = local.decompose()
         components['parent'] = dict(entity=ensure_id(target), local=dict(translation=list(translation),
             rotation=[rotation.x,rotation.y,rotation.z,rotation.w],scale=list(scale)))
-        if h.locomotion:
+        if h.locomotion and h.use_blend:
+            if h.run_speed <= h.walk_speed:
+                raise ValueError('Run speed must be greater than walk speed')
+            components['locomotion'] = dict(blend=[dict(clip=h.idle_clip,speed=0.0),
+                dict(clip=h.walk_clip,speed=h.walk_speed),dict(clip=h.move_clip,speed=h.run_speed)])
+        elif h.locomotion:
             components['locomotion'] = dict(idleClip=h.idle_clip,moveClip=h.move_clip,
                                            speedThreshold=h.speed_threshold)
     if h.script_enabled:
@@ -482,7 +494,13 @@ class HAKI_PT_panel(bpy.types.Panel):
                     if h.locomotion:
                         box.prop(h,'idle_clip')
                         box.prop(h,'move_clip')
-                        box.prop(h,'speed_threshold')
+                        box.prop(h,'use_blend')
+                        if h.use_blend:
+                            box.prop(h,'walk_clip')
+                            box.prop(h,'walk_speed')
+                            box.prop(h,'run_speed')
+                        else:
+                            box.prop(h,'speed_threshold')
                 else:
                     box.label(text='Origin at feet; unit scale; upright')
                     for name in ('radius','height','slope','step','character_mass','strength','gravity','local_player'):

@@ -150,6 +150,17 @@ with tempfile.TemporaryDirectory(prefix='haki-blender-test-') as temporary:
     assert 'skinnedMeshRenderer' in visual and 'animator' in visual,visual
     assert set(('Idle','Run')).issubset(visual['animator']['clips']),visual
     assert visual['locomotion']['moveClip'] == 'Run',visual
+    skinned.haki_settings.use_blend = True
+    skinned.haki_settings.walk_speed, skinned.haki_settings.run_speed = 1.6, 4.4
+    blend = editor.metadata_for(skinned)['components']['locomotion']['blend']
+    assert [(b['clip'],round(b['speed'],3)) for b in blend] == [('Idle',0),('Walk',1.6),('Run',4.4)],blend
+    skinned.haki_settings.run_speed = 1.0
+    try:
+        editor.metadata_for(skinned)
+        raise AssertionError('run speed below walk speed was accepted')
+    except ValueError:
+        pass
+    skinned.haki_settings.use_blend = False
     assert skinned.parent == rig
     w = entities[wall_id]['components']
     assert w['collider']['halfExtents'] == [1,3,2], w
