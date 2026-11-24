@@ -15,6 +15,7 @@ Run inside Blender (e.g. through MCP):
     ns["build"]()            # rebuild collections, camera, sun, colliders; validates the scene
     ns["render_checks"]()    # gameplay-camera renders: start, centre, 4 edges, 4 corners
     ns["export"]()           # Haki Export Arena + the map's environment intensity
+    ns["update_player"]()    # only re-append the Elastic Brawler player visual (no full rebuild)
 
 Everything is deterministic (fixed seeds). Change the recipe and rebuild rather than
 hand-editing instances.
@@ -681,6 +682,7 @@ def build():
     h.preview = True
     h.script_enabled = True
     h.script_path = "player.lua"
+    add_character(player)
 
     project = scene.haki_project
     project.root = str(ROOT)
@@ -701,6 +703,98 @@ def build():
     counts = {c.name: len(c.objects) for c in root.children}
     print("arena-02 built:", counts, "terrain", bounds, "ground map", image.size[:])
     return bounds
+
+
+CHARACTER = ROOT / "output/characters/elastic-brawler/model/elastic-brawler-polished.blend"
+CHARACTER_TEXTURE = 1024  # px; the character is ~100 px tall through the gameplay camera
+CLIPS = ("Idle", "Walk", "Run")
+
+
+def _remove_character():
+    """Drop a previously appended Elastic Brawler and everything it brought in."""
+    objects = [o for o in bpy.data.objects if o.name.startswith("ElasticBrawler")]
+    materials = {s.material for o in objects for s in o.material_slots if s.material}
+    images = {n.image for m in materials if m.node_tree for n in m.node_tree.nodes
+              if n.type == "TEX_IMAGE" and n.image}
+    data = [o.data for o in objects if o.data]
+    for obj in objects:
+        bpy.data.objects.remove(obj, do_unlink=True)
+    for block in data:
+        (bpy.data.meshes if isinstance(block, bpy.types.Mesh) else bpy.data.armatures).remove(block)
+    for material in materials:
+        bpy.data.materials.remove(material)
+    for image in images:
+        bpy.data.images.remove(image)
+    for name in CLIPS:
+        if name in bpy.data.actions:
+            bpy.data.actions.remove(bpy.data.actions[name])
+    collection = bpy.data.collections.get("ElasticBrawler_Character")
+    if collection:
+        bpy.data.collections.remove(collection)
+
+
+def add_character(player):
+    """The Elastic Brawler as the player's visual, with an Idle/Walk/Run speed blend.
+
+    Speeds come from the measured strides in the character's assembly.json, so the feet
+    plant at those speeds; player.lua walks at the walk stride speed while Shift is held.
+    """
+    import json
+
+    if not CHARACTER.exists():
+        raise RuntimeError(f"missing character file {CHARACTER}")
+    clips = json.loads((CHARACTER.parent / "assembly.json").read_text())["animation"]["clips"]
+    walk, run = clips["Walk"]["stride_speed_mps"], clips["Run"]["stride_speed_mps"]
+    _remove_character()
+    # The clips are keyed at 30 fps; glTF export converts frames to seconds with the scene rate.
+    bpy.context.scene.render.fps, bpy.context.scene.render.fps_base = 30, 1.0
+    with bpy.data.libraries.load(str(CHARACTER), link=False) as (source, target):
+        target.collections = ["ElasticBrawler_Character"]
+    collection = target.collections[0]
+    gameplay = player.users_collection[0]
+    for obj in collection.objects:
+        gameplay.objects.link(obj)
+    bpy.data.collections.remove(collection)
+    for name in CLIPS:
+        if name not in bpy.data.actions:
+            raise RuntimeError(f"character file has no {name} action")
+    root, mesh = bpy.data.objects["ElasticBrawler"], bpy.data.objects["ElasticBrawler_Mesh"]
+    # Engine forward is glTF -Z (Blender +Y); the model faces Blender -Y, so turn it around.
+    from mathutils import Matrix
+
+    turned = Matrix.Rotation(math.pi, 4, "Z") @ root.matrix_world
+    turned.translation = (player.location.x, player.location.y, 0.0)
+    root.matrix_world = turned
+    for image in {n.image for s in mesh.material_slots if s.material and s.material.node_tree
+                  for n in s.material.node_tree.nodes if n.type == "TEX_IMAGE" and n.image}:
+        if max(image.size) > CHARACTER_TEXTURE:
+            image.scale(CHARACTER_TEXTURE, CHARACTER_TEXTURE)
+            image.pack()
+    h = mesh.haki_settings
+    h.mode = "VISUAL"
+    h.visual_parent = player
+    h.locomotion = True
+    h.idle_clip, h.walk_clip, h.move_clip = CLIPS
+    h.use_blend = True
+    h.walk_speed, h.run_speed = walk, run
+    player.haki_settings.script_properties.clear()
+    for name, value in (("speed", 5.0), ("walk_speed", walk)):
+        prop = player.haki_settings.script_properties.add()
+        prop.name, prop.kind, prop.number = name, "number", value
+    return mesh
+
+
+def update_player():
+    """Refresh only the player's character visual (after re-animating it), without a full rebuild."""
+    if Path(bpy.data.filepath).resolve() != (DIRECTORY / "arena-02.blend").resolve():
+        raise RuntimeError("Open arena-02.blend before updating the player")
+    mesh = add_character(bpy.data.objects["Player"])
+    bpy.ops.haki.repair_ids()
+    editor = next(m for n, m in sys.modules.items() if n.endswith("haki_editor.editor"))
+    errors = editor.validate_scene(bpy.context)
+    if errors:
+        raise RuntimeError("\n".join(errors))
+    return mesh
 
 
 def export():

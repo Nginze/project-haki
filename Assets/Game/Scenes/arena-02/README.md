@@ -32,7 +32,12 @@ Use `export()` rather than the sidebar button: the add-on always writes environm
 - **Outskirts:** mesa tops carry clusters of broad-leaf plants with shrubs, rocks and cacti, set back from the rims. Low sand areas get sparse rocks, shrubs and bones.
 - **Ground:** flat sand at z = 0 with one baked map: broad tonal variation, small grains, and contact darkening at the feet of walls, props and cliffs. Water land fills and mesa tops reuse the same map, so the floor continues seamlessly.
 - **Batching:** water, grass visuals, fences and outskirts dressing are merged into 8 m chunks (fewer draw calls in the forward and shadow passes). Gameplay props stay separate objects.
-- **`Player`:** a mesh-free character controller running `Scripts/player.lua`.
+- **`Player`:** a character controller running `Scripts/player.lua`, with the Elastic Brawler
+  (`output/characters/elastic-brawler/model/elastic-brawler-polished.blend`) attached as its
+  visual. The character's `Idle`/`Walk`/`Run` clips play through the engine's speed blend at
+  the measured stride speeds (1.26 and 4.11 m/s). It runs at 5 m/s; hold **Shift** to walk.
+  Its textures are scaled to 1024 px in this scene. After re-animating the character, run
+  `ns["update_player"]()` then `ns["export"]()` instead of a full rebuild.
 
 ## Camera and coverage
 - **Benchmark camera:** perspective, 57° pitch, 25° vertical FOV, 25.4 m from the focus (art direction section 1).

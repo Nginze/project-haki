@@ -1201,6 +1201,90 @@
       }
     },
     {
+      "id": "d8a910b8-c7f0-45e0-a391-18c1a51bbfaa",
+      "name": "ElasticBrawler_Mesh",
+      "components": {
+        "transform": {
+          "translation": [
+            0.0,
+            0.0,
+            4.0
+          ],
+          "rotation": [
+            0.0,
+            0.9999999999999991,
+            0.0,
+            4.37113882867378e-08
+          ],
+          "scale": [
+            1.0000000000000038,
+            1.0,
+            1.0000000000000038
+          ]
+        },
+        "parent": {
+          "entity": "fcd28b62-7c6e-41f4-b518-ff3f6736c8e1",
+          "local": {
+            "translation": [
+              0.0,
+              -0.029999999329447746,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              1.0,
+              0.0,
+              4.371138828673793e-08
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        },
+        "locomotion": {
+          "blend": [
+            {
+              "clip": "Idle",
+              "speed": 0.0
+            },
+            {
+              "clip": "Walk",
+              "speed": 1.2619999647140503
+            },
+            {
+              "clip": "Run",
+              "speed": 4.111999988555908
+            }
+          ]
+        },
+        "skinnedMeshRenderer": {
+          "mesh": "arena-02.mesh.arena.elasticbrawler-mesh-003",
+          "skeleton": "arena-02.skeleton.arena.skin-0.node-94",
+          "materials": [
+            "arena-02.material.arena.elasticbrawler-body-bdd9db940f",
+            "arena-02.material.arena.elasticbrawler-jacket-fd19673b27",
+            "arena-02.material.arena.elasticbrawler-shorts-a46e85d342",
+            "arena-02.material.arena.elasticbrawler-belt-220f7abec5",
+            "arena-02.material.arena.elasticbrawler-jacket-buttons-a75ecb0197",
+            "arena-02.material.arena.elasticbrawler-sandals-c349b066e8"
+          ]
+        },
+        "animator": {
+          "clips": {
+            "Idle": "arena-02.animation-clip.arena.animation-0.skin-0.node-94",
+            "Run": "arena-02.animation-clip.arena.animation-1.skin-0.node-94",
+            "Walk": "arena-02.animation-clip.arena.animation-2.skin-0.node-94"
+          },
+          "currentClip": "Idle",
+          "playbackSpeed": 1.0,
+          "playing": true,
+          "loop": true
+        }
+      }
+    },
+    {
       "id": "arena.fencechunk-0-1",
       "name": "FenceChunk_0_1",
       "components": {
@@ -7996,7 +8080,10 @@
         },
         "script": {
           "path": "player.lua",
-          "properties": {}
+          "properties": {
+            "speed": 5.0,
+            "walk_speed": 1.2619999647140503
+          }
         }
       }
     },

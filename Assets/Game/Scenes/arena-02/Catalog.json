@@ -3,6 +3,27 @@
   "version": 1,
   "assets": [
     {
+      "id": "arena-02.animation-clip.arena.animation-0.skin-0.node-94",
+      "type": "animationClip",
+      "source": "Models/arena.glb",
+      "animation": "Idle",
+      "skeleton": "arena-02.skeleton.arena.skin-0.node-94"
+    },
+    {
+      "id": "arena-02.animation-clip.arena.animation-1.skin-0.node-94",
+      "type": "animationClip",
+      "source": "Models/arena.glb",
+      "animation": "Run",
+      "skeleton": "arena-02.skeleton.arena.skin-0.node-94"
+    },
+    {
+      "id": "arena-02.animation-clip.arena.animation-2.skin-0.node-94",
+      "type": "animationClip",
+      "source": "Models/arena.glb",
+      "animation": "Walk",
+      "skeleton": "arena-02.skeleton.arena.skin-0.node-94"
+    },
+    {
       "id": "arena-02.material.arena.arena02-ground-2c5b50e388",
       "type": "material",
       "source": "Materials/arena-arena02-ground-2c5b50e388.material.json"
@@ -138,6 +159,36 @@
       "source": "Materials/arena-canyon-wood-end-94d0dff32a.material.json"
     },
     {
+      "id": "arena-02.material.arena.elasticbrawler-belt-220f7abec5",
+      "type": "material",
+      "source": "Materials/arena-elasticbrawler-belt-220f7abec5.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.elasticbrawler-body-bdd9db940f",
+      "type": "material",
+      "source": "Materials/arena-elasticbrawler-body-bdd9db940f.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.elasticbrawler-jacket-buttons-a75ecb0197",
+      "type": "material",
+      "source": "Materials/arena-elasticbrawler-jacket-buttons-a75ecb0197.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.elasticbrawler-jacket-fd19673b27",
+      "type": "material",
+      "source": "Materials/arena-elasticbrawler-jacket-fd19673b27.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.elasticbrawler-sandals-c349b066e8",
+      "type": "material",
+      "source": "Materials/arena-elasticbrawler-sandals-c349b066e8.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.elasticbrawler-shorts-a46e85d342",
+      "type": "material",
+      "source": "Materials/arena-elasticbrawler-shorts-a46e85d342.material.json"
+    },
+    {
       "id": "arena-02.mesh.arena.arena-mesa-00-001",
       "type": "mesh",
       "source": "Models/arena.glb",
@@ -238,6 +289,19 @@
       "type": "mesh",
       "source": "Models/arena.glb",
       "mesh": "crate"
+    },
+    {
+      "id": "arena-02.mesh.arena.elasticbrawler-mesh-003",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "ElasticBrawler_Mesh.003"
+    },
+    {
+      "id": "arena-02.mesh.arena.elasticbrawler-mesh-003.node-94",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "ElasticBrawler_Mesh.003",
+      "node": "#94"
     },
     {
       "id": "arena-02.mesh.arena.fencechunk-0-1",
@@ -714,6 +778,34 @@
       "mesh": "WaterChunk_-3_-3"
     },
     {
+      "id": "arena-02.skeleton.arena.skin-0.node-94",
+      "type": "skeleton",
+      "source": "Models/arena.glb",
+      "skin": "ElasticBrawler_Rig",
+      "node": "#94"
+    },
+    {
+      "id": "arena-02.texture.arena.1-jacket-basecolor-srgb-b5f5bbab31",
+      "type": "texture",
+      "source": "Textures/arena-1-jacket-basecolor-b5f5bbab31.png",
+      "srgb": true,
+      "flipY": false
+    },
+    {
+      "id": "arena-02.texture.arena.1-sandals-basecolor-srgb-a310f8ec6c",
+      "type": "texture",
+      "source": "Textures/arena-1-sandals-basecolor-a310f8ec6c.png",
+      "srgb": true,
+      "flipY": false
+    },
+    {
+      "id": "arena-02.texture.arena.1-shorts-basecolor-srgb-0d471c33f6",
+      "type": "texture",
+      "source": "Textures/arena-1-shorts-basecolor-0d471c33f6.png",
+      "srgb": true,
+      "flipY": false
+    },
+    {
       "id": "arena-02.texture.arena.cactus-srgb-b83b9373eb",
       "type": "texture",
       "source": "Textures/arena-cactus-b83b9373eb.png",
@@ -752,6 +844,27 @@
       "id": "arena-02.texture.arena.cliff-side-srgb-96a471141f",
       "type": "texture",
       "source": "Textures/arena-cliff-side-96a471141f.png",
+      "srgb": true,
+      "flipY": false
+    },
+    {
+      "id": "arena-02.texture.arena.elasticbrawler-belt-color-srgb-970ec582a5",
+      "type": "texture",
+      "source": "Textures/arena-elasticbrawler-belt-color-970ec582a5.png",
+      "srgb": true,
+      "flipY": false
+    },
+    {
+      "id": "arena-02.texture.arena.elasticbrawler-body-color-srgb-f7ad48bf81",
+      "type": "texture",
+      "source": "Textures/arena-elasticbrawler-body-color-f7ad48bf81.png",
+      "srgb": true,
+      "flipY": false
+    },
+    {
+      "id": "arena-02.texture.arena.elasticbrawler-buttons-color-srgb-b493b91f62",
+      "type": "texture",
+      "source": "Textures/arena-elasticbrawler-buttons-color-b493b91f62.png",
       "srgb": true,
       "flipY": false
     },
