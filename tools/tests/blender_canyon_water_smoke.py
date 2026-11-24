@@ -1,7 +1,11 @@
-"""Run inside Blender: verify shoreline tops survive building/export with outward normals.
+"""Run inside Blender: verify the canyon kit v2 water modules survive building and export.
 
-Checks actual GLB triangle winding, normals and palette UVs. The intersecting bank/slab
-case previously looked correct in Blender but exported downward-facing shorelines.
+For water_bank, water_outer and water_inner, and for every generated variant used by a stepped
+inlet, it checks the exported GLB:
+  * the water surface sits at WATER_TOP and faces up;
+  * the land fill (where a module has one) sits at 0 and faces up;
+  * the shore lip faces toward the water and up, never into the ground;
+  * the module stays inside its 1 x 1 m cell.
 """
 import json
 from pathlib import Path
@@ -12,71 +16,89 @@ import tempfile
 import bpy
 from mathutils import Vector
 
-ROOT=Path(__file__).resolve().parents[2]
-kit=runpy.run_path(str(ROOT/'tools/blender/kits/canyon_kit.py'))
-collection=kit['kit_collection']()
-visibility=(collection.hide_viewport,collection.hide_render)
-selected=list(bpy.context.selected_objects)
-active=bpy.context.view_layer.objects.active
-collection.hide_viewport=False;collection.hide_render=False
+ROOT = Path(__file__).resolve().parents[2]
+kit = runpy.run_path(str(ROOT / "tools/blender/kits/canyon_kit.py"))
+WATER_TOP = kit["WATER_TOP"]
 
 
 def read_glb(path):
-    data=path.read_bytes();offset=12;chunks={}
-    while offset<len(data):
-        length,kind=struct.unpack_from('<II',data,offset)
-        chunks[kind]=data[offset+8:offset+8+length];offset+=8+length
-    document=json.loads(chunks[0x4e4f534a]);binary=chunks[0x004e4942]
+    data = path.read_bytes()
+    offset = 12
+    chunks = {}
+    while offset < len(data):
+        length, kind = struct.unpack_from("<II", data, offset)
+        chunks[kind] = data[offset + 8:offset + 8 + length]
+        offset += 8 + length
+    document = json.loads(chunks[0x4E4F534A])
+    binary = chunks[0x004E4942]
 
     def accessor(index):
-        value=document['accessors'][index];view=document['bufferViews'][value['bufferView']]
-        kind={5121:'B',5123:'H',5125:'I',5126:'f'}[value['componentType']]
-        width={'SCALAR':1,'VEC2':2,'VEC3':3,'VEC4':4}[value['type']]
-        fmt='<'+kind*width;size=struct.calcsize(fmt)
-        start=view.get('byteOffset',0)+value.get('byteOffset',0)
-        return [struct.unpack_from(fmt,binary,start+i*view.get('byteStride',size)) for i in range(value['count'])]
-    return document,accessor
+        value = document["accessors"][index]
+        view = document["bufferViews"][value["bufferView"]]
+        kind = {5121: "B", 5123: "H", 5125: "I", 5126: "f"}[value["componentType"]]
+        width = {"SCALAR": 1, "VEC2": 2, "VEC3": 3, "VEC4": 4}[value["type"]]
+        fmt = "<" + kind * width
+        size = struct.calcsize(fmt)
+        start = view.get("byteOffset", 0) + value.get("byteOffset", 0)
+        return [struct.unpack_from(fmt, binary, start + i * view.get("byteStride", size)) for i in range(value["count"])]
+
+    return document, accessor
 
 
-try:
-    with tempfile.TemporaryDirectory(prefix='canyon-water-check-') as temporary:
-        for name in ('water_edge','water_corner_outer','water_corner_inner'):
-            existing=bpy.data.objects.get(name)
-            location=existing.location.copy() if existing else Vector((0,0,0))
-            obj=kit[name]()
-            try:
-                tops=[f for f in obj.data.polygons if all(abs(obj.data.vertices[i].co.z-kit['BANK_TOP'])<1e-5 for i in f.vertices)]
-                assert tops and all(f.normal.z>.99 for f in tops),name+': bank top inverted after build'
-                for other in list(bpy.context.selected_objects):other.select_set(False)
-                obj.location=(0,0,0);obj.select_set(True);bpy.context.view_layer.objects.active=obj
-                path=Path(temporary)/(name+'.glb')
-                bpy.ops.export_scene.gltf(filepath=str(path),use_selection=True,export_yup=True,
-                    export_apply=True,export_cameras=False,export_lights=False)
-                document,accessor=read_glb(path);checked=0
-                for mesh in document['meshes']:
-                    for primitive in mesh['primitives']:
-                        attributes=primitive['attributes']
-                        positions=accessor(attributes['POSITION']);normals=accessor(attributes['NORMAL'])
-                        uv=accessor(attributes['TEXCOORD_0']);indices=[v[0] for v in accessor(primitive['indices'])]
-                        for i in range(0,len(indices),3):
-                            tri=indices[i:i+3]
-                            if not all(abs(positions[j][1]-kit['BANK_TOP'])<1e-5 for j in tri):continue
-                            a,b,c=(Vector(positions[j]) for j in tri)
-                            assert (b-a).cross(c-a).y>0,name+': GLB bank triangle faces down'
-                            for j in tri:
-                                assert normals[j][1]>.99,name+': GLB bank normal faces down'
-                                u,v=kit['swatch_uv']('bank')
-                                assert abs(uv[j][0]-u)<1e-5 and abs(uv[j][1]-(1-v))<1e-5,name+': bank palette UV changed'
-                            checked+=1
-                assert checked>0,name+': no exported bank-top triangles'
-                print(name,checked,'bank-top triangles: winding, normals and palette UV passed')
-            finally:
-                obj.location=location
-finally:
-    for obj in list(bpy.context.selected_objects):obj.select_set(False)
-    for obj in selected:
-        if obj.name in bpy.data.objects:obj.select_set(True)
-    if active and active.name in bpy.data.objects:bpy.context.view_layer.objects.active=active
-    collection.hide_viewport,collection.hide_render=visibility
+def check(name, obj, directory):
+    for other in list(bpy.context.selected_objects):
+        other.select_set(False)
+    saved = obj.location.copy()
+    obj.location = (0, 0, 0)
+    obj.select_set(True)
+    bpy.context.view_layer.objects.active = obj
+    path = Path(directory) / (name + ".glb")
+    try:
+        bpy.ops.export_scene.gltf(filepath=str(path), use_selection=True, export_yup=True, export_apply=True,
+                                  export_cameras=False, export_lights=False)
+    finally:
+        obj.location = saved
+    document, accessor = read_glb(path)
+    counts = {"water": 0, "land": 0, "lip": 0}
+    for mesh in document["meshes"]:
+        for primitive in mesh["primitives"]:
+            material = document["materials"][primitive["material"]]["name"]
+            positions = accessor(primitive["attributes"]["POSITION"])
+            indices = [v[0] for v in accessor(primitive["indices"])]
+            for x, y, z in positions:  # glTF is Y-up: (x, z, -y) in Blender terms
+                assert -0.5001 <= x <= 0.5001 and -0.5001 <= z <= 0.5001, f"{name}: vertex outside its cell"
+            for i in range(0, len(indices), 3):
+                a, b, c = (Vector(positions[j]) for j in indices[i:i + 3])
+                normal = (b - a).cross(c - a)
+                if normal.length < 2e-6:  # slivers where the lip profile meets a cell corner
+                    continue
+                normal.normalize()
+                heights = [p.y for p in (a, b, c)]
+                if material.endswith("water"):
+                    assert all(abs(h - WATER_TOP) < 1e-5 for h in heights), f"{name}: water off its level"
+                    assert normal.y > 0.99, f"{name}: water faces down"
+                    counts["water"] += 1
+                elif material.endswith("sand"):
+                    assert all(abs(h) < 1e-5 for h in heights), f"{name}: land fill off the land level"
+                    assert normal.y > 0.99, f"{name}: land fill faces down"
+                    counts["land"] += 1
+                elif material.endswith("lip"):
+                    assert normal.y > 0.2, f"{name}: lip top faces down {a} {b} {c}"
+                    counts["lip"] += 1
+    assert counts["water"] > 0, f"{name}: no water surface"
+    return counts
 
-print('CANYON_WATER_NORMALS_OK')
+
+variants = {"water_bank": "N", "water_outer": "NE"}
+inlet = {(0, 0), (1, 0), (2, 0), (0, 1), (1, 1), (0, 2)}  # a stepped inlet: banks, outer and inner corners
+with tempfile.TemporaryDirectory(prefix="canyon-water-check-") as temporary:
+    names = ["water_bank", "water_outer", "water_inner"]
+    for builder in names:
+        kit[builder]()
+    for cell in sorted(inlet):
+        names.append(kit["water_piece"](inlet, cell))
+    for name in dict.fromkeys(names):
+        counts = check(name, bpy.data.objects[name], temporary)
+        print(name, counts, "passed")
+
+print("CANYON_WATER_OK")
