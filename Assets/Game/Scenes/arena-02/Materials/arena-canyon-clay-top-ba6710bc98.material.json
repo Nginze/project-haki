@@ -14,15 +14,15 @@
     "BaseColorFactor": {
       "type": "vec4",
       "value": [
-        0.5840784311294556,
-        0.25015828013420105,
-        0.35153260827064514,
+        1.0,
+        1.0,
+        1.0,
         1.0
       ]
     },
     "UseBaseColorTexture": {
       "type": "int",
-      "value": 0
+      "value": 1
     },
     "PbrWorkflow": {
       "type": "int",
@@ -46,7 +46,7 @@
     },
     "RoughnessFactor": {
       "type": "float",
-      "value": 0.8799999952316284
+      "value": 0.8999999761581421
     },
     "UseMetallicRoughnessTexture": {
       "type": "int",
@@ -54,7 +54,7 @@
     },
     "UseNormalTexture": {
       "type": "int",
-      "value": 0
+      "value": 1
     },
     "NormalScale": {
       "type": "float",
@@ -119,6 +119,14 @@
     "Ior": {
       "type": "float",
       "value": 1.5
+    },
+    "BaseColorTexture": {
+      "type": "texture2D",
+      "value": "arena-02.texture.arena.clay-top-srgb-42e5dc93c5"
+    },
+    "NormalTexture": {
+      "type": "texture2D",
+      "value": "arena-02.texture.arena.clay-top-n-linear-ffb17ab0bd"
     }
   }
 }

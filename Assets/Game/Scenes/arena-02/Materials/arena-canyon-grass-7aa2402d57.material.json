@@ -46,7 +46,7 @@
     },
     "RoughnessFactor": {
       "type": "float",
-      "value": 0.8999999761581421
+      "value": 0.699999988079071
     },
     "UseMetallicRoughnessTexture": {
       "type": "int",
@@ -122,7 +122,7 @@
     },
     "BaseColorTexture": {
       "type": "texture2D",
-      "value": "arena-02.texture.arena.ground-color-srgb-b939fe718c"
+      "value": "arena-02.texture.arena.grass-blade-srgb-4754c88cd9"
     }
   }
 }

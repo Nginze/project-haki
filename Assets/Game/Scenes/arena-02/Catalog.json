@@ -3,44 +3,211 @@
   "version": 1,
   "assets": [
     {
-      "id": "arena-02.material.arena.arena02-ground-ae7cc44f9f",
+      "id": "arena-02.material.arena.arena02-ground-2c5b50e388",
       "type": "material",
-      "source": "Materials/arena-arena02-ground-ae7cc44f9f.material.json"
+      "source": "Materials/arena-arena02-ground-2c5b50e388.material.json"
     },
     {
-      "id": "arena-02.material.arena.cactus-body-a497b0eadb",
+      "id": "arena-02.material.arena.canyon-bone-dark-58a6a97520",
       "type": "material",
-      "source": "Materials/arena-cactus-body-a497b0eadb.material.json"
+      "source": "Materials/arena-canyon-bone-dark-58a6a97520.material.json"
     },
     {
-      "id": "arena-02.material.arena.cactus-petal-131c91db84",
+      "id": "arena-02.material.arena.canyon-bone-e4599beef6",
       "type": "material",
-      "source": "Materials/arena-cactus-petal-131c91db84.material.json"
+      "source": "Materials/arena-canyon-bone-e4599beef6.material.json"
     },
     {
-      "id": "arena-02.material.arena.cactus-pollen-33353defc4",
+      "id": "arena-02.material.arena.canyon-cactus-02b8cb522d",
       "type": "material",
-      "source": "Materials/arena-cactus-pollen-33353defc4.material.json"
+      "source": "Materials/arena-canyon-cactus-02b8cb522d.material.json"
     },
     {
-      "id": "arena-02.material.arena.cactus-rib-8123793b0c",
+      "id": "arena-02.material.arena.canyon-clay-side-ae6f17d548",
       "type": "material",
-      "source": "Materials/arena-cactus-rib-8123793b0c.material.json"
+      "source": "Materials/arena-canyon-clay-side-ae6f17d548.material.json"
     },
     {
-      "id": "arena-02.material.arena.cactus-spine-cfc7561830",
+      "id": "arena-02.material.arena.canyon-clay-top-ba6710bc98",
       "type": "material",
-      "source": "Materials/arena-cactus-spine-cfc7561830.material.json"
+      "source": "Materials/arena-canyon-clay-top-ba6710bc98.material.json"
     },
     {
-      "id": "arena-02.material.arena.cactus-tip-df3a7989a6",
+      "id": "arena-02.material.arena.canyon-cliff-side-e299c685b4",
       "type": "material",
-      "source": "Materials/arena-cactus-tip-df3a7989a6.material.json"
+      "source": "Materials/arena-canyon-cliff-side-e299c685b4.material.json"
     },
     {
-      "id": "arena-02.material.arena.canyon-palette-b83d1dbe0f",
+      "id": "arena-02.material.arena.canyon-grass-7aa2402d57",
       "type": "material",
-      "source": "Materials/arena-canyon-palette-b83d1dbe0f.material.json"
+      "source": "Materials/arena-canyon-grass-7aa2402d57.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-haki-band-d1aaf32b54",
+      "type": "material",
+      "source": "Materials/arena-canyon-haki-band-d1aaf32b54.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-haki-core-a71a4b430c",
+      "type": "material",
+      "source": "Materials/arena-canyon-haki-core-a71a4b430c.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-haki-ring-b737edecbc",
+      "type": "material",
+      "source": "Materials/arena-canyon-haki-ring-b737edecbc.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-haki-violet-bb9829e1c0",
+      "type": "material",
+      "source": "Materials/arena-canyon-haki-violet-bb9829e1c0.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-iron-b3da6cde30",
+      "type": "material",
+      "source": "Materials/arena-canyon-iron-b3da6cde30.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-leaf-530b88266b",
+      "type": "material",
+      "source": "Materials/arena-canyon-leaf-530b88266b.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-lip-8aa7fbb9af",
+      "type": "material",
+      "source": "Materials/arena-canyon-lip-8aa7fbb9af.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-lip-side-cce3f62e1f",
+      "type": "material",
+      "source": "Materials/arena-canyon-lip-side-cce3f62e1f.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-petal-8936836349",
+      "type": "material",
+      "source": "Materials/arena-canyon-petal-8936836349.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-pollen-cab9e09b8b",
+      "type": "material",
+      "source": "Materials/arena-canyon-pollen-cab9e09b8b.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-rock-b3700ede30",
+      "type": "material",
+      "source": "Materials/arena-canyon-rock-b3700ede30.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-rock-coral-24398a72bc",
+      "type": "material",
+      "source": "Materials/arena-canyon-rock-coral-24398a72bc.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-rope-9c23f6ff0b",
+      "type": "material",
+      "source": "Materials/arena-canyon-rope-9c23f6ff0b.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-stem-3accb00ea2",
+      "type": "material",
+      "source": "Materials/arena-canyon-stem-3accb00ea2.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-stone-tile-52a10f6dca",
+      "type": "material",
+      "source": "Materials/arena-canyon-stone-tile-52a10f6dca.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-thorn-3f1f6695d8",
+      "type": "material",
+      "source": "Materials/arena-canyon-thorn-3f1f6695d8.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-water-84adf437df",
+      "type": "material",
+      "source": "Materials/arena-canyon-water-84adf437df.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-wood-939e378a47",
+      "type": "material",
+      "source": "Materials/arena-canyon-wood-939e378a47.material.json"
+    },
+    {
+      "id": "arena-02.material.arena.canyon-wood-end-94d0dff32a",
+      "type": "material",
+      "source": "Materials/arena-canyon-wood-end-94d0dff32a.material.json"
+    },
+    {
+      "id": "arena-02.mesh.arena.arena-mesa-00-001",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "arena_mesa_00.001"
+    },
+    {
+      "id": "arena-02.mesh.arena.arena-mesa-01-001",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "arena_mesa_01.001"
+    },
+    {
+      "id": "arena-02.mesh.arena.arena-mesa-02-001",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "arena_mesa_02.001"
+    },
+    {
+      "id": "arena-02.mesh.arena.arena-mesa-03-001",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "arena_mesa_03.001"
+    },
+    {
+      "id": "arena-02.mesh.arena.arena-wall-00",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "arena_wall_00"
+    },
+    {
+      "id": "arena-02.mesh.arena.arena-wall-01",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "arena_wall_01"
+    },
+    {
+      "id": "arena-02.mesh.arena.arena-wall-02",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "arena_wall_02"
+    },
+    {
+      "id": "arena-02.mesh.arena.arena-wall-03",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "arena_wall_03"
+    },
+    {
+      "id": "arena-02.mesh.arena.arena-wall-04",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "arena_wall_04"
+    },
+    {
+      "id": "arena-02.mesh.arena.arena-wall-05",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "arena_wall_05"
+    },
+    {
+      "id": "arena-02.mesh.arena.arena-wall-06",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "arena_wall_06"
+    },
+    {
+      "id": "arena-02.mesh.arena.arena-wall-07",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "arena_wall_07"
     },
     {
       "id": "arena-02.mesh.arena.arena02-ground",
@@ -49,22 +216,22 @@
       "mesh": "Arena02_Ground"
     },
     {
-      "id": "arena-02.mesh.arena.arena02-stream",
+      "id": "arena-02.mesh.arena.barrel",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "Arena02_Stream"
+      "mesh": "barrel"
     },
     {
-      "id": "arena-02.mesh.arena.cactus-barrel",
+      "id": "arena-02.mesh.arena.bone-pile",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "cactus_barrel"
+      "mesh": "bone_pile"
     },
     {
-      "id": "arena-02.mesh.arena.cactus-tall",
+      "id": "arena-02.mesh.arena.cactus-flower",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "cactus_tall"
+      "mesh": "cactus_flower"
     },
     {
       "id": "arena-02.mesh.arena.crate",
@@ -73,172 +240,574 @@
       "mesh": "crate"
     },
     {
-      "id": "arena-02.mesh.arena.fence-post",
+      "id": "arena-02.mesh.arena.fencechunk-0-1",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "fence_post"
+      "mesh": "FenceChunk_0_1"
     },
     {
-      "id": "arena-02.mesh.arena.fence-rail",
+      "id": "arena-02.mesh.arena.fencechunk-1-1",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "fence_rail"
+      "mesh": "FenceChunk_1_1"
     },
     {
-      "id": "arena-02.mesh.arena.grass-corner",
+      "id": "arena-02.mesh.arena.fencechunk-1-1-2",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "grass_corner"
+      "mesh": "FenceChunk_-1_1"
     },
     {
-      "id": "arena-02.mesh.arena.grass-end",
+      "id": "arena-02.mesh.arena.fencechunk-2-0",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "grass_end"
+      "mesh": "FenceChunk_-2_0"
     },
     {
-      "id": "arena-02.mesh.arena.grass-straight",
+      "id": "arena-02.mesh.arena.fencechunk-2-1",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "grass_straight"
+      "mesh": "FenceChunk_-2_-1"
     },
     {
-      "id": "arena-02.mesh.arena.grass-tuft",
+      "id": "arena-02.mesh.arena.fencechunk-2-3",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "grass_tuft"
+      "mesh": "FenceChunk_2_-3"
     },
     {
-      "id": "arena-02.mesh.arena.rock-boulder",
+      "id": "arena-02.mesh.arena.fencechunk-3-0",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "rock_boulder"
+      "mesh": "FenceChunk_3_0"
     },
     {
-      "id": "arena-02.mesh.arena.rock-mass-0",
+      "id": "arena-02.mesh.arena.fencechunk-3-1",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "rock_mass_0"
+      "mesh": "FenceChunk_-3_-1"
     },
     {
-      "id": "arena-02.mesh.arena.rock-mass-1",
+      "id": "arena-02.mesh.arena.grasschunk-0-1",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "rock_mass_1"
+      "mesh": "GrassChunk_0_1"
     },
     {
-      "id": "arena-02.mesh.arena.rock-mass-2",
+      "id": "arena-02.mesh.arena.grasschunk-0-1-2",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "rock_mass_2"
+      "mesh": "GrassChunk_0_-1"
     },
     {
-      "id": "arena-02.mesh.arena.rock-mass-3",
+      "id": "arena-02.mesh.arena.grasschunk-1-0",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "rock_mass_3"
+      "mesh": "GrassChunk_1_0"
     },
     {
-      "id": "arena-02.mesh.arena.rock-mass-4",
+      "id": "arena-02.mesh.arena.grasschunk-1-0-2",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "rock_mass_4"
+      "mesh": "GrassChunk_-1_0"
     },
     {
-      "id": "arena-02.mesh.arena.rock-mass-5",
+      "id": "arena-02.mesh.arena.grasschunk-1-1",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "rock_mass_5"
+      "mesh": "GrassChunk_1_-1"
     },
     {
-      "id": "arena-02.mesh.arena.rock-pebbles",
+      "id": "arena-02.mesh.arena.grasschunk-1-2",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "rock_pebbles"
+      "mesh": "GrassChunk_-1_-2"
     },
     {
-      "id": "arena-02.mesh.arena.shrub-a",
+      "id": "arena-02.mesh.arena.grasschunk-2-0",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "shrub_a"
+      "mesh": "GrassChunk_-2_0"
     },
     {
-      "id": "arena-02.mesh.arena.shrub-b",
+      "id": "arena-02.mesh.arena.grasschunk-2-1",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "shrub_b"
+      "mesh": "GrassChunk_-2_-1"
     },
     {
-      "id": "arena-02.mesh.arena.shrub-c",
+      "id": "arena-02.mesh.arena.haki-cache",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "shrub_c"
+      "mesh": "haki_cache"
     },
     {
-      "id": "arena-02.mesh.arena.south-ledge-0",
+      "id": "arena-02.mesh.arena.outskirtschunk-0-1",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "south_ledge_0"
+      "mesh": "OutskirtsChunk_0_1"
     },
     {
-      "id": "arena-02.mesh.arena.south-ledge-1",
+      "id": "arena-02.mesh.arena.outskirtschunk-0-2",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "south_ledge_1"
+      "mesh": "OutskirtsChunk_0_2"
     },
     {
-      "id": "arena-02.mesh.arena.south-ledge-2",
+      "id": "arena-02.mesh.arena.outskirtschunk-0-2-2",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "south_ledge_2"
+      "mesh": "OutskirtsChunk_0_-2"
     },
     {
-      "id": "arena-02.mesh.arena.south-ledge-3",
+      "id": "arena-02.mesh.arena.outskirtschunk-0-3",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "south_ledge_3"
+      "mesh": "OutskirtsChunk_0_-3"
     },
     {
-      "id": "arena-02.mesh.arena.wall-corner",
+      "id": "arena-02.mesh.arena.outskirtschunk-1-0",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "wall_corner"
+      "mesh": "OutskirtsChunk_1_0"
     },
     {
-      "id": "arena-02.mesh.arena.wall-end",
+      "id": "arena-02.mesh.arena.outskirtschunk-1-1",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "wall_end"
+      "mesh": "OutskirtsChunk_1_1"
     },
     {
-      "id": "arena-02.mesh.arena.wall-end-low",
+      "id": "arena-02.mesh.arena.outskirtschunk-1-1-2",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "wall_end_low"
+      "mesh": "OutskirtsChunk_1_-1"
     },
     {
-      "id": "arena-02.mesh.arena.wall-straight",
+      "id": "arena-02.mesh.arena.outskirtschunk-1-1-3",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "wall_straight"
+      "mesh": "OutskirtsChunk_-1_1"
     },
     {
-      "id": "arena-02.mesh.arena.water-corner-outer",
+      "id": "arena-02.mesh.arena.outskirtschunk-1-2",
       "type": "mesh",
       "source": "Models/arena.glb",
-      "mesh": "water_corner_outer"
+      "mesh": "OutskirtsChunk_1_2"
     },
     {
-      "id": "arena-02.texture.arena.canyon-palette-srgb-4f835c6168",
+      "id": "arena-02.mesh.arena.outskirtschunk-1-2-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_-1_2"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-1-2-3",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_-1_-2"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-1-3",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_1_-3"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-1-3-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_-1_-3"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-2-0",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_2_0"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-2-1",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_2_1"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-2-1-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_2_-1"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-2-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_2_2"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-2-2-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_2_-2"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-2-2-3",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_-2_2"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-2-2-4",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_-2_-2"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-2-3",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_2_-3"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-2-3-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_-2_-3"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-3-0",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_3_0"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-3-0-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_-3_0"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-3-1",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_3_1"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-3-1-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_3_-1"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-3-1-3",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_-3_1"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-3-1-4",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_-3_-1"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-3-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_3_2"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-3-2-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_3_-2"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-3-2-3",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_-3_2"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-3-2-4",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_-3_-2"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-3-3",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_3_-3"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-3-3-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_-3_-3"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-4-0",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_-4_0"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-4-1",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_-4_1"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-4-1-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_-4_-1"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-4-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_-4_2"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-4-2-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_-4_-2"
+    },
+    {
+      "id": "arena-02.mesh.arena.outskirtschunk-4-3",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "OutskirtsChunk_-4_-3"
+    },
+    {
+      "id": "arena-02.mesh.arena.rock-tiles",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "rock_tiles"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-0-0",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_0_0"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-0-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_0_-2"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-1-0",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_1_0"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-1-1",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_1_-1"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-1-1-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_-1_1"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-1-1-3",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_-1_-1"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-1-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_1_-2"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-1-2-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_-1_2"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-2-0",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_-2_0"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-2-1",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_-2_1"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-2-1-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_-2_-1"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-2-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_2_-2"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-2-2-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_-2_2"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-2-2-3",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_-2_-2"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-2-3",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_-2_-3"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-3-0",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_-3_0"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-3-1",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_-3_1"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-3-1-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_-3_-1"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-3-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_-3_2"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-3-2-2",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_-3_-2"
+    },
+    {
+      "id": "arena-02.mesh.arena.waterchunk-3-3",
+      "type": "mesh",
+      "source": "Models/arena.glb",
+      "mesh": "WaterChunk_-3_-3"
+    },
+    {
+      "id": "arena-02.texture.arena.cactus-srgb-b83b9373eb",
       "type": "texture",
-      "source": "Textures/arena-canyon-palette-4f835c6168.png",
+      "source": "Textures/arena-cactus-b83b9373eb.png",
       "srgb": true,
       "flipY": false
     },
     {
-      "id": "arena-02.texture.arena.ground-color-srgb-b939fe718c",
+      "id": "arena-02.texture.arena.clay-side-srgb-98505f58a3",
       "type": "texture",
-      "source": "Textures/arena-ground-color-b939fe718c.png",
+      "source": "Textures/arena-clay-side-98505f58a3.png",
+      "srgb": true,
+      "flipY": false
+    },
+    {
+      "id": "arena-02.texture.arena.clay-top-n-linear-ffb17ab0bd",
+      "type": "texture",
+      "source": "Textures/arena-clay-top-n-ffb17ab0bd.png",
+      "srgb": false,
+      "flipY": false
+    },
+    {
+      "id": "arena-02.texture.arena.clay-top-srgb-42e5dc93c5",
+      "type": "texture",
+      "source": "Textures/arena-clay-top-42e5dc93c5.png",
+      "srgb": true,
+      "flipY": false
+    },
+    {
+      "id": "arena-02.texture.arena.cliff-side-n-linear-b73e082f1e",
+      "type": "texture",
+      "source": "Textures/arena-cliff-side-n-b73e082f1e.png",
+      "srgb": false,
+      "flipY": false
+    },
+    {
+      "id": "arena-02.texture.arena.cliff-side-srgb-96a471141f",
+      "type": "texture",
+      "source": "Textures/arena-cliff-side-96a471141f.png",
+      "srgb": true,
+      "flipY": false
+    },
+    {
+      "id": "arena-02.texture.arena.grass-blade-srgb-4754c88cd9",
+      "type": "texture",
+      "source": "Textures/arena-grass-blade-4754c88cd9.png",
+      "srgb": true,
+      "flipY": false
+    },
+    {
+      "id": "arena-02.texture.arena.ground-color-srgb-a38d9ae213",
+      "type": "texture",
+      "source": "Textures/arena-ground-color-a38d9ae213.png",
+      "srgb": true,
+      "flipY": false
+    },
+    {
+      "id": "arena-02.texture.arena.leaf-srgb-26b95c98da",
+      "type": "texture",
+      "source": "Textures/arena-leaf-26b95c98da.png",
+      "srgb": true,
+      "flipY": false
+    },
+    {
+      "id": "arena-02.texture.arena.rope-srgb-a62b3b7c4a",
+      "type": "texture",
+      "source": "Textures/arena-rope-a62b3b7c4a.png",
+      "srgb": true,
+      "flipY": false
+    },
+    {
+      "id": "arena-02.texture.arena.water-srgb-ffe98c2cc3",
+      "type": "texture",
+      "source": "Textures/arena-water-ffe98c2cc3.png",
+      "srgb": true,
+      "flipY": false
+    },
+    {
+      "id": "arena-02.texture.arena.wood-end-srgb-e1b945e343",
+      "type": "texture",
+      "source": "Textures/arena-wood-end-e1b945e343.png",
+      "srgb": true,
+      "flipY": false
+    },
+    {
+      "id": "arena-02.texture.arena.wood-n-linear-8802b314cc",
+      "type": "texture",
+      "source": "Textures/arena-wood-n-8802b314cc.png",
+      "srgb": false,
+      "flipY": false
+    },
+    {
+      "id": "arena-02.texture.arena.wood-srgb-49f9672e9b",
+      "type": "texture",
+      "source": "Textures/arena-wood-49f9672e9b.png",
       "srgb": true,
       "flipY": false
     }
