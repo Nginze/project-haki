@@ -211,16 +211,16 @@ Approval checklist:
 
 ## 10. Current implementation and next work
 
-As reviewed on **19 November 2026**. The arena-02 look-development pass (palette wiring, cover walls, foliage, outskirts, camera, render settings) has landed; it is not yet approved as visually finished.
+As reviewed on **24 November 2026**. Canyon kit v2 is modelled from the kit sheets in [references/kit-v2](references/kit-v2/), and arena-02 is rebuilt to the gameplay concept's composition; neither is approved as visually finished.
 
 | Area | Current state / required work |
 | --- | --- |
 | Arena coverage | arena-02 terrain is sized from the union of benchmark-camera footprints over every focus in the playable square at 16:9, 16:10 and 21:9 plus 4 m, and `arena_rules.lua` clamps the frustum footprint to that rectangle. Checked in Blender and in-engine captures (centre, edges, corners, 16:9 and 21:9); not yet play-tested by hand. |
-| Outskirts | arena-02 uses the three bands: a rocky rise north, a dry bank with brush/cacti east, a stream with a fence section west and low ledges south, then grouped outskirts clusters. Review against the latest user-supplied gameplay references; earlier generated concepts are not the approval benchmark. |
-| Foliage | Concealment grass is now `grass_*` modules (canopy mass plus tapered blades, skirt only on exposed edges, seamless joins); outskirts use broad-leaf `shrub_a/b/c`. Review blade width and density beside a character. |
+| Outskirts | arena-02 uses the three bands: a lake fed by the north-west inlet, fenced mesa plateaus with clustered broad-leaf plants to the north and east, a stream behind a fence to the west, and a south-east lake below a low foreground mesa. Checked in-engine at every edge and corner. |
+| Foliage | Concealment grass is 25 broad teardrop blades per cell, leaning back so their faces turn toward the gameplay camera. Modules exist for each open-side combination (`grass_<sides>`) and are placed unrotated. Outskirts use `outskirts_plant` and `small_shrub`. Review the blade size beside a character. |
 | Camera consistency | Resolved: the section 1 benchmark profile is authored in the arena-02 recipe and exported unchanged (perspective, 57°, 25° FOV). |
-| Palette | Kit and arena generators read `palette.json` roles; baked darkening respects `minBakedBrightness`. Runtime palette loading/tinting is not present yet. |
-| Shading | The current renderer is glTF PBR with shadows, environment lighting, SSAO, bloom, exposure/tone mapping, and FXAA. Two-tone shading with protected macro light/shade regions is a target, not an existing mode. |
+| Palette | Kit and arena generators read `palette.json` roles, including the added `rock`, `iron`, `bone` and `water.shore` roles. Painted textures come from `tools/blender/kits/canyon_textures.py`, and baked darkening respects `minBakedBrightness`. The engine does not load the palette or tint at runtime yet. |
+| Shading | glTF PBR with cascaded shadows, environment lighting, bloom, FXAA and an optional Khronos PBR Neutral tonemapper (`rendering.tonemapper`), which keeps authored colours. arena-02 currently uses a warm-neutral ambient to match the concept, which departs from section 5's blue-purple shade, so section 5 needs review. SSAO is off because the baked ground map carries contact shading. Two-tone shading is still only a target. |
 | Texture filtering | Texture mipmap support exists; maximum supported anisotropic filtering still needs integration. |
 | Look-dev tooling | Add repeatable gameplay captures and a plain-vs-styled switch as implementation work. |
 
