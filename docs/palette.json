@@ -41,7 +41,8 @@
     },
     "water": {
       "shallow": "#259ED4",
-      "deep": "#1685BC"
+      "deep": "#1685BC",
+      "shore": "#8FD3EE"
     },
     "shoreline": {
       "base": "#B97955",
@@ -52,19 +53,32 @@
       "highlight": "#E1CBA5"
     },
     "cactus": {
-      "base": "#648C58",
-      "shade": "#436A52",
-      "highlight": "#A4BC75",
-      "thorn": "#D9CEAD"
+      "base": "#4E9A4C",
+      "shade": "#2F6E45",
+      "highlight": "#86C25E",
+      "thorn": "#F2D36B"
     },
     "flower": {
-      "petal": "#C989A0",
-      "center": "#D8BC77"
+      "petal": "#E86A8A",
+      "center": "#F7D25A"
     },
     "concealment_grass": {
       "base": "#FFD44F",
       "highlight": "#FFE578",
       "root": "#F3A62C"
+    },
+    "rock": {
+      "base": "#A38E97",
+      "shade": "#7D6A78",
+      "highlight": "#C2AEB4"
+    },
+    "iron": {
+      "base": "#5C6275",
+      "highlight": "#868DA3"
+    },
+    "bone": {
+      "base": "#EFE6D6",
+      "shade": "#C9BBA8"
     }
   },
   "teams": {
